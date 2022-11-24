@@ -27,6 +27,7 @@ describe("UsersRepository", () => {
       });
       const { User } = require("../../models");
       const UsersRepository = require("../../repositories/usersRepository");
+
       const res = await UsersRepository.register(userData);
       expect(mockUserModel.create).toHaveBeenCalledWith({
         ...userData,
@@ -44,6 +45,30 @@ describe("UsersRepository", () => {
       const res = await UsersRepository.register(userData);
 
       expect(res).toBeInstanceOf(Error);
+    });
+  });
+
+  describe("findUserByEmail", () => {
+    beforeEach(() => {
+      jest.resetModules();
+    });
+    it("should return user model by email", async () => {
+      const mockUserModel = {
+        findOne: jest.fn().mockReturnValue(Promise.resolve(user)),
+      };
+
+      jest.mock("../../models", () => {
+        return { User: mockUserModel };
+      });
+      const { User } = require("../../models");
+      const UsersRepository = require("../../repositories/usersRepository");
+
+      const result = await UsersRepository.findUserByEmail(userData.email);
+
+      expect(mockUserModel.findOne).toHaveBeenCalledWith({
+        where: { email: userData.email },
+      });
+      expect(result).toBe(user);
     });
   });
 });

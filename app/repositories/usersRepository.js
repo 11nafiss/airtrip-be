@@ -7,6 +7,17 @@ async function register(userData) {
   }
 }
 
+async function findUserByEmail(email) {
+  try {
+    return await User.findOne({
+      where: { email },
+    });
+  } catch (error) {
+    return error;
+  }
+}
+
 module.exports = {
   register,
+  findUserByEmail,
 };
