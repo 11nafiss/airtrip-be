@@ -16,7 +16,7 @@ module.exports = {
         type: Sequelize.STRING,
       },
       phone: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
       },
       address: {
         type: Sequelize.STRING,
@@ -24,10 +24,13 @@ module.exports = {
       email: {
         type: Sequelize.STRING,
       },
-      roleId: {
+      encryptedPassword: {
+        type: Sequelize.STRING,
+      },
+      role_id: {
         type: Sequelize.INTEGER,
         references: {
-          model: "Roles",
+          model: "Roles", // tables name not model name
           key: "id",
         },
       },
