@@ -1,9 +1,19 @@
 const { User } = require("../../models");
+const bcryptjs = require("bcryptjs");
 const userData = {
   email: "email@email",
   password: "userpass",
 };
-const user = new User({ ...userData, roleId: 2 });
+
+function encryptPass(password) {
+  return bcryptjs.hashSync(password);
+}
+
+const user = new User({
+  ...userData,
+  roleId: 2,
+  password: encryptPass(userData.password),
+});
 
 describe("AuthenticationService", () => {
   describe("register", () => {
@@ -21,9 +31,12 @@ describe("AuthenticationService", () => {
       const authenticationService = require("../../services/AuthenticationService");
 
       const result = await authenticationService.register(userData);
-      expect(mockUserRepo.register).toHaveBeenCalledWith({
-        ...userData,
-      });
+      expect(mockUserRepo.register).toHaveBeenCalledWith(
+        expect.objectContaining({
+          ...userData,
+          password: expect.not.stringMatching(userData.password),
+        })
+      );
       expect(result).toBe(user);
     });
 
