@@ -11,15 +11,19 @@
     "db:migrate": "./node_modules/.bin/sequelize-cli db:migrate",
     "db:rollback": "./node_modules/.bin/sequelize-cli db:migrate:undo",
     "db:seed": "./node_modules/.bin/sequelize-cli db:seed:all",
+    "db:setup": "yarn db:drop && yarn db:create && yarn db:migrate && yarn db:seed",
     "test": "jest --verbose"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "dotenv": "^16.0.3",
     "express": "^4.17.3",
+    "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
     "pg": "^8.7.3",
     "sequelize": "^6.18.0",
-    "sequelize-cli": "^6.4.1"
+    "sequelize-cli": "^6.4.1",
+    "swagger-ui-express": "^4.6.0"
   },
   "devDependencies": {
     "jest": "^29.3.1",
