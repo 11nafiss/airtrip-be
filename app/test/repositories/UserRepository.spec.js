@@ -26,7 +26,7 @@ describe("UsersRepository", () => {
       const UsersRepository = require("../../repositories/usersRepository");
       const res = await UsersRepository.register(userData);
       expect(mockUserModel.create).toHaveBeenCalledWith({
-        userData,
+        ...userData,
         roleId: 2,
       });
       expect(res).toBe(user);

@@ -6,7 +6,7 @@ const userData = {
   address: "Jl.kaki",
   email: "email@email",
 };
-const user = new User({ userData, roleId: 2 });
+const user = new User({ ...userData, roleId: 2 });
 
 describe("AuthenticationService", () => {
   describe("register", () => {
@@ -24,9 +24,8 @@ describe("AuthenticationService", () => {
       const authenticationService = require("../../services/AuthenticationService");
 
       const result = await authenticationService.register(userData);
-      expect(mockUserRepo.create).toHaveBeenCalledWith({
-        userData,
-        roleId: 2,
+      expect(mockUserRepo.register).toHaveBeenCalledWith({
+        ...userData,
       });
       expect(result).toBe(user);
     });

@@ -7,3 +7,7 @@ async function register(userData) {
     return error;
   }
 }
+
+module.exports = {
+  register,
+};
