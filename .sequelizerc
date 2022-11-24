@@ -1,8 +1,11 @@
 const path = require("path");
+const dotenv = require("dotenv");
 
 const appDir = path.join(__dirname, 'app');
 const configDir = path.join(__dirname, 'config');
 const dbDir = path.join(__dirname, 'db');
+
+dotenv.config();
 
 module.exports = {
   'config': path.join(configDir, 'database.js'),
