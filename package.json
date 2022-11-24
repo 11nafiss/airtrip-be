@@ -10,7 +10,8 @@
     "db:drop": "./node_modules/.bin/sequelize-cli db:drop",
     "db:migrate": "./node_modules/.bin/sequelize-cli db:migrate",
     "db:rollback": "./node_modules/.bin/sequelize-cli db:migrate:undo",
-    "db:seed": "./node_modules/.bin/sequelize-cli db:seed:all"
+    "db:seed": "./node_modules/.bin/sequelize-cli db:seed:all",
+    "test": "jest --verbose"
   },
   "dependencies": {
     "express": "^4.17.3",
@@ -20,6 +21,7 @@
     "sequelize-cli": "^6.4.1"
   },
   "devDependencies": {
+    "jest": "^29.3.1",
     "nodemon": "^2.0.15"
   }
 }
