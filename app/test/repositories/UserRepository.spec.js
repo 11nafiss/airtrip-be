@@ -1,10 +1,13 @@
 const { User } = require("../../models");
+const bcryptjs = require("bcryptjs");
+
+function encryptPass(password) {
+  return bcryptjs.hashSync(password);
+}
+
 const userData = {
-  name: "user",
-  image: "userimg",
-  phone: "0812345678",
-  address: "Jl.kaki",
   email: "email@email",
+  password: encryptPass("userpass"),
 };
 const user = new User({ ...userData, roleId: 2 });
 
@@ -30,6 +33,17 @@ describe("UsersRepository", () => {
         roleId: 2,
       });
       expect(res).toBe(user);
+    });
+
+    it("should return error obj", async () => {
+      jest.mock("../../models", () => {
+        return { User: null };
+      });
+      const { User } = require("../../models");
+      const UsersRepository = require("../../repositories/usersRepository");
+      const res = await UsersRepository.register(userData);
+
+      expect(res).toBeInstanceOf(Error);
     });
   });
 });

@@ -1,10 +1,7 @@
 const { User } = require("../../models");
 const userData = {
-  name: "user",
-  image: "userimg",
-  phone: "0812345678",
-  address: "Jl.kaki",
   email: "email@email",
+  password: "userpass",
 };
 const user = new User({ ...userData, roleId: 2 });
 
@@ -28,6 +25,15 @@ describe("AuthenticationService", () => {
         ...userData,
       });
       expect(result).toBe(user);
+    });
+
+    it("should return error obj", async () => {
+      jest.mock("../../repositories/usersRepository", () => null);
+      const usersRepo = require("../../repositories/usersRepository");
+      const authenticationService = require("../../services/AuthenticationService");
+
+      const result = await authenticationService.register(userData);
+      expect(result).toBeInstanceOf(Error);
     });
   });
 });
