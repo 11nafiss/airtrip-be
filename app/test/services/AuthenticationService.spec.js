@@ -24,6 +24,7 @@ describe("AuthenticationService", () => {
     it("should return registered user data", async () => {
       const mockUserRepo = {
         register: jest.fn().mockReturnValue(Promise.resolve(user)),
+        findUserByEmail: jest.fn().mockReturnValue(Promise.resolve(null)),
       };
 
       jest.mock("../../repositories/usersRepository", () => mockUserRepo);
@@ -31,6 +32,7 @@ describe("AuthenticationService", () => {
       const authenticationService = require("../../services/AuthenticationService");
 
       const result = await authenticationService.register(userData);
+      expect(mockUserRepo.findUserByEmail).toHaveBeenCalledWith(userData.email);
       expect(mockUserRepo.register).toHaveBeenCalledWith(
         expect.objectContaining({
           ...userData,
@@ -38,6 +40,25 @@ describe("AuthenticationService", () => {
         })
       );
       expect(result).toBe(user);
+    });
+
+    it("should return instance of EmailAlreadyRegistered Error", async () => {
+      const mockUserRepo = {
+        findUserByEmail: jest.fn().mockReturnValue(Promise.resolve(user)),
+      };
+
+      jest.mock("../../repositories/usersRepository", () => mockUserRepo);
+      const usersRepo = require("../../repositories/usersRepository");
+      const authenticationService = require("../../services/AuthenticationService");
+      const { EmailAlreadyRegisteredError } = require("../../errors");
+
+      const result = await authenticationService.register(userData);
+      expect(mockUserRepo.findUserByEmail).toHaveBeenCalledWith(userData.email);
+
+      expect(result).toBeInstanceOf(EmailAlreadyRegisteredError);
+
+      expect(new EmailAlreadyRegisteredError("")).toBeInstanceOf(Error);
+      expect(result.message).toBe(`${userData.email} already registered!`);
     });
 
     it("should return error obj", async () => {
