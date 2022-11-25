@@ -53,7 +53,7 @@ describe("AuthenticationController", () => {
           password: "userpass",
         },
       };
-
+      const EmailAlreadyRegisteredError = require("../../errors/EmailAlreadyRegisteredError");
       const err = new EmailAlreadyRegisteredError(mockRequest.body.email);
       const mockAuthService = {
         register: jest.fn().mockReturnValue(Promise.resolve(err)),

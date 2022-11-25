@@ -1,3 +1,4 @@
+const { EmailAlreadyRegisteredError } = require("../../../errors");
 const authenticationService = require("../../../services/AuthenticationService");
 
 async function register(req, res) {
@@ -5,6 +6,10 @@ async function register(req, res) {
     /* req.body = {email, password}
      */
     const user = await authenticationService.register(req.body);
+    console.log(user);
+    if (user instanceof EmailAlreadyRegisteredError) {
+      return res.status(422).json(user);
+    }
     res.status(201).json(user);
   } catch (error) {}
 }
