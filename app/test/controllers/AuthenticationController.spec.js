@@ -71,7 +71,7 @@ describe("AuthenticationController", () => {
 
       expect(mockAuthService.register).toHaveBeenCalledWith(mockRequest.body);
       expect(mockResponse.status).toHaveBeenCalledWith(422);
-      expect(mockResponse.json).toHaveBeenCalledWith(err);
+      expect(mockResponse.json).toHaveBeenCalledWith(err.message);
     });
 
     it("should call res.status(500) ", () => {});
