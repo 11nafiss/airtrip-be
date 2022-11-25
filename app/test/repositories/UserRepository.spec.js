@@ -12,11 +12,10 @@ const userData = {
 const user = new User({ ...userData, roleId: 2 });
 
 describe("UsersRepository", () => {
+  beforeEach(() => {
+    jest.resetModules();
+  });
   describe("register", () => {
-    beforeEach(() => {
-      jest.resetModules();
-    });
-
     it("should return created user model", async () => {
       const mockUserModel = {
         create: jest.fn().mockReturnValue(Promise.resolve(user)),
@@ -25,7 +24,7 @@ describe("UsersRepository", () => {
       jest.mock("../../models", () => {
         return { User: mockUserModel };
       });
-      const { User } = require("../../models");
+
       const UsersRepository = require("../../repositories/usersRepository");
 
       const res = await UsersRepository.register(userData);
@@ -40,7 +39,7 @@ describe("UsersRepository", () => {
       jest.mock("../../models", () => {
         return { User: null };
       });
-      const { User } = require("../../models");
+
       const UsersRepository = require("../../repositories/usersRepository");
       const res = await UsersRepository.register(userData);
 
@@ -49,9 +48,6 @@ describe("UsersRepository", () => {
   });
 
   describe("findUserByEmail", () => {
-    beforeEach(() => {
-      jest.resetModules();
-    });
     it("should return user model by email", async () => {
       const mockUserModel = {
         findOne: jest.fn().mockReturnValue(Promise.resolve(user)),
@@ -60,7 +56,7 @@ describe("UsersRepository", () => {
       jest.mock("../../models", () => {
         return { User: mockUserModel };
       });
-      const { User } = require("../../models");
+
       const UsersRepository = require("../../repositories/usersRepository");
 
       const result = await UsersRepository.findUserByEmail(userData.email);

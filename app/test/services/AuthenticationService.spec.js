@@ -16,11 +16,10 @@ const user = new User({
 });
 
 describe("AuthenticationService", () => {
+  beforeEach(() => {
+    jest.resetModules();
+  });
   describe("register", () => {
-    beforeEach(() => {
-      jest.resetModules();
-    });
-
     it("should return registered user data", async () => {
       const mockUserRepo = {
         register: jest.fn().mockReturnValue(Promise.resolve(user)),
@@ -28,7 +27,7 @@ describe("AuthenticationService", () => {
       };
 
       jest.mock("../../repositories/usersRepository", () => mockUserRepo);
-      const usersRepo = require("../../repositories/usersRepository");
+
       const authenticationService = require("../../services/AuthenticationService");
 
       const result = await authenticationService.register(userData);
@@ -48,7 +47,7 @@ describe("AuthenticationService", () => {
       };
 
       jest.mock("../../repositories/usersRepository", () => mockUserRepo);
-      const usersRepo = require("../../repositories/usersRepository");
+
       const authenticationService = require("../../services/AuthenticationService");
       const { EmailAlreadyRegisteredError } = require("../../errors");
 
@@ -63,7 +62,7 @@ describe("AuthenticationService", () => {
 
     it("should return error obj", async () => {
       jest.mock("../../repositories/usersRepository", () => null);
-      const usersRepo = require("../../repositories/usersRepository");
+
       const authenticationService = require("../../services/AuthenticationService");
 
       const result = await authenticationService.register(userData);

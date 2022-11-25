@@ -1,6 +1,5 @@
 const { User } = require("../../models");
 const bcryptjs = require("bcryptjs");
-const { EmailAlreadyRegisteredError } = require("../../errors");
 
 function encryptPass(password) {
   return bcryptjs.hashSync(password);
@@ -14,16 +13,15 @@ const userData = {
 const user = new User({ ...userData, roleId: 2 });
 
 describe("AuthenticationController", () => {
+  beforeEach(() => {
+    jest.resetModules();
+  });
   const mockResponse = {
     status: jest.fn().mockReturnThis(),
     json: jest.fn().mockReturnThis(),
   };
 
   describe("register", () => {
-    beforeEach(() => {
-      jest.resetModules();
-    });
-
     it("should call res.status(201) and res.json with user data", async () => {
       const mockRequest = {
         body: {
@@ -36,10 +34,13 @@ describe("AuthenticationController", () => {
       };
       // mock auth service
       jest.mock("../../services/AuthenticationService", () => mockAuthService);
+      const routes = require("../../../config/routes");
+      const controllers = require("../../controllers");
 
-      const authenticationService = require("../../services/AuthenticationService");
-      const { api } = require("../../controllers");
-      await api.v1.authenticationController.register(mockRequest, mockResponse);
+      await controllers.api.v1.authenticationController.register(
+        mockRequest,
+        mockResponse
+      );
 
       expect(mockAuthService.register).toHaveBeenCalledWith(mockRequest.body);
       expect(mockResponse.status).toHaveBeenCalledWith(201);
@@ -61,9 +62,12 @@ describe("AuthenticationController", () => {
       // mock auth service
       jest.mock("../../services/AuthenticationService", () => mockAuthService);
 
-      const authenticationService = require("../../services/AuthenticationService");
-      const { api } = require("../../controllers");
-      await api.v1.authenticationController.register(mockRequest, mockResponse);
+      const routes = require("../../../config/routes");
+      const controllers = require("../../controllers");
+      await controllers.api.v1.authenticationController.register(
+        mockRequest,
+        mockResponse
+      );
 
       expect(mockAuthService.register).toHaveBeenCalledWith(mockRequest.body);
       expect(mockResponse.status).toHaveBeenCalledWith(422);
