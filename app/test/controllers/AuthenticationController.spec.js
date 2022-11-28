@@ -1,5 +1,6 @@
 const { User } = require("../../models");
 const bcryptjs = require("bcryptjs");
+const { register } = require("../../repositories/usersRepository");
 
 function encryptPass(password) {
   return bcryptjs.hashSync(password);
@@ -56,6 +57,7 @@ describe("AuthenticationController", () => {
       };
       const EmailAlreadyRegisteredError = require("../../errors/EmailAlreadyRegisteredError");
       const err = new EmailAlreadyRegisteredError(mockRequest.body.email);
+
       const mockAuthService = {
         register: jest.fn().mockReturnValue(Promise.resolve(err)),
       };
@@ -74,6 +76,33 @@ describe("AuthenticationController", () => {
       expect(mockResponse.json).toHaveBeenCalledWith(err.message);
     });
 
-    it("should call res.status(500) ", () => {});
+    it("should call next, req.err should contain error", async () => {
+      const mockRequest = {
+        body: {
+          email: "email@email",
+          password: "userpass",
+        },
+      };
+
+      const routes = require("../../../config/routes");
+      const controllers = require("../../controllers");
+      const mockNext = jest.fn();
+      jest.mock("../../services/AuthenticationService", () => {
+        return {
+          register: () => {
+            throw Error("error");
+          },
+        };
+      });
+
+      await controllers.api.v1.authenticationController.register(
+        mockRequest,
+        mockResponse,
+        mockNext
+      );
+
+      expect(mockNext).toHaveBeenCalled();
+      expect(mockRequest.error).toBeInstanceOf(Error);
+    });
   });
 });

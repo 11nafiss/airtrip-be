@@ -9,7 +9,7 @@ function encryptPass(password) {
 async function register(userData) {
   try {
     const existingUser = await usersRepo.findUserByEmail(userData.email);
-    console.log(existingUser);
+
     if (existingUser !== null) {
       const err = new EmailAlreadyRegisteredError(userData.email);
       return err;
@@ -20,7 +20,7 @@ async function register(userData) {
     });
     return user;
   } catch (error) {
-    return error;
+    throw error;
   }
 }
 

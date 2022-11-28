@@ -5,4 +5,14 @@ module.exports = {
       message: "AIRTRIP API is up and running!",
     });
   },
+
+  // for handling unspecified error
+  handleError(req, res) {
+    res.status(500).json({
+      error: {
+        name: req.error.name,
+        message: req.error.message,
+      },
+    });
+  },
 };

@@ -3,7 +3,7 @@ async function register(userData) {
   try {
     return await User.create({ ...userData, roleId: 2 });
   } catch (error) {
-    return error;
+    throw error;
   }
 }
 
@@ -13,7 +13,7 @@ async function findUserByEmail(email) {
       where: { email },
     });
   } catch (error) {
-    return error;
+    throw error;
   }
 }
 

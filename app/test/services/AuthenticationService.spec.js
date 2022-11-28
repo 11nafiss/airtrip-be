@@ -60,13 +60,19 @@ describe("AuthenticationService", () => {
       expect(result.message).toBe(`${userData.email} already registered!`);
     });
 
-    it("should return error obj", async () => {
+    it("should throw error", async () => {
       jest.mock("../../repositories/usersRepository", () => null);
-
+      const mockUserRepo = {
+        findUserByEmail: () => {
+          throw new Error("error");
+        },
+      };
+      jest.mock("../../repositories/usersRepository", () => mockUserRepo);
       const authenticationService = require("../../services/AuthenticationService");
 
-      const result = await authenticationService.register(userData);
-      expect(result).toBeInstanceOf(Error);
+      expect(async () => {
+        await authenticationService.register("octopus");
+      }).rejects.toThrow();
     });
   });
 });

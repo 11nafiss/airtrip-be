@@ -35,15 +35,15 @@ describe("UsersRepository", () => {
       expect(res).toBe(user);
     });
 
-    it("should return error obj", async () => {
+    it("should throw error", async () => {
       jest.mock("../../models", () => {
         return { User: null };
       });
 
       const UsersRepository = require("../../repositories/usersRepository");
-      const res = await UsersRepository.register(userData);
-
-      expect(res).toBeInstanceOf(Error);
+      expect(
+        async () => await UsersRepository.register(userData)
+      ).rejects.toThrow();
     });
   });
 

@@ -11,4 +11,6 @@ apiRouter.post(
   "/register",
   controllers.api.v1.authenticationController.register
 );
+
+apiRouter.use(controllers.main.handleError);
 module.exports = apiRouter;
