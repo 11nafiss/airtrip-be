@@ -12,7 +12,6 @@ function encryptPass(password) {
 }
 
 function createToken(user) {
-  console.log(user);
   return jwt.sign(
     {
       id: user.id,
@@ -51,7 +50,7 @@ async function register(userData) {
 async function login(userData) {
   try {
     const existingUser = await usersRepo.findUserByEmail(userData.email);
-    console.log(existingUser);
+
     if (existingUser === null) {
       return new EmailNotRegisteredError(userData.email);
     }
