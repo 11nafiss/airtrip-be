@@ -10,8 +10,8 @@ async function register(userData) {
 async function findUserByEmail(email) {
   try {
     return await User.findOne({
-      include: Role,
       where: { email },
+      include: Role,
     });
   } catch (error) {
     throw error;

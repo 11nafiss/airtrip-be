@@ -1,4 +1,4 @@
-const { User } = require("../../models");
+const { User, Role } = require("../../models");
 const bcryptjs = require("bcryptjs");
 
 function encryptPass(password) {
@@ -9,7 +9,11 @@ const userData = {
   email: "email@email",
   password: encryptPass("userpass"),
 };
-const user = new User({ ...userData, roleId: 2 });
+const user = new User({
+  ...userData,
+  roleId: 2,
+  Role: { id: 2, name: "USER" },
+});
 
 describe("UsersRepository", () => {
   beforeEach(() => {
