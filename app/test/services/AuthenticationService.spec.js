@@ -1,5 +1,6 @@
 const { User } = require("../../models");
 const bcryptjs = require("bcryptjs");
+
 const userData = {
   email: "email@email",
   password: "userpass",
@@ -55,8 +56,6 @@ describe("AuthenticationService", () => {
       expect(mockUserRepo.findUserByEmail).toHaveBeenCalledWith(userData.email);
 
       expect(result).toBeInstanceOf(EmailAlreadyRegisteredError);
-
-      expect(new EmailAlreadyRegisteredError("")).toBeInstanceOf(Error);
       expect(result.message).toBe(`${userData.email} already registered!`);
     });
 
@@ -73,6 +72,62 @@ describe("AuthenticationService", () => {
       expect(async () => {
         await authenticationService.register("octopus");
       }).rejects.toThrow();
+    });
+  });
+
+  describe("login", () => {
+    it("should return jwt access token", async () => {
+      const mockUserRepo = {
+        findUserByEmail: jest.fn().mockReturnValue(Promise.resolve(user)),
+      };
+
+      jest.mock("../../repositories/usersRepository", () => mockUserRepo);
+      const authenticationService = require("../../services/AuthenticationService");
+
+      const jsonwebtoken = require("jsonwebtoken");
+      const spyJwt = jest.spyOn(jsonwebtoken, "sign");
+      const spyBcrypt = jest.spyOn(bcryptjs, "compareSync");
+
+      const result = await authenticationService.login(userData);
+
+      expect(mockUserRepo.findUserByEmail).toHaveBeenCalledWith(userData.email);
+      expect(spyJwt).toHaveBeenCalledWith(user, process.env.JWT_SIGNATURE_KEY);
+      expect(spyBcrypt).toHaveBeenCalledWith(userData.password, user.password);
+      expect(result).toBe(expect.any(String));
+    });
+
+    it("should return EmailNotRegisteredError", async () => {
+      const mockUserRepo = {
+        findUserByEmail: jest.fn().mockReturnValue(Promise.resolve(null)),
+      };
+
+      jest.mock("../../repositories/usersRepository", async () => mockUserRepo);
+      const authenticationService = require("../../services/AuthenticationService");
+      const EmailNotRegisteredError = require("../../errors/EmailNotRegistered");
+
+      const result = await authenticationService.login(userData);
+      expect(mockUserRepo.findUserByEmail).toHaveBeenCalledWith(userData.email);
+      expect(result).toBeInstanceOf(EmailNotRegisteredError);
+      expect(result.message).toBe(`${userData.email} is not registered!`);
+    });
+
+    it("should return WrongPasswordError", async () => {
+      const mockUserRepo = {
+        findUserByEmail: jest.fn().mockReturnValue(Promise.resolve(user)),
+      };
+
+      jest.mock("../../repositories/usersRepository", async () => mockUserRepo);
+      const authenticationService = require("../../services/AuthenticationService");
+      const spyBcrypt = jest.spyOn(bcryptjs, "compareSync");
+
+      const result = await authenticationService.login(userData);
+
+      const WrongPasswordError = require("../../errors/WrongPasswordError");
+      expect(mockUserRepo.findUserByEmail).toHaveBeenCalledWith(userData.email);
+
+      expect(spyBcrypt).toHaveBeenCalledWith(userData.password, user.password);
+      expect(result).toBeInstanceOf(WrongPasswordError);
+      expect(result.message).toBe(`Incorrect password!`);
     });
   });
 });

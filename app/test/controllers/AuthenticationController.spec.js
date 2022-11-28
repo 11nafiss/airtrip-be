@@ -21,15 +21,14 @@ describe("AuthenticationController", () => {
     status: jest.fn().mockReturnThis(),
     json: jest.fn().mockReturnThis(),
   };
-
+  const mockRequest = {
+    body: {
+      email: "email@email",
+      password: "userpass",
+    },
+  };
   describe("register", () => {
     it("should call res.status(201) and res.json with user data", async () => {
-      const mockRequest = {
-        body: {
-          email: "email@email",
-          password: "userpass",
-        },
-      };
       const mockAuthService = {
         register: jest.fn().mockReturnValue(Promise.resolve(user)),
       };
@@ -49,12 +48,6 @@ describe("AuthenticationController", () => {
     });
 
     it("should call res.status(422) and res.json with email already registered error", async () => {
-      const mockRequest = {
-        body: {
-          email: "email@email",
-          password: "userpass",
-        },
-      };
       const EmailAlreadyRegisteredError = require("../../errors/EmailAlreadyRegisteredError");
       const err = new EmailAlreadyRegisteredError(mockRequest.body.email);
 
@@ -77,13 +70,6 @@ describe("AuthenticationController", () => {
     });
 
     it("should call next, req.err should contain error", async () => {
-      const mockRequest = {
-        body: {
-          email: "email@email",
-          password: "userpass",
-        },
-      };
-
       const routes = require("../../../config/routes");
       const controllers = require("../../controllers");
       const mockNext = jest.fn();
@@ -104,5 +90,9 @@ describe("AuthenticationController", () => {
       expect(mockNext).toHaveBeenCalled();
       expect(mockRequest.error).toBeInstanceOf(Error);
     });
+  });
+
+  describe("login", () => {
+    describe("", () => {});
   });
 });

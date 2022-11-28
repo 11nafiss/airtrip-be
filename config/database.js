@@ -5,8 +5,8 @@
 
 /** Destruct environment variable to get database configuration */
 const {
-  DB_USERNAME = "admin",
-  DB_PASSWORD = "adminadmin",
+  DB_USERNAME = null,
+  DB_PASSWORD = null,
   DB_HOST = "127.0.0.1",
   DB_NAME = "airtrip",
 } = process.env;
