@@ -1,4 +1,4 @@
-const { User } = require("../models");
+const { User, Role } = require("../models");
 async function register(userData) {
   try {
     return await User.create({ ...userData, roleId: 2 });
@@ -10,6 +10,7 @@ async function register(userData) {
 async function findUserByEmail(email) {
   try {
     return await User.findOne({
+      include: Role,
       where: { email },
     });
   } catch (error) {

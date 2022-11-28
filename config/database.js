@@ -3,6 +3,11 @@
  * @author NoFall887
  */
 
+// read env variable from .env file if not in production
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+
 /** Destruct environment variable to get database configuration */
 const {
   DB_USERNAME = null,
