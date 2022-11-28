@@ -8,6 +8,7 @@ module.exports = {
 
   // for handling unspecified error
   handleError(req, res) {
+    console.log(req.error);
     res.status(500).json({
       error: {
         name: req.error.name,

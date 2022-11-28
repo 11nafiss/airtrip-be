@@ -1,5 +1,6 @@
 const usersRepo = require("../repositories/usersRepository");
 const bcryptjs = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 const {
   EmailAlreadyRegisteredError,
   WrongPasswordError,
@@ -10,7 +11,24 @@ function encryptPass(password) {
   return bcryptjs.hashSync(password);
 }
 
-function createToken() {}
+function createToken(user) {
+  console.log(user);
+  return jwt.sign(
+    {
+      id: user.id,
+      name: user.name,
+      image: user.image,
+      phone: user.phone,
+      address: user.address,
+      email: user.email,
+      role: {
+        id: user.Role.id,
+        name: user.Role.name,
+      },
+    },
+    process.env.JWT_SIGNATURE_KEY
+  );
+}
 
 async function register(userData) {
   try {
@@ -33,13 +51,13 @@ async function register(userData) {
 async function login(userData) {
   try {
     const existingUser = await usersRepo.findUserByEmail(userData.email);
-
+    console.log(existingUser);
     if (existingUser === null) {
       return new EmailNotRegisteredError(userData.email);
     }
 
     if (bcryptjs.compareSync(userData.password, existingUser.password)) {
-      return existingUser;
+      return createToken(existingUser);
     }
 
     return new WrongPasswordError();

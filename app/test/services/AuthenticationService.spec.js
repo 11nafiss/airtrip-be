@@ -1,4 +1,4 @@
-const { User } = require("../../models");
+const { User, Role } = require("../../models");
 const bcryptjs = require("bcryptjs");
 
 const userData = {
@@ -15,7 +15,10 @@ const user = new User({
   roleId: 2,
   password: encryptPass(userData.password),
 });
-
+user.Role = new Role({
+  id: 2,
+  name: "USER",
+});
 describe("AuthenticationService", () => {
   beforeEach(() => {
     jest.resetModules();
@@ -83,17 +86,33 @@ describe("AuthenticationService", () => {
 
       jest.mock("../../repositories/usersRepository", () => mockUserRepo);
       const authenticationService = require("../../services/AuthenticationService");
-
       const jsonwebtoken = require("jsonwebtoken");
+      const bcryptjs = require("bcryptjs");
+
       const spyJwt = jest.spyOn(jsonwebtoken, "sign");
       const spyBcrypt = jest.spyOn(bcryptjs, "compareSync");
 
       const result = await authenticationService.login(userData);
 
       expect(mockUserRepo.findUserByEmail).toHaveBeenCalledWith(userData.email);
-      expect(spyJwt).toHaveBeenCalledWith(user, process.env.JWT_SIGNATURE_KEY);
       expect(spyBcrypt).toHaveBeenCalledWith(userData.password, user.password);
-      expect(result).toBe(expect.any(String));
+      expect(spyJwt).toHaveBeenCalledWith(
+        {
+          id: user.id,
+          name: user.name,
+          image: user.image,
+          phone: user.phone,
+          address: user.address,
+          email: user.email,
+          role: {
+            id: user.Role.id,
+            name: user.Role.name,
+          },
+        },
+        process.env.JWT_SIGNATURE_KEY
+      );
+
+      expect(result).toStrictEqual(expect.any(String));
     });
 
     it("should return EmailNotRegisteredError", async () => {
@@ -101,7 +120,7 @@ describe("AuthenticationService", () => {
         findUserByEmail: jest.fn().mockReturnValue(Promise.resolve(null)),
       };
 
-      jest.mock("../../repositories/usersRepository", async () => mockUserRepo);
+      jest.mock("../../repositories/usersRepository", () => mockUserRepo);
       const authenticationService = require("../../services/AuthenticationService");
       const EmailNotRegisteredError = require("../../errors/EmailNotRegistered");
 
@@ -112,20 +131,30 @@ describe("AuthenticationService", () => {
     });
 
     it("should return WrongPasswordError", async () => {
+      const wrongPassData = {
+        email: userData.email,
+        password: "wrongpassword",
+      };
       const mockUserRepo = {
         findUserByEmail: jest.fn().mockReturnValue(Promise.resolve(user)),
       };
 
-      jest.mock("../../repositories/usersRepository", async () => mockUserRepo);
+      jest.mock("../../repositories/usersRepository", () => mockUserRepo);
       const authenticationService = require("../../services/AuthenticationService");
+      const bcryptjs = require("bcryptjs");
       const spyBcrypt = jest.spyOn(bcryptjs, "compareSync");
 
-      const result = await authenticationService.login(userData);
+      const result = await authenticationService.login(wrongPassData);
 
       const WrongPasswordError = require("../../errors/WrongPasswordError");
-      expect(mockUserRepo.findUserByEmail).toHaveBeenCalledWith(userData.email);
+      expect(mockUserRepo.findUserByEmail).toHaveBeenCalledWith(
+        wrongPassData.email
+      );
 
-      expect(spyBcrypt).toHaveBeenCalledWith(userData.password, user.password);
+      expect(spyBcrypt).toHaveBeenCalledWith(
+        wrongPassData.password,
+        user.password
+      );
       expect(result).toBeInstanceOf(WrongPasswordError);
       expect(result.message).toBe(`Incorrect password!`);
     });

@@ -6,7 +6,6 @@ async function register(req, res, next) {
   try {
     /* req.body = {email, password}
      */
-    console.log(req.body);
     const user = await authenticationService.register(req.body);
 
     if (user instanceof EmailAlreadyRegisteredError) {
