@@ -1,5 +1,6 @@
-const { User } = require("../../models");
+const { User, Role } = require("../../models");
 const bcryptjs = require("bcryptjs");
+
 const userData = {
   email: "email@email",
   password: "userpass",
@@ -14,7 +15,10 @@ const user = new User({
   roleId: 2,
   password: encryptPass(userData.password),
 });
-
+user.Role = new Role({
+  id: 2,
+  name: "USER",
+});
 describe("AuthenticationService", () => {
   beforeEach(() => {
     jest.resetModules();
@@ -55,8 +59,6 @@ describe("AuthenticationService", () => {
       expect(mockUserRepo.findUserByEmail).toHaveBeenCalledWith(userData.email);
 
       expect(result).toBeInstanceOf(EmailAlreadyRegisteredError);
-
-      expect(new EmailAlreadyRegisteredError("")).toBeInstanceOf(Error);
       expect(result.message).toBe(`${userData.email} already registered!`);
     });
 
@@ -73,6 +75,88 @@ describe("AuthenticationService", () => {
       expect(async () => {
         await authenticationService.register("octopus");
       }).rejects.toThrow();
+    });
+  });
+
+  describe("login", () => {
+    it("should return jwt access token", async () => {
+      const mockUserRepo = {
+        findUserByEmail: jest.fn().mockReturnValue(Promise.resolve(user)),
+      };
+
+      jest.mock("../../repositories/usersRepository", () => mockUserRepo);
+      const authenticationService = require("../../services/AuthenticationService");
+      const jsonwebtoken = require("jsonwebtoken");
+      const bcryptjs = require("bcryptjs");
+
+      const spyJwt = jest.spyOn(jsonwebtoken, "sign");
+      const spyBcrypt = jest.spyOn(bcryptjs, "compareSync");
+
+      const result = await authenticationService.login(userData);
+
+      expect(mockUserRepo.findUserByEmail).toHaveBeenCalledWith(userData.email);
+      expect(spyBcrypt).toHaveBeenCalledWith(userData.password, user.password);
+      expect(spyJwt).toHaveBeenCalledWith(
+        {
+          id: user.id,
+          name: user.name,
+          image: user.image,
+          phone: user.phone,
+          address: user.address,
+          email: user.email,
+          role: {
+            id: user.Role.id,
+            name: user.Role.name,
+          },
+        },
+        process.env.JWT_SIGNATURE_KEY
+      );
+
+      expect(result).toStrictEqual(expect.any(String));
+    });
+
+    it("should return EmailNotRegisteredError", async () => {
+      const mockUserRepo = {
+        findUserByEmail: jest.fn().mockReturnValue(Promise.resolve(null)),
+      };
+
+      jest.mock("../../repositories/usersRepository", () => mockUserRepo);
+      const authenticationService = require("../../services/AuthenticationService");
+      const EmailNotRegisteredError = require("../../errors/EmailNotRegistered");
+
+      const result = await authenticationService.login(userData);
+      expect(mockUserRepo.findUserByEmail).toHaveBeenCalledWith(userData.email);
+      expect(result).toBeInstanceOf(EmailNotRegisteredError);
+      expect(result.message).toBe(`${userData.email} is not registered!`);
+    });
+
+    it("should return WrongPasswordError", async () => {
+      const wrongPassData = {
+        email: userData.email,
+        password: "wrongpassword",
+      };
+      const mockUserRepo = {
+        findUserByEmail: jest.fn().mockReturnValue(Promise.resolve(user)),
+      };
+
+      jest.mock("../../repositories/usersRepository", () => mockUserRepo);
+      const authenticationService = require("../../services/AuthenticationService");
+      const bcryptjs = require("bcryptjs");
+      const spyBcrypt = jest.spyOn(bcryptjs, "compareSync");
+
+      const result = await authenticationService.login(wrongPassData);
+
+      const WrongPasswordError = require("../../errors/WrongPasswordError");
+      expect(mockUserRepo.findUserByEmail).toHaveBeenCalledWith(
+        wrongPassData.email
+      );
+
+      expect(spyBcrypt).toHaveBeenCalledWith(
+        wrongPassData.password,
+        user.password
+      );
+      expect(result).toBeInstanceOf(WrongPasswordError);
+      expect(result.message).toBe(`Incorrect password!`);
     });
   });
 });

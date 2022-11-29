@@ -1,4 +1,4 @@
-const { User } = require("../../models");
+const { User, Role } = require("../../models");
 const bcryptjs = require("bcryptjs");
 
 function encryptPass(password) {
@@ -9,7 +9,11 @@ const userData = {
   email: "email@email",
   password: encryptPass("userpass"),
 };
-const user = new User({ ...userData, roleId: 2 });
+const user = new User({
+  ...userData,
+  roleId: 2,
+  Role: { id: 2, name: "USER" },
+});
 
 describe("UsersRepository", () => {
   beforeEach(() => {
@@ -48,7 +52,7 @@ describe("UsersRepository", () => {
   });
 
   describe("findUserByEmail", () => {
-    it("should return user model by email", async () => {
+    it("should return user by email", async () => {
       const mockUserModel = {
         findOne: jest.fn().mockReturnValue(Promise.resolve(user)),
       };
@@ -56,12 +60,13 @@ describe("UsersRepository", () => {
       jest.mock("../../models", () => {
         return { User: mockUserModel };
       });
-
+      const { Role } = require("../../models");
       const UsersRepository = require("../../repositories/usersRepository");
 
       const result = await UsersRepository.findUserByEmail(userData.email);
 
       expect(mockUserModel.findOne).toHaveBeenCalledWith({
+        include: Role,
         where: { email: userData.email },
       });
       expect(result).toBe(user);
