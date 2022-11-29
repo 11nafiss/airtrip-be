@@ -8,7 +8,7 @@ const authenticationService = require("../../../services/AuthenticationService")
 
 async function register(req, res, next) {
   try {
-    /* req.body = {email, password}
+    /* req.body = {email, password, phone, name, address}
      */
     const registeredEmail = await authenticationService.register(req.body);
 
@@ -23,6 +23,7 @@ async function register(req, res, next) {
 }
 
 async function login(req, res, next) {
+  // req.body = {email, password}
   try {
     const token = await authenticationService.login(req.body);
 

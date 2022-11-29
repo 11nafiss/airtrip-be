@@ -28,6 +28,14 @@ describe("AuthenticationController", () => {
   };
   const mockNext = jest.fn();
   describe("register", () => {
+    const mockRequestRegister = {
+      body: {
+        ...mockRequest.body,
+        phone: "08123456789",
+        name: "user name",
+        address: "Probolinggo, Jawa Timur",
+      },
+    };
     it("should call res.status(201) and res.json with user data", async () => {
       const mockAuthService = {
         register: jest.fn().mockReturnValue(Promise.resolve(user.email)),
@@ -38,18 +46,22 @@ describe("AuthenticationController", () => {
       const controllers = require("../../controllers");
 
       await controllers.api.v1.authenticationController.register(
-        mockRequest,
+        mockRequestRegister,
         mockResponse
       );
 
-      expect(mockAuthService.register).toHaveBeenCalledWith(mockRequest.body);
+      expect(mockAuthService.register).toHaveBeenCalledWith(
+        mockRequestRegister.body
+      );
       expect(mockResponse.status).toHaveBeenCalledWith(201);
       expect(mockResponse.json).toHaveBeenCalledWith({ email: user.email });
     });
 
     it("should call res.status(422) and res.json with email already registered error", async () => {
       const EmailAlreadyRegisteredError = require("../../errors/EmailAlreadyRegisteredError");
-      const err = new EmailAlreadyRegisteredError(mockRequest.body.email);
+      const err = new EmailAlreadyRegisteredError(
+        mockRequestRegister.body.email
+      );
 
       const mockAuthService = {
         register: jest.fn().mockReturnValue(Promise.resolve(err)),
@@ -60,12 +72,14 @@ describe("AuthenticationController", () => {
       const routes = require("../../../config/routes");
       const controllers = require("../../controllers");
       await controllers.api.v1.authenticationController.register(
-        mockRequest,
+        mockRequestRegister,
         mockResponse,
         mockNext
       );
 
-      expect(mockAuthService.register).toHaveBeenCalledWith(mockRequest.body);
+      expect(mockAuthService.register).toHaveBeenCalledWith(
+        mockRequestRegister.body
+      );
       expect(mockResponse.status).toHaveBeenCalledWith(422);
       expect(mockResponse.json).toHaveBeenCalledWith({ message: err.message });
     });
@@ -83,13 +97,13 @@ describe("AuthenticationController", () => {
       });
 
       await controllers.api.v1.authenticationController.register(
-        mockRequest,
+        mockRequestRegister,
         mockResponse,
         mockNext
       );
 
       expect(mockNext).toHaveBeenCalled();
-      expect(mockRequest.error).toBeInstanceOf(Error);
+      expect(mockRequestRegister.error).toBeInstanceOf(Error);
     });
   });
 
