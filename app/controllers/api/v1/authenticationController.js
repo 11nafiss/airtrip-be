@@ -10,12 +10,12 @@ async function register(req, res, next) {
   try {
     /* req.body = {email, password}
      */
-    const user = await authenticationService.register(req.body);
+    const registeredEmail = await authenticationService.register(req.body);
 
-    if (user instanceof EmailAlreadyRegisteredError) {
-      return res.status(422).json(user.message);
+    if (registeredEmail instanceof EmailAlreadyRegisteredError) {
+      return res.status(422).json(registeredEmail.message);
     }
-    res.status(201).json(user);
+    res.status(201).json({ email: registeredEmail });
   } catch (error) {
     req.error = error;
     next();

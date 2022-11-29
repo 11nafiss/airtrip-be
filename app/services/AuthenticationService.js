@@ -41,7 +41,8 @@ async function register(userData) {
       ...userData,
       password: encryptPass(userData.password),
     });
-    return user;
+
+    return user.email;
   } catch (error) {
     throw error;
   }

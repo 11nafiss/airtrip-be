@@ -24,7 +24,7 @@ describe("AuthenticationService", () => {
     jest.resetModules();
   });
   describe("register", () => {
-    it("should return registered user data", async () => {
+    it("should return registered user email", async () => {
       const mockUserRepo = {
         register: jest.fn().mockReturnValue(Promise.resolve(user)),
         findUserByEmail: jest.fn().mockReturnValue(Promise.resolve(null)),
@@ -42,7 +42,8 @@ describe("AuthenticationService", () => {
           password: expect.not.stringMatching(userData.password),
         })
       );
-      expect(result).toBe(user);
+
+      expect(result).toBe(user.email);
     });
 
     it("should return instance of EmailAlreadyRegistered Error", async () => {

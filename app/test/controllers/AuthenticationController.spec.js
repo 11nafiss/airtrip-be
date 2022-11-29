@@ -30,7 +30,7 @@ describe("AuthenticationController", () => {
   describe("register", () => {
     it("should call res.status(201) and res.json with user data", async () => {
       const mockAuthService = {
-        register: jest.fn().mockReturnValue(Promise.resolve(user)),
+        register: jest.fn().mockReturnValue(Promise.resolve(user.email)),
       };
       // mock auth service
       jest.mock("../../services/AuthenticationService", () => mockAuthService);
@@ -44,7 +44,7 @@ describe("AuthenticationController", () => {
 
       expect(mockAuthService.register).toHaveBeenCalledWith(mockRequest.body);
       expect(mockResponse.status).toHaveBeenCalledWith(201);
-      expect(mockResponse.json).toHaveBeenCalledWith(user);
+      expect(mockResponse.json).toHaveBeenCalledWith({ email: user.email });
     });
 
     it("should call res.status(422) and res.json with email already registered error", async () => {
@@ -61,7 +61,8 @@ describe("AuthenticationController", () => {
       const controllers = require("../../controllers");
       await controllers.api.v1.authenticationController.register(
         mockRequest,
-        mockResponse
+        mockResponse,
+        mockNext
       );
 
       expect(mockAuthService.register).toHaveBeenCalledWith(mockRequest.body);
