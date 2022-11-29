@@ -13,7 +13,7 @@ async function register(req, res, next) {
     const registeredEmail = await authenticationService.register(req.body);
 
     if (registeredEmail instanceof EmailAlreadyRegisteredError) {
-      return res.status(422).json(registeredEmail.message);
+      return res.status(422).json({ message: registeredEmail.message });
     }
     res.status(201).json({ email: registeredEmail });
   } catch (error) {
@@ -27,11 +27,11 @@ async function login(req, res, next) {
     const token = await authenticationService.login(req.body);
 
     if (token instanceof EmailNotRegisteredError) {
-      return res.status(404).json(token.message);
+      return res.status(404).json({ message: token.message });
     }
 
     if (token instanceof WrongPasswordError) {
-      return res.status(401).json(token.message);
+      return res.status(401).json({ message: token.message });
     }
 
     res.status(200).json({ accessToken: token });

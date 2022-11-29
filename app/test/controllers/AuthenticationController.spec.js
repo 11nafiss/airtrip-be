@@ -67,7 +67,7 @@ describe("AuthenticationController", () => {
 
       expect(mockAuthService.register).toHaveBeenCalledWith(mockRequest.body);
       expect(mockResponse.status).toHaveBeenCalledWith(422);
-      expect(mockResponse.json).toHaveBeenCalledWith(err.message);
+      expect(mockResponse.json).toHaveBeenCalledWith({ message: err.message });
     });
 
     it("should call next, req.err should contain error", async () => {
@@ -136,7 +136,7 @@ describe("AuthenticationController", () => {
 
       expect(mockAuthService.login).toHaveBeenCalledWith(mockRequest.body);
       expect(mockResponse.status).toHaveBeenCalledWith(404);
-      expect(mockResponse.json).toHaveBeenCalledWith(err.message);
+      expect(mockResponse.json).toHaveBeenCalledWith({ message: err.message });
     });
 
     it("should call res.status(401) and res.json with WrongPasswordError", async () => {
@@ -158,7 +158,7 @@ describe("AuthenticationController", () => {
 
       expect(mockAuthService.login).toHaveBeenCalledWith(mockRequest.body);
       expect(mockResponse.status).toHaveBeenCalledWith(401);
-      expect(mockResponse.json).toHaveBeenCalledWith(err.message);
+      expect(mockResponse.json).toHaveBeenCalledWith({ message: err.message });
     });
   });
 });
