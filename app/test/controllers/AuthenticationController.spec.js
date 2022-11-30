@@ -175,4 +175,64 @@ describe("AuthenticationController", () => {
       expect(mockResponse.json).toHaveBeenCalledWith({ message: err.message });
     });
   });
+
+  describe("authorize", () => {
+    it("should set request.user with decoded and verified", async () => {
+      const token = "Bearer deifncewofinierbgi";
+      const noBearerToken = token.split(" ")[1];
+      const mockRequestAuthorize = {
+        ...mockRequest,
+        headers: { authorization: token },
+      };
+      const mockAuthService = {
+        authorize: jest.fn().mockReturnValue(Promise.resolve(userData)),
+      };
+      // mock auth service
+      jest.mock("../../services/AuthenticationService", () => mockAuthService);
+      const routes = require("../../../config/routes");
+      const controllers = require("../../controllers");
+
+      await controllers.api.v1.authenticationController.authorize(
+        mockRequestAuthorize,
+        mockResponse,
+        mockNext
+      );
+
+      expect(mockAuthService.authorize).toHaveBeenCalledWith(noBearerToken);
+
+      expect(mockRequestAuthorize.user).toEqual(userData);
+      expect(mockNext).toHaveBeenCalled();
+    });
+
+    it("should call res.status(401) with UnauthorizedError", async () => {
+      const token = "Bearer deifncewofinierbgi";
+      const noBearerToken = token.split(" ")[1];
+      const mockRequestAuthorize = {
+        ...mockRequest,
+        headers: { authorization: token },
+      };
+      const { WrongPasswordError, UnauthorizedError } = require("../../errors");
+      const err = new UnauthorizedError("User not found");
+      const mockAuthService = {
+        authorize: jest.fn().mockReturnValue(Promise.resolve(err)),
+      };
+      // mock auth service
+      jest.mock("../../services/AuthenticationService", () => mockAuthService);
+      const routes = require("../../../config/routes");
+      const controllers = require("../../controllers");
+
+      await controllers.api.v1.authenticationController.authorize(
+        mockRequestAuthorize,
+        mockResponse,
+        mockNext
+      );
+
+      expect(mockAuthService.authorize).toHaveBeenCalledWith(noBearerToken);
+      expect(mockResponse.status).toHaveBeenCalledWith(401);
+      expect(mockResponse.json).toHaveBeenCalledWith({
+        message: err.message,
+        cause: err.cause,
+      });
+    });
+  });
 });

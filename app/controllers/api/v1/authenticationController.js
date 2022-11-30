@@ -3,6 +3,7 @@ const {
   EmailAlreadyRegisteredError,
   EmailNotRegisteredError,
   WrongPasswordError,
+  UnauthorizedError,
 } = require("../../../errors");
 const authenticationService = require("../../../services/AuthenticationService");
 
@@ -36,6 +37,25 @@ async function login(req, res, next) {
     }
 
     res.status(200).json({ accessToken: token });
-  } catch (error) {}
+  } catch (error) {
+    req.error = error;
+    next();
+  }
 }
-module.exports = { register, login };
+
+async function authorize(req, res, next) {
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+    const user = await authenticationService.authorize(token);
+
+    if (user instanceof UnauthorizedError) {
+      return res.status(401).json({ message: user.message, cause: user.cause });
+    }
+    req.user = user;
+    next();
+  } catch (error) {
+    req.error = error;
+    next();
+  }
+}
+module.exports = { register, login, authorize };
