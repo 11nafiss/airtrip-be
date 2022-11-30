@@ -4,7 +4,7 @@
   "main": "app/index.js",
   "license": "MIT",
   "scripts": {
-    "start": "bin/www",
+    "start": "node -r dotenv/config bin/www",
     "develop": "nodemon -q bin/www",
     "db:create": "./node_modules/.bin/sequelize-cli db:create",
     "db:drop": "./node_modules/.bin/sequelize-cli db:drop",
