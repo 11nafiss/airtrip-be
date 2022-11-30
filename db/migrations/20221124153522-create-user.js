@@ -21,11 +21,17 @@ module.exports = {
       address: {
         type: Sequelize.STRING,
       },
+      saldo: {
+        type: Sequelize.INTEGER,
+      },
       email: {
         type: Sequelize.STRING,
       },
       encryptedPassword: {
         type: Sequelize.STRING,
+      },
+      verified: {
+        type: Sequelize.BOOLEAN,
       },
       role_id: {
         type: Sequelize.INTEGER,
