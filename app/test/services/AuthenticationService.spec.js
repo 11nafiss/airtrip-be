@@ -19,10 +19,12 @@ user.Role = new Role({
   id: 2,
   name: "USER",
 });
+
 describe("AuthenticationService", () => {
   beforeEach(() => {
     jest.resetModules();
   });
+
   describe("register", () => {
     const userDataRegister = {
       ...userData,
@@ -171,5 +173,70 @@ describe("AuthenticationService", () => {
       expect(result).toBeInstanceOf(WrongPasswordError);
       expect(result.message).toBe(`Incorrect password!`);
     });
+  });
+
+  describe("authorize", () => {
+    const role = "BUYER";
+    const userJson = user.toJSON();
+    const jwt = require("jsonwebtoken");
+    const token = jwt.sign(userJson, process.env.JWT_SIGNATURE_KEY);
+
+    it("should return decoded and verified payload from jwt", async () => {
+      const jwt = require("jsonwebtoken");
+      const spyVerifyToken = jest.spyOn(jwt, "verify");
+
+      const mockUserRepo = {
+        findUserByEmail: jest.fn().mockReturnValue(Promise.resolve(user)),
+      };
+      const usersRepository = jest.mock(
+        "../../repositories/usersRepository",
+        () => mockUserRepo
+      );
+      const authenticationService = require("../../services/AuthenticationService");
+
+      const result = await authenticationService.authorize(token);
+
+      expect(spyVerifyToken).toHaveBeenCalledWith(
+        token,
+        process.env.JWT_SIGNATURE_KEY
+      );
+      expect(mockUserRepo.findUserByEmail).toHaveBeenCalledWith(userJson.email);
+      expect(result).toStrictEqual(userJson);
+    });
+
+    it.each([{ token: "false token" }, { token, user: null }])(
+      "should return UnauthorizedError",
+      async (testObj) => {
+        const jsonwebtoken = require("jsonwebtoken");
+        const spyVerifyToken = jest.spyOn(jsonwebtoken, "verify");
+
+        const mockUserRepo = {
+          findUserByEmail: jest
+            .fn()
+            .mockReturnValue(Promise.resolve(testObj.user)),
+        };
+        const usersRepository = jest.mock(
+          "../../repositories/usersRepository",
+          () => mockUserRepo
+        );
+
+        const authenticationService = require("../../services/AuthenticationService");
+        const result = await authenticationService.authorize(testObj.token);
+
+        expect(spyVerifyToken).toHaveBeenCalledWith(
+          testObj.token,
+          process.env.JWT_SIGNATURE_KEY
+        );
+        if (testObj.token !== "false token") {
+          expect(mockUserRepo.findUserByEmail).toHaveBeenCalledWith(
+            userJson.email
+          );
+        }
+        const { UnauthorizedError } = require("../../errors");
+        expect(result).toBeInstanceOf(UnauthorizedError);
+        expect(result.message).toBe("Action unauthorized!");
+        expect(result.cause).toEqual(expect.any(String));
+      }
+    );
   });
 });
