@@ -177,7 +177,9 @@ describe("AuthenticationController", () => {
   });
 
   describe("authorize", () => {
-    it("should set request.user with decoded and verified", async () => {
+    const expectedRole = "BUYER";
+
+    it("should set request.user with decoded and verified token", async () => {
       const token = "Bearer deifncewofinierbgi";
       const noBearerToken = token.split(" ")[1];
       const mockRequestAuthorize = {
@@ -192,13 +194,16 @@ describe("AuthenticationController", () => {
       const routes = require("../../../config/routes");
       const controllers = require("../../controllers");
 
-      await controllers.api.v1.authenticationController.authorize(
+      await controllers.api.v1.authenticationController.authorize(expectedRole)(
         mockRequestAuthorize,
         mockResponse,
         mockNext
       );
 
-      expect(mockAuthService.authorize).toHaveBeenCalledWith(noBearerToken);
+      expect(mockAuthService.authorize).toHaveBeenCalledWith(
+        noBearerToken,
+        expectedRole
+      );
 
       expect(mockRequestAuthorize.user).toEqual(userData);
       expect(mockNext).toHaveBeenCalled();
@@ -221,13 +226,16 @@ describe("AuthenticationController", () => {
       const routes = require("../../../config/routes");
       const controllers = require("../../controllers");
 
-      await controllers.api.v1.authenticationController.authorize(
+      await controllers.api.v1.authenticationController.authorize(expectedRole)(
         mockRequestAuthorize,
         mockResponse,
         mockNext
       );
 
-      expect(mockAuthService.authorize).toHaveBeenCalledWith(noBearerToken);
+      expect(mockAuthService.authorize).toHaveBeenCalledWith(
+        noBearerToken,
+        expectedRole
+      );
       expect(mockResponse.status).toHaveBeenCalledWith(401);
       expect(mockResponse.json).toHaveBeenCalledWith({
         message: err.message,
