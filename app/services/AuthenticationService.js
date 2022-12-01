@@ -40,6 +40,7 @@ async function register(userData) {
     }
     const user = await usersRepo.register({
       ...userData,
+      role_id: 1,
       encryptedPassword: encryptPass(userData.password),
     });
 

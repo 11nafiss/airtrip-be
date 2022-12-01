@@ -12,7 +12,7 @@ function encryptPass(password) {
 
 const user = new User({
   ...userData,
-  role_id: 2,
+  role_id: 1,
   encryptedPassword: encryptPass(userData.password),
 });
 user.Role = new Role({
@@ -49,6 +49,7 @@ describe("AuthenticationService", () => {
       expect(mockUserRepo.register).toHaveBeenCalledWith(
         expect.objectContaining({
           ...userDataRegister,
+          role_id: 1,
           encryptedPassword: expect.not.stringMatching(userData.password),
         })
       );
