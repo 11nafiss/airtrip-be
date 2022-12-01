@@ -4,8 +4,9 @@ const jwt = require("jsonwebtoken");
 const {
   EmailAlreadyRegisteredError,
   WrongPasswordError,
+  UnauthorizedError,
+  EmailNotRegisteredError,
 } = require("../errors");
-const EmailNotRegisteredError = require("../errors/EmailNotRegistered");
 
 function encryptPass(password) {
   return bcryptjs.hashSync(password);
@@ -68,7 +69,27 @@ async function login(userData) {
   }
 }
 
+async function authorize(token) {
+  try {
+    const { iat, ...payload } = jwt.verify(
+      token,
+      process.env.JWT_SIGNATURE_KEY
+    );
+
+    const user = await usersRepo.findUserByEmail(payload.email);
+
+    if (user === null) {
+      throw new Error("User not found");
+    }
+
+    return payload;
+  } catch (error) {
+    return new UnauthorizedError(error.message);
+  }
+}
+
 module.exports = {
   register,
   login,
+  authorize,
 };
