@@ -2,8 +2,6 @@
  * @file Manages database connection configuration.
  * @author NoFall887
  */
-const dotenv = require("dotenv");
-dotenv.config();
 
 // read env variable from .env file if not in production
 if (process.env.NODE_ENV !== "production") {

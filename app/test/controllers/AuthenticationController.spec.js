@@ -10,7 +10,7 @@ const userData = {
   password: encryptPass("userpass"),
 };
 
-const user = new User({ ...userData, roleId: 2 });
+const user = new User({ ...userData, role_id: 2 });
 
 describe("AuthenticationController", () => {
   beforeEach(() => {

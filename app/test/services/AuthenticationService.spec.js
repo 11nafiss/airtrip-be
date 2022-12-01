@@ -12,8 +12,8 @@ function encryptPass(password) {
 
 const user = new User({
   ...userData,
-  roleId: 2,
-  password: encryptPass(userData.password),
+  role_id: 2,
+  encryptedPassword: encryptPass(userData.password),
 });
 user.Role = new Role({
   id: 2,
@@ -47,7 +47,7 @@ describe("AuthenticationService", () => {
       expect(mockUserRepo.register).toHaveBeenCalledWith(
         expect.objectContaining({
           ...userDataRegister,
-          password: expect.not.stringMatching(userData.password),
+          encryptedPassword: expect.not.stringMatching(userData.password),
         })
       );
 
@@ -108,7 +108,10 @@ describe("AuthenticationService", () => {
       const result = await authenticationService.login(userData);
 
       expect(mockUserRepo.findUserByEmail).toHaveBeenCalledWith(userData.email);
-      expect(spyBcrypt).toHaveBeenCalledWith(userData.password, user.password);
+      expect(spyBcrypt).toHaveBeenCalledWith(
+        userData.password,
+        user.encryptedPassword
+      );
       expect(spyJwt).toHaveBeenCalledWith(
         {
           id: user.id,
@@ -166,7 +169,7 @@ describe("AuthenticationService", () => {
 
       expect(spyBcrypt).toHaveBeenCalledWith(
         wrongPassData.password,
-        user.password
+        user.encryptedPassword
       );
       expect(result).toBeInstanceOf(WrongPasswordError);
       expect(result.message).toBe(`Incorrect password!`);

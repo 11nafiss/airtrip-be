@@ -7,12 +7,12 @@ function encryptPass(password) {
 
 const userData = {
   email: "email@email",
-  password: encryptPass("userpass"),
+  encryptedPassword: encryptPass("userpass"),
 };
 const user = new User({
   ...userData,
-  roleId: 2,
-  Role: { id: 2, name: "USER" },
+  role_id: 2,
+  Role: { id: 2, name: "BUYER" },
 });
 
 describe("UsersRepository", () => {
@@ -34,7 +34,7 @@ describe("UsersRepository", () => {
       const res = await UsersRepository.register(userData);
       expect(mockUserModel.create).toHaveBeenCalledWith({
         ...userData,
-        roleId: 2,
+        role_id: 2,
       });
       expect(res).toBe(user);
     });

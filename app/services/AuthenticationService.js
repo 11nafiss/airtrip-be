@@ -39,7 +39,7 @@ async function register(userData) {
     }
     const user = await usersRepo.register({
       ...userData,
-      password: encryptPass(userData.password),
+      encryptedPassword: encryptPass(userData.password),
     });
 
     return user.email;
@@ -56,7 +56,9 @@ async function login(userData) {
       return new EmailNotRegisteredError(userData.email);
     }
 
-    if (bcryptjs.compareSync(userData.password, existingUser.password)) {
+    if (
+      bcryptjs.compareSync(userData.password, existingUser.encryptedPassword)
+    ) {
       return createToken(existingUser);
     }
 
