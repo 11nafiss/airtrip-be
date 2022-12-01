@@ -49,7 +49,6 @@ describe("AuthenticationService", () => {
       expect(mockUserRepo.register).toHaveBeenCalledWith(
         expect.objectContaining({
           ...userDataRegister,
-          role_id: 1,
           encryptedPassword: expect.not.stringMatching(userData.password),
         })
       );
