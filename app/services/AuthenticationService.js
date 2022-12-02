@@ -69,7 +69,7 @@ async function login(userData) {
   }
 }
 
-async function authorize(token) {
+async function authorize(token, expectedRole) {
   try {
     const { iat, ...payload } = jwt.verify(
       token,
@@ -79,9 +79,12 @@ async function authorize(token) {
     const user = await usersRepo.findUserByEmail(payload.email);
 
     if (user === null) {
-      throw new Error("User not found");
+      throw new Error("User not found!");
     }
 
+    if (expectedRole !== payload.role.name) {
+      throw new Error("Invalid role!");
+    }
     return payload;
   } catch (error) {
     return new UnauthorizedError(error.message);

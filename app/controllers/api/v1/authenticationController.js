@@ -43,19 +43,23 @@ async function login(req, res, next) {
   }
 }
 
-async function authorize(req, res, next) {
-  try {
-    const token = req.headers.authorization.split(" ")[1];
-    const user = await authenticationService.authorize(token);
+function authorize(expectedRole) {
+  return async (req, res, next) => {
+    try {
+      const token = req.headers.authorization.split(" ")[1];
+      const user = await authenticationService.authorize(token, expectedRole);
 
-    if (user instanceof UnauthorizedError) {
-      return res.status(401).json({ message: user.message, cause: user.cause });
+      if (user instanceof UnauthorizedError) {
+        return res
+          .status(401)
+          .json({ message: user.message, cause: user.cause });
+      }
+      req.user = user;
+      next();
+    } catch (error) {
+      req.error = error;
+      next();
     }
-    req.user = user;
-    next();
-  } catch (error) {
-    req.error = error;
-    next();
-  }
+  };
 }
 module.exports = { register, login, authorize };
