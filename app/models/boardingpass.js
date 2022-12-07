@@ -14,10 +14,10 @@ module.exports = (sequelize, DataTypes) => {
   BoardingPass.init(
     {
       flight_id: DataTypes.INTEGER,
-      seat: DataTypes.STRING,
       passenger_id: DataTypes.INTEGER,
+      seat: DataTypes.STRING,
       has_checked_in: DataTypes.BOOLEAN,
-      has_boarded: DataTypes.BOOLEAN,
+      has_boarded: DataTypes.INTEGER,
     },
     {
       sequelize,
@@ -26,4 +26,3 @@ module.exports = (sequelize, DataTypes) => {
   );
   return BoardingPass;
 };
-

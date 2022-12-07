@@ -12,9 +12,6 @@ module.exports = {
       total_price: {
         type: Sequelize.INTEGER,
       },
-      flight_type: {
-        type: Sequelize.ENUM("Oneway", "Rundtrip"),
-      },
       invoice_number: {
         type: Sequelize.INTEGER,
       },
