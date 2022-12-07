@@ -9,11 +9,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      class: {
-        type: Sequelize.ENUM("Economy", "Business", "First"),
-      },
-      price: {
+      total_price: {
         type: Sequelize.INTEGER,
+      },
+      flight_type: {
+        type: Sequelize.ENUM("Oneway", "Rundtrip"),
       },
       invoice_number: {
         type: Sequelize.INTEGER,
@@ -29,6 +29,13 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {
           model: "Users", // tables name not model name
+          key: "id",
+        },
+      },
+      flight_details: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "FlightDetails", // tables name not model name
           key: "id",
         },
       },

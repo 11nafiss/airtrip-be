@@ -34,7 +34,7 @@ module.exports = {
         type: Sequelize.BOOLEAN,
       },
       has_boarded: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.BOOLEAN,
       },
       createdAt: {
         allowNull: false,
