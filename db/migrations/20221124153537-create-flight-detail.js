@@ -2,35 +2,26 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("BoardingPasses", {
+    await queryInterface.createTable("FlightDetails", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      flight_id: {
+      boarding_pass_pergi: {
         type: Sequelize.INTEGER,
         references: {
-          model: "Flights", // tables name not model name
+          model: "BoardingPasses", // tables name not model name
           key: "id",
         },
       },
-      seat: {
-        type: Sequelize.STRING,
-      },
-      passenger_id: {
+      boarding_pass_pulang: {
         type: Sequelize.INTEGER,
         references: {
-          model: "Users", // tables name not model name
+          model: "BoardingPasses", // tables name not model name
           key: "id",
         },
-      },
-      has_checked_in: {
-        type: Sequelize.BOOLEAN,
-      },
-      has_boarded: {
-        type: Sequelize.BOOLEAN,
       },
       createdAt: {
         allowNull: false,
@@ -43,6 +34,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("BoardingPasses");
+    await queryInterface.dropTable("FlightDetails");
   },
 };
