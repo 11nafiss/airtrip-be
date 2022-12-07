@@ -4,52 +4,7 @@ describe("flightsRepository", () => {
   });
   describe("findFlights", () => {
     it("should return flights data based on search parameters", async () => {
-      const flights = [
-        {
-          id: 1,
-          departure_date: new Date(),
-          from: {
-            id: 1,
-            iata: "TBJ",
-            name: "Tabarka–Aïn Draham International Airport",
-            location: "Tabarka, Tunisia",
-          },
-          to: {
-            id: 2,
-            iata: "CGK",
-            name: "Soekarno–Hatta International Airport",
-            location: "Jakarta, Indonesia",
-          },
-          description: "lorem ipsum",
-
-          airplane: {
-            id: 2,
-            model_number: "boring 646",
-          },
-        },
-        {
-          id: 2,
-          departure_date: new Date(),
-          from: {
-            id: 1,
-            iata: "TBJ",
-            name: "Tabarka–Aïn Draham International Airport",
-            location: "Tabarka, Tunisia",
-          },
-          to: {
-            id: 2,
-            iata: "CGK",
-            name: "Soekarno–Hatta International Airport",
-            location: "Jakarta, Indonesia",
-          },
-          description: "lorem ipsum",
-
-          airplane: {
-            id: 2,
-            model_number: "boring 737",
-          },
-        },
-      ];
+      const flights = require("../helper/flightsDataExample");
 
       const mockFlightModel = {
         findAll: jest.fn().mockReturnValue(flights),
@@ -60,7 +15,7 @@ describe("flightsRepository", () => {
       });
       const { Airport, Airplane } = require("../../models");
       const flightsRepository = require("../../repositories/flightsRepository");
-      const { Op } = require("sequelize");
+
       const searchParams = {
         departure_date: new Date(),
         from: 1,
@@ -74,20 +29,18 @@ describe("flightsRepository", () => {
 
       expect(mockFlightModel.findAll).toHaveBeenCalledWith({
         where: {
-          departure_date: {
-            [Op.gte]: searchParams.departure_date,
-          },
+          departure_date: searchParams.departure_date,
           from: searchParams.from,
           to: searchParams.to,
         },
         include: [
           {
             model: Airport,
-            as: "from",
+            as: "from_airport",
           },
           {
             model: Airport,
-            as: "to",
+            as: "to_airport",
           },
           { model: Airplane },
         ],

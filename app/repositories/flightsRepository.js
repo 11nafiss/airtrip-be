@@ -5,20 +5,18 @@ async function findFlights(departure_date, from, to) {
   try {
     return await Flight.findAll({
       where: {
-        departure_date: {
-          [Op.gte]: departure_date,
-        },
+        departure_date,
         from,
         to,
       },
       include: [
         {
           model: Airport,
-          as: "from",
+          as: "from_airport",
         },
         {
           model: Airport,
-          as: "to",
+          as: "to_airport",
         },
         { model: Airplane },
       ],

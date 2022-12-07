@@ -1,4 +1,3 @@
-const { use } = require("../../../../config/routes");
 const {
   EmailAlreadyRegisteredError,
   EmailNotRegisteredError,
