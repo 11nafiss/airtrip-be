@@ -50,13 +50,15 @@ describe("flightsRepository", () => {
           },
         },
       ];
+
       const mockFlightModel = {
         findAll: jest.fn().mockReturnValue(flights),
       };
 
       jest.mock("../../models", () => {
-        return { Flight: mockFlightModel };
+        return { Flight: mockFlightModel, Airport: {}, Airplane: {} };
       });
+      const { Airport, Airplane } = require("../../models");
       const flightsRepository = require("../../repositories/flightsRepository");
       const { Op } = require("sequelize");
       const searchParams = {
@@ -78,6 +80,17 @@ describe("flightsRepository", () => {
           from: searchParams.from,
           to: searchParams.to,
         },
+        include: [
+          {
+            model: Airport,
+            as: "from",
+          },
+          {
+            model: Airport,
+            as: "to",
+          },
+          { model: Airplane },
+        ],
       });
       expect(result).toBe(flights);
     });
