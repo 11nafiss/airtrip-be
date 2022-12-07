@@ -23,9 +23,17 @@ module.exports = {
       },
       from: {
         type: Sequelize.INTEGER,
+        references: {
+          model: "Airports",
+          key: "id",
+        },
       },
       to: {
         type: Sequelize.INTEGER,
+        references: {
+          model: "Airports",
+          key: "id",
+        },
       },
       airplane_id: {
         type: Sequelize.INTEGER,
