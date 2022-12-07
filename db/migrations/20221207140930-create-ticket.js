@@ -31,11 +31,7 @@ module.exports = {
       flight_details: {
         type: Sequelize.INTEGER,
         references: {
-<<<<<<<< HEAD:db/migrations/20221124153538-create-ticket.js
-          model: "FlightDetails", // tables name not model name
-========
           model: "Flight_Details", // tables name not model name
->>>>>>>> database-sprint-2:db/migrations/20221207140930-create-ticket.js
           key: "id",
         },
       },

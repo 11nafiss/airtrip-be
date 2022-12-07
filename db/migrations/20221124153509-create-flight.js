@@ -21,16 +21,15 @@ module.exports = {
       price: {
         type: Sequelize.INTEGER,
       },
-
       from: {
-        type: Sequelize.INTEGER,,
+        type: Sequelize.INTEGER,
         references: {
           model: "Airports",
           key: "id",
         },
       },
       to: {
-        type: Sequelize.INTEGER,,
+        type: Sequelize.INTEGER,
         references: {
           model: "Airports",
           key: "id",
@@ -44,20 +43,19 @@ module.exports = {
         },
       },
       description: {
-        type: Sequelize.STRING,,
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,,
+        type: Sequelize.DATE,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE,,
-      },,
+        type: Sequelize.DATE,
+      },
     });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable("Flights");
   },
 };
-
