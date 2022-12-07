@@ -23,7 +23,6 @@ module.exports = (sequelize, DataTypes) => {
       arrival: DataTypes.DATE,
       class: DataTypes.ENUM("Economy", "Business", "First"),
       price: DataTypes.INTEGER,
-
       from: DataTypes.INTEGER,
       to: DataTypes.INTEGER,
       airplane_id: DataTypes.INTEGER,

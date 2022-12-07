@@ -16,17 +16,25 @@ module.exports = {
         type: Sequelize.DATE,
       },
       class: {
-        type: Sequelize.ENUM("Economy", "Business", "First"),
+        type: Sequelize.ENUM("Economy", "Bussiness", "First"),
       },
       price: {
         type: Sequelize.INTEGER,
       },
 
       from: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER,,
+        references: {
+          model: "Airports",
+          key: "id",
+        },
       },
       to: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER,,
+        references: {
+          model: "Airports",
+          key: "id",
+        },
       },
       airplane_id: {
         type: Sequelize.INTEGER,
@@ -36,19 +44,20 @@ module.exports = {
         },
       },
       description: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING,,
       },
       createdAt: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.DATE,,
       },
       updatedAt: {
         allowNull: false,
-        type: Sequelize.DATE,
-      },
+        type: Sequelize.DATE,,
+      },,
     });
   },
   async down(queryInterface, Sequelize) {
     await queryInterface.dropTable("Flights");
   },
 };
+
