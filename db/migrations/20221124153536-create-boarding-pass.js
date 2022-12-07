@@ -16,19 +16,15 @@ module.exports = {
           key: "id",
         },
       },
-      ticket_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: "Tickets", // tables name not model name
-          key: "id",
-        },
-      },
       passenger_id: {
         type: Sequelize.INTEGER,
         references: {
           model: "Users", // tables name not model name
           key: "id",
         },
+      },
+      seat: {
+        type: Sequelize.STRING,
       },
       has_checked_in: {
         type: Sequelize.BOOLEAN,
