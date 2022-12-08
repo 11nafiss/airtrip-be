@@ -16,7 +16,7 @@ apiRouter.post(
 );
 apiRouter.post("/login", controllers.api.v1.authenticationController.login);
 apiRouter.post(
-  "/flights",
+  "/flights/search",
   controllers.api.v1.flightController.handleSearchFlights
 );
 // for authorization testing purpose only

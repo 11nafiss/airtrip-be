@@ -10,7 +10,7 @@ describe("flightService", () => {
       const flightService = require("../../services/flightService");
 
       const searchParams = {
-        departure_date: new Date().toISOString(),
+        departure: new Date().toISOString(),
         from: 1,
         to: 2,
       };
@@ -18,7 +18,7 @@ describe("flightService", () => {
       const result = await flightService.searchFlights(searchParams);
 
       expect(mockFlightRepo.findFlights).toHaveBeenCalledWith(
-        new Date(searchParams.departure_date),
+        new Date(searchParams.departure),
         searchParams.from,
         searchParams.to
       );

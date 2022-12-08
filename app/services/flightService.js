@@ -1,9 +1,9 @@
 const flightsRepository = require("../repositories/flightsRepository");
 
-async function searchFlights({ departure_date, from, to }) {
+async function searchFlights({ departure, from, to }) {
   try {
     const result = await flightsRepository.findFlights(
-      new Date(departure_date),
+      new Date(departure),
       from,
       to
     );

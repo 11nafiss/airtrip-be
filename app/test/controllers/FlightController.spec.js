@@ -17,7 +17,7 @@ describe("flightController", () => {
       const controllers = require("../../controllers");
       const mockRequest = {
         body: {
-          departure_date: new Date().toISOString(),
+          departure: new Date().toISOString(),
           from: 1,
           to: 2,
         },

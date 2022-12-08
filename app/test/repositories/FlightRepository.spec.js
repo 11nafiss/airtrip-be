@@ -17,19 +17,20 @@ describe("flightsRepository", () => {
       const flightsRepository = require("../../repositories/flightsRepository");
 
       const searchParams = {
-        departure_date: new Date(),
+        departure: new Date(),
         from: 1,
         to: 2,
       };
       const result = await flightsRepository.findFlights(
-        searchParams.departure_date,
+        searchParams.departure,
         searchParams.from,
         searchParams.to
       );
 
+      const airportRequiredAttributes = ["id", "iata", "name", "address"];
       expect(mockFlightModel.findAll).toHaveBeenCalledWith({
         where: {
-          departure_date: searchParams.departure_date,
+          departure: searchParams.departure,
           from: searchParams.from,
           to: searchParams.to,
         },
@@ -37,10 +38,12 @@ describe("flightsRepository", () => {
           {
             model: Airport,
             as: "from_airport",
+            attributes: airportRequiredAttributes,
           },
           {
             model: Airport,
             as: "to_airport",
+            attributes: airportRequiredAttributes,
           },
           { model: Airplane },
         ],
