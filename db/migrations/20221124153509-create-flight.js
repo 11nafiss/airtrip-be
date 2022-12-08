@@ -9,14 +9,17 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      departure_date: {
+      departure: {
         type: Sequelize.DATE,
       },
-      departure_time: {
-        type: Sequelize.TIME,
+      arrival: {
+        type: Sequelize.DATE,
       },
-      flight_type: {
-        type: Sequelize.ENUM("Oneway", "Rundtrip"),
+      class: {
+        type: Sequelize.ENUM("Economy", "Bussiness", "First"),
+      },
+      price: {
+        type: Sequelize.INTEGER,
       },
       from: {
         type: Sequelize.INTEGER,
