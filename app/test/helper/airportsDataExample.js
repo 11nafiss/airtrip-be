@@ -4,7 +4,7 @@ module.exports = [
     iata: "TBJ",
     icao: "DTKA",
     name: "Tabarka–Aïn Draham International Airport",
-    location: "Tabarka, Tunisia",
+    address: "Tabarka, Tunisia",
     website: "http://www.oaca.nat.tn/",
   },
   {
@@ -12,7 +12,7 @@ module.exports = [
     iata: "LCG",
     icao: "LECO",
     name: "A Coruña Airport",
-    location: "A Coruña, Galicia, Spain",
+    address: "A Coruña, Galicia, Spain",
     website: "http://www.aena.es/es/aeropuerto-a-coruna/index.html",
   },
 ];

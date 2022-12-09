@@ -18,7 +18,7 @@ describe("AirportRepository", () => {
       const result = await airportRepository.getAirports();
 
       expect(mockAirportModel.findAll).toHaveBeenCalledWith({
-        attributes: ["id", "iata", "name", "location"],
+        attributes: ["id", "iata", "name", "address"],
       });
       expect(result).toBe(airports);
     });
