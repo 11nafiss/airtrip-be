@@ -15,7 +15,10 @@ apiRouter.post(
   controllers.api.v1.authenticationController.register
 );
 apiRouter.post("/login", controllers.api.v1.authenticationController.login);
-
+apiRouter.post(
+  "/flights/search",
+  controllers.api.v1.flightController.handleSearchFlights
+);
 // for authorization testing purpose only
 if (process.env.NODE_ENV !== "production") {
   apiRouter.post(
