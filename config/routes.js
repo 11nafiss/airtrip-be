@@ -14,15 +14,25 @@ apiRouter.post(
   "/register",
   controllers.api.v1.authenticationController.register
 );
+
 apiRouter.post("/login", controllers.api.v1.authenticationController.login);
+
 apiRouter.post(
   "/flights/search",
   controllers.api.v1.flightController.handleSearchFlights
 );
+
 apiRouter.get(
   "/airports",
   controllers.api.v1.airportController.handleGetAirports
 );
+
+apiRouter.post(
+  "/createFlight",
+  controllers.api.v1.authenticationController.authorize("ADMIN"),
+  controllers.api.v1.flightController.handleCreateFlight
+);
+
 // for authorization testing purpose only
 if (process.env.NODE_ENV !== "production") {
   apiRouter.post(
