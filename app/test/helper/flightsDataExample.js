@@ -1,7 +1,8 @@
 const flights = [
   {
     id: 1,
-    departure_date: new Date(),
+    departure: new Date(),
+    arrival: new Date(),
     from: {
       id: 1,
       iata: "TBJ",
@@ -23,7 +24,8 @@ const flights = [
   },
   {
     id: 2,
-    departure_date: new Date(),
+    departure: new Date(),
+    arrival: new Date(),
     from: {
       id: 1,
       iata: "TBJ",

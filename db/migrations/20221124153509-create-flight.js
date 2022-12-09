@@ -16,7 +16,7 @@ module.exports = {
         type: Sequelize.DATE,
       },
       class: {
-        type: Sequelize.ENUM("Economy", "Bussiness", "First"),
+        type: Sequelize.ENUM("economy", "bussiness", "first"),
       },
       price: {
         type: Sequelize.INTEGER,
