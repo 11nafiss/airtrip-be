@@ -1,21 +1,3 @@
-const airports = [
-  {
-    id: 7242,
-    iata: "TBJ",
-    icao: "DTKA",
-    name: "Tabarka–Aïn Draham International Airport",
-    location: "Tabarka, Tunisia",
-    website: "http://www.oaca.nat.tn/",
-  },
-  {
-    id: 4079,
-    iata: "LCG",
-    icao: "LECO",
-    name: "A Coruña Airport",
-    location: "A Coruña, Galicia, Spain",
-    website: "http://www.aena.es/es/aeropuerto-a-coruna/index.html",
-  },
-];
 describe("AirportRepository", () => {
   beforeEach(() => {
     jest.resetModules();
@@ -23,6 +5,7 @@ describe("AirportRepository", () => {
 
   describe("getAirports", () => {
     it("should return all airports", async () => {
+      const airports = require("../helper/airportsDataExample");
       const mockAirportModel = {
         findAll: jest.fn().mockReturnValue(airports),
       };
@@ -34,7 +17,9 @@ describe("AirportRepository", () => {
 
       const result = await airportRepository.getAirports();
 
-      expect(mockAirportModel.findAll).toHaveBeenCalled();
+      expect(mockAirportModel.findAll).toHaveBeenCalledWith({
+        attributes: ["id", "iata", "name", "location"],
+      });
       expect(result).toBe(airports);
     });
   });
