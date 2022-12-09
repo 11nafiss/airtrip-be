@@ -39,7 +39,6 @@ async function searchFlights({
     }
     return { flights, return_flights: returnFlights };
   } catch (error) {
-    console.log(error);
     throw error;
   }
 }
