@@ -8,16 +8,16 @@ const airportRequiredAttributes = [
   "country_code",
 ];
 
-async function findFlights(flight_date, from, to, flight_class) {
+async function findFlights(departureDate, from, to, flightClass) {
   try {
     return await Flight.findAll({
       where: {
         departure: {
-          [Op.gte]: flight_date,
+          [Op.gte]: departureDate,
         },
         from,
         to,
-        class: flight_class,
+        class: flightClass,
       },
       include: [
         {
@@ -39,22 +39,22 @@ async function findFlights(flight_date, from, to, flight_class) {
 }
 
 async function findReturnFlights(
-  flight_date,
-  return_flight_date,
+  returnFlightDate,
+  arrivalDate,
   from,
   to,
-  flight_class
+  flightClass
 ) {
   try {
     return await Flight.findAll({
       where: {
         departure: {
-          [Op.gte]: return_flight_date,
-          [Op.gt]: flight_date,
+          [Op.gte]: returnFlightDate,
+          [Op.gt]: arrivalDate,
         },
         from: to,
         to: from,
-        class: flight_class,
+        class: flightClass,
       },
       include: [
         {

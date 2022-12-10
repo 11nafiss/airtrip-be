@@ -19,6 +19,10 @@ apiRouter.post(
   "/flights/search",
   controllers.api.v1.flightController.handleSearchFlights
 );
+apiRouter.post(
+  "/flights/search-return",
+  controllers.api.v1.flightController.handleSearchReturnFlights
+);
 // for authorization testing purpose only
 if (process.env.NODE_ENV !== "production") {
   apiRouter.post(
