@@ -72,4 +72,36 @@ describe("UsersRepository", () => {
       expect(result).toBe(user);
     });
   });
+
+  describe("updateUser", () => {
+    it("should return updated user model", async () => {
+      let params = {
+        id: 1,
+        name: "examplename",
+        image: "imageurl.com",
+        phone: "089212121",
+        address: "probolinggo",
+        email: "email@email",
+        encryptedPassword: "dneujndeuwfneujsw",
+      };
+      const mockUserModel = {
+        update: jest.fn().mockReturnValue(Promise.resolve([params, null])),
+      };
+      jest.mock("../../models", () => {
+        return { User: mockUserModel };
+      });
+
+      const UsersRepository = require("../../repositories/usersRepository");
+
+      let result = await UsersRepository.updateUser(params);
+
+      const { id, ...noIdParams } = params;
+      expect(mockUserModel.update).toHaveBeenCalledWith(noIdParams, {
+        where: {
+          id: id,
+        },
+      });
+      expect(result).toBe(params);
+    });
+  });
 });

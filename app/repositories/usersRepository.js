@@ -18,7 +18,33 @@ async function findUserByEmail(email) {
   }
 }
 
+async function updateUser({
+  id,
+  name,
+  image,
+  phone,
+  address,
+  email,
+  encryptedPassword,
+}) {
+  try {
+    let updatedUser = await User.update(
+      { name, image, phone, address, email, encryptedPassword },
+      {
+        where: {
+          id,
+        },
+      }
+    );
+
+    return updatedUser[0];
+  } catch (error) {
+    throw error;
+  }
+}
+
 module.exports = {
   register,
   findUserByEmail,
+  updateUser,
 };
