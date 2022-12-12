@@ -8,6 +8,15 @@ async function getAirports() {
   }
 }
 
+async function getAirportById(id) {
+  try {
+    return await airportRepo.getAirportsById(id);
+  } catch (error) {
+    throw error;
+  }
+}
+
 module.exports = {
   getAirports,
+  getAirportById,
 };

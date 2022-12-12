@@ -1,5 +1,5 @@
 const { Flight, Airplane, Airport } = require("../models");
-const { Op } = require("sequelize");
+const { Op, fn } = require("sequelize");
 const airportRequiredAttributes = [
   "id",
   "iata",
@@ -17,7 +17,7 @@ async function findFlights(flight_date, from, to, flight_class) {
         },
         from,
         to,
-        class: flight_class,
+        flight_class: flight_class,
       },
       include: [
         {
@@ -54,7 +54,7 @@ async function findReturnFlights(
         },
         from: to,
         to: from,
-        class: flight_class,
+        flight_class: flight_class,
       },
       include: [
         {
@@ -74,7 +74,18 @@ async function findReturnFlights(
     throw error;
   }
 }
+
+async function createFlight(body) {
+  try {
+    const flight = await Flight.create(body);
+    return flight;
+  } catch (error) {
+    throw error;
+  }
+}
+
 module.exports = {
   findFlights,
   findReturnFlights,
+  createFlight,
 };
