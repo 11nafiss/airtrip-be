@@ -33,7 +33,7 @@ function createToken(user) {
 async function register(userData) {
   try {
     const existingUser = await usersRepo.findUserByEmail(userData.email);
-    // console.log(existingUser);
+
     if (existingUser !== null) {
       const err = new EmailAlreadyRegisteredError(userData.email);
       return err;
@@ -95,4 +95,5 @@ module.exports = {
   register,
   login,
   authorize,
+  createToken,
 };

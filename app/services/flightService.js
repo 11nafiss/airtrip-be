@@ -41,7 +41,17 @@ async function searchReturnFlights({
   }
 }
 
+async function createFlight(body) {
+  try {
+    const flight = await flightsRepository.createFlight(body);
+    return flight;
+  } catch (error) {
+    throw error;
+  }
+}
+
 module.exports = {
   searchFlights,
   searchReturnFlights,
+  createFlight,
 };

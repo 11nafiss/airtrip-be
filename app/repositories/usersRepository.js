@@ -18,7 +18,34 @@ async function findUserByEmail(email) {
   }
 }
 
+async function updateUser(id, updateParams) {
+  try {
+    let updatedUser = await User.update(updateParams, {
+      where: {
+        id,
+      },
+      returning: true,
+    });
+
+    return updatedUser[1][0];
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function findRole(roleId) {
+  try {
+    console.log(Role);
+    const role = await Role.findByPk(roleId);
+    return role;
+  } catch (error) {
+    throw error;
+  }
+}
+
 module.exports = {
   register,
   findUserByEmail,
+  updateUser,
+  findRole,
 };
