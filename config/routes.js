@@ -1,6 +1,6 @@
 const express = require("express");
 const controllers = require("../app/controllers");
-
+const upload = require("./multer");
 const apiRouter = express.Router();
 
 const Roles = {
@@ -15,6 +15,12 @@ apiRouter.post(
   controllers.api.v1.authenticationController.register
 );
 apiRouter.post("/login", controllers.api.v1.authenticationController.login);
+apiRouter.put(
+  "/users/update/:id",
+  controllers.api.v1.authenticationController.authorize(Roles.BUYER),
+  upload.single("image"),
+  controllers.api.v1.userController.handleUpdateUser
+);
 apiRouter.post(
   "/flights/search",
   controllers.api.v1.flightController.handleSearchFlights

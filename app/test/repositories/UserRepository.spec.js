@@ -75,8 +75,8 @@ describe("UsersRepository", () => {
 
   describe("updateUser", () => {
     it("should return updated user model", async () => {
-      let params = {
-        id: 1,
+      const id = 1;
+      const params = {
         name: "examplename",
         image: "imageurl.com",
         phone: "089212121",
@@ -85,7 +85,7 @@ describe("UsersRepository", () => {
         encryptedPassword: "dneujndeuwfneujsw",
       };
       const mockUserModel = {
-        update: jest.fn().mockReturnValue(Promise.resolve([params, null])),
+        update: jest.fn().mockReturnValue(Promise.resolve([1, [params]])),
       };
       jest.mock("../../models", () => {
         return { User: mockUserModel };
@@ -93,15 +93,38 @@ describe("UsersRepository", () => {
 
       const UsersRepository = require("../../repositories/usersRepository");
 
-      let result = await UsersRepository.updateUser(params);
+      let result = await UsersRepository.updateUser(id, params);
 
-      const { id, ...noIdParams } = params;
-      expect(mockUserModel.update).toHaveBeenCalledWith(noIdParams, {
+      expect(mockUserModel.update).toHaveBeenCalledWith(params, {
         where: {
           id: id,
         },
+        returning: true,
       });
       expect(result).toBe(params);
+    });
+  });
+
+  describe("findRole", () => {
+    it("should return user role data", async () => {
+      const id = 1;
+      const mockRole = {
+        id: id,
+        name: "ADMIN",
+      };
+      const mockRoleModel = {
+        findByPk: jest.fn().mockReturnValue(Promise.resolve(mockRole)),
+      };
+
+      jest.mock("../../models", () => {
+        return { Role: mockRoleModel };
+      });
+
+      const UsersRepository = require("../../repositories/usersRepository");
+      const result = await UsersRepository.findRole(id);
+
+      expect(mockRoleModel.findByPk).toHaveBeenCalledWith(id);
+      expect(result).toEqual(mockRole);
     });
   });
 });
