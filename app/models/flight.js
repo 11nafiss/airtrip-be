@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       departure: DataTypes.DATE,
       arrival: DataTypes.DATE,
-      class: DataTypes.ENUM("Economy", "Business", "First"),
+      flight_class: DataTypes.ENUM("Economy", "Business", "First"),
       price: DataTypes.INTEGER,
       from: DataTypes.INTEGER,
       to: DataTypes.INTEGER,
@@ -38,3 +38,4 @@ module.exports = (sequelize, DataTypes) => {
   );
   return Flight;
 };
+

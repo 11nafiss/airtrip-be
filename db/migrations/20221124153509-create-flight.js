@@ -15,7 +15,7 @@ module.exports = {
       arrival: {
         type: Sequelize.DATE,
       },
-      class: {
+      flight_class: {
         type: Sequelize.ENUM("economy", "bussiness", "first"),
       },
       price: {
