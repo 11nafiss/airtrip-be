@@ -17,7 +17,7 @@ async function findFlights(flight_date, from, to, flight_class) {
         },
         from,
         to,
-        class: flight_class,
+        flight_class: flight_class,
       },
       include: [
         {
@@ -54,7 +54,7 @@ async function findReturnFlights(
         },
         from: to,
         to: from,
-        class: flight_class,
+        flight_class: flight_class,
       },
       include: [
         {
