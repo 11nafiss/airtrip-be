@@ -44,7 +44,7 @@ describe("flightsRepository", () => {
           },
           from: searchParams.from,
           to: searchParams.to,
-          class: searchParams.flight_class,
+          flight_class: searchParams.flight_class,
         },
         include: [
           {
@@ -101,7 +101,7 @@ describe("flightsRepository", () => {
           },
           from: searchParams.to,
           to: searchParams.from,
-          class: searchParams.flight_class,
+          flight_class: searchParams.flight_class,
         },
         include: [
           {
