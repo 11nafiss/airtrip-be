@@ -26,6 +26,10 @@ apiRouter.post(
   "/flights/search",
   controllers.api.v1.flightController.handleSearchFlights
 );
+apiRouter.post(
+  "/flights/search-return",
+  controllers.api.v1.flightController.handleSearchReturnFlights
+);
 
 apiRouter.get(
   "/airports",

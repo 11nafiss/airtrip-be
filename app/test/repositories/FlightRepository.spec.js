@@ -25,26 +25,26 @@ describe("flightsRepository", () => {
       const flightsRepository = require("../../repositories/flightsRepository");
       const { Op } = require("sequelize");
       const searchParams = {
-        flight_date: new Date(),
+        departureDate: new Date(),
         from: 1,
         to: 2,
-        flight_class: "economy",
+        flightClass: "economy",
       };
       const result = await flightsRepository.findFlights(
-        searchParams.flight_date,
+        searchParams.departureDate,
         searchParams.from,
         searchParams.to,
-        searchParams.flight_class
+        searchParams.flightClass
       );
 
       expect(mockFlightModel.findAll).toHaveBeenCalledWith({
         where: {
           departure: {
-            [Op.gte]: searchParams.flight_date,
+            [Op.gte]: searchParams.departureDate,
           },
           from: searchParams.from,
           to: searchParams.to,
-          flight_class: searchParams.flight_class,
+          flight_class: searchParams.flightClass,
         },
         include: [
           {
@@ -79,29 +79,29 @@ describe("flightsRepository", () => {
       const flightsRepository = require("../../repositories/flightsRepository");
       const { Op } = require("sequelize");
       const searchParams = {
-        flight_date: new Date(),
-        return_flight_date: new Date().setDate(new Date().getDate() + 1),
+        returnFlightDate: new Date(),
+        arrivalDate: new Date(),
         from: 1,
         to: 2,
-        flight_class: "economy",
+        flightClass: "economy",
       };
       const result = await flightsRepository.findReturnFlights(
-        searchParams.flight_date,
-        searchParams.return_flight_date,
+        searchParams.returnFlightDate,
+        searchParams.arrivalDate,
         searchParams.from,
         searchParams.to,
-        searchParams.flight_class
+        searchParams.flightClass
       );
 
       expect(mockFlightModel.findAll).toHaveBeenCalledWith({
         where: {
           departure: {
-            [Op.gte]: searchParams.return_flight_date,
-            [Op.gt]: searchParams.flight_date,
+            [Op.gte]: searchParams.returnFlightDate,
+            [Op.gt]: searchParams.arrivalDate,
           },
           from: searchParams.to,
           to: searchParams.from,
-          flight_class: searchParams.flight_class,
+          flight_class: searchParams.flightClass,
         },
         include: [
           {

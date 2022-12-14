@@ -7,10 +7,21 @@ const { RecordNotFoundError } = require("../../../errors");
 async function handleSearchFlights(req, res, next) {
   try {
     /*
-    req.body = {from, to, flight_date, return_flight_date, flight_type, flight_class}
+    req.body = {from, to, departureDate, flightClass}
     */
 
     const flights = await flightService.searchFlights(req.body);
+
+    res.status(200).json({ data: flights });
+  } catch (error) {
+    req.error = error;
+    next();
+  }
+}
+async function handleSearchReturnFlights(req, res, next) {
+  // req.body = {from, to, returnFlightDate,  arrivalDate, flightClass}
+  try {
+    const flights = await flightService.searchReturnFlights(req.body);
 
     res.status(200).json({ data: flights });
   } catch (error) {
@@ -46,7 +57,9 @@ async function handleCreateFlight(req, res, next) {
     }
 
     // get the airplane data
-    const airplane = await airplaneService.getAirplaneById(req.body.airplane_id);
+    const airplane = await airplaneService.getAirplaneById(
+      req.body.airplane_id
+    );
 
     if (!airplane) {
       const msg = `airplane with id ${req.body.airplane_id}`;
@@ -69,4 +82,6 @@ async function handleCreateFlight(req, res, next) {
 module.exports = {
   handleSearchFlights,
   handleCreateFlight,
+  handleSearchFlights,
+  handleSearchReturnFlights,
 };
