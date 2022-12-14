@@ -8,6 +8,29 @@ const airportRequiredAttributes = [
   "country_code",
 ];
 
+async function list() {
+  try {
+    const fligts = await Flight.findAll({
+      include: [
+        {
+          model: Airport,
+          as: "from_airport",
+          attributes: airportRequiredAttributes,
+        },
+        {
+          model: Airport,
+          as: "to_airport",
+          attributes: airportRequiredAttributes,
+        },
+        { model: Airplane },
+      ],
+    });
+    return fligts;
+  } catch (error) {
+    throw error;
+  }
+}
+
 async function findFlights(flight_date, from, to, flight_class) {
   try {
     return await Flight.findAll({
@@ -89,6 +112,19 @@ async function updateFlight(id, updateArgs) {
     const flight = await Flight.update(updateArgs, {
       where: { id: id },
       returning: true,
+      include: [
+        {
+          model: Airport,
+          as: "from_airport",
+          attributes: airportRequiredAttributes,
+        },
+        {
+          model: Airport,
+          as: "to_airport",
+          attributes: airportRequiredAttributes,
+        },
+        { model: Airplane },
+      ],
     });
 
     return flight[1];
@@ -99,7 +135,21 @@ async function updateFlight(id, updateArgs) {
 
 async function getFlightById(id) {
   try {
-    const flight = await Flight.findByPk(id);
+    const flight = await Flight.findByPk(id, {
+      include: [
+        {
+          model: Airport,
+          as: "from_airport",
+          attributes: airportRequiredAttributes,
+        },
+        {
+          model: Airport,
+          as: "to_airport",
+          attributes: airportRequiredAttributes,
+        },
+        { model: Airplane },
+      ],
+    });
     return flight;
   } catch (error) {
     throw error;
@@ -114,7 +164,9 @@ async function deleteFlight(id) {
     throw error;
   }
 }
+
 module.exports = {
+  list,
   getFlightById,
   findFlights,
   findReturnFlights,

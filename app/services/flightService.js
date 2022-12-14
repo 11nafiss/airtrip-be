@@ -43,6 +43,15 @@ async function searchFlights({
   }
 }
 
+async function getAllFlights() {
+  try {
+    const flights = await flightsRepository.list();
+    return flights;
+  } catch (error) {
+    throw error;
+  }
+}
+
 async function createFlight(body) {
   try {
     const flight = await flightsRepository.createFlight(body);
@@ -81,6 +90,7 @@ async function deleteFlight(id) {
 }
 
 module.exports = {
+  getAllFlights,
   searchFlights,
   createFlight,
   updateFlight,

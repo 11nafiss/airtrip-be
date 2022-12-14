@@ -34,6 +34,12 @@ apiRouter.post(
   controllers.api.v1.flightController.handleCreateFlight
 );
 
+// get all flight data
+apiRouter.get(
+  "/listFlights",
+  controllers.api.v1.flightController.handleListFlights
+);
+
 // update flight data
 apiRouter.put(
   "/updateFlight/:id",

@@ -4,6 +4,30 @@ const airplaneService = require("../../../services/airplaneService");
 
 const { RecordNotFoundError } = require("../../../errors");
 
+async function handleListFlights(req, res, next) {
+  try {
+    const flights = await flightService.getAllFlights();
+
+    if (!flights) {
+      res.status(404).json({
+        sttaus: "FAIL",
+        message: "No Flight Data Found!",
+      });
+    }
+
+    res.status(200).json({
+      status: "OK",
+      data: flights,
+    });
+  } catch (error) {
+    res.status(422).json({
+      status: "FAIL",
+      message: error,
+    });
+    next();
+  }
+}
+
 async function handleSearchFlights(req, res, next) {
   try {
     /*
@@ -153,6 +177,7 @@ async function handleDeleteFlight(req, res, next) {
   }
 }
 module.exports = {
+  handleListFlights,
   handleSearchFlights,
   handleCreateFlight,
   handleUpdateFlight,
