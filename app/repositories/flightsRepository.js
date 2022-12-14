@@ -1,5 +1,5 @@
 const { Flight, Airplane, Airport } = require("../models");
-const { Op, fn } = require("sequelize");
+const { Op } = require("sequelize");
 const airportRequiredAttributes = [
   "id",
   "iata",

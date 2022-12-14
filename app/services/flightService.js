@@ -2,8 +2,9 @@ const flightsRepository = require("../repositories/flightsRepository");
 
 async function searchFlights({ from, to, departureDate, flightClass }) {
   try {
+    console.log(departureDate);
     departureDate = new Date(departureDate);
-
+    console.log(departureDate);
     const flights = await flightsRepository.findFlights(
       departureDate,
       from,
