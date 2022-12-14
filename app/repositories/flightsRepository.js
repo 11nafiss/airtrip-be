@@ -84,8 +84,32 @@ async function createFlight(body) {
   }
 }
 
+async function updateFlight(id, updateArgs) {
+  try {
+    const flight = await Flight.update(updateArgs, {
+      where: { id: id },
+      returning: true,
+    });
+
+    return flight[1];
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function getFlightById(id) {
+  try {
+    const flight = await Flight.findByPk(id);
+    return flight;
+  } catch (error) {
+    throw error;
+  }
+}
+
 module.exports = {
   findFlights,
   findReturnFlights,
   createFlight,
+  updateFlight,
+  getFlightById,
 };

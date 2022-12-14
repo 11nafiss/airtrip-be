@@ -32,8 +32,6 @@ async function handleCreateFlight(req, res, next) {
       return;
     }
 
-    // add checking here
-
     // get the arrival address
     const to = await airportService.getAirportById(req.body.to);
 
@@ -46,7 +44,9 @@ async function handleCreateFlight(req, res, next) {
     }
 
     // get the airplane data
-    const airplane = await airplaneService.getAirplaneById(req.body.airplane_id);
+    const airplane = await airplaneService.getAirplaneById(
+      req.body.airplane_id
+    );
 
     if (!airplane) {
       const msg = `airplane with id ${req.body.airplane_id}`;
@@ -59,9 +59,66 @@ async function handleCreateFlight(req, res, next) {
     const flight = await flightService.createFlight(req.body);
 
     // return the response
-    res.status(201).json({ data: flight });
+    res.status(200).json({
+      status: "OK",
+      data: flight,
+    });
   } catch (error) {
-    res.status(422).json(error);
+    res.status(422).json({
+      status: "FAIL",
+      message: error,
+    });
+    next();
+  }
+}
+
+async function handleUpdateFlight(req, res, next) {
+  try {
+    const id = req.params.id;
+
+    // get the flight data
+    const flight = await flightService.getFlightById(id);
+    if (!flight) {
+      const msg = `airplane with id ${id}`;
+      const err = new RecordNotFoundError(msg);
+      res.status(404).json(err);
+      return;
+    }
+
+    // get the departure address
+    const from = await airportService.getAirportById(req.body.from);
+
+    // add checking here
+    if (!from) {
+      const msg = `airport with id ${req.body.from}`;
+      const err = new RecordNotFoundError(msg);
+      res.status(404).json(err);
+      return;
+    }
+
+    // get the arrival address
+    const to = await airportService.getAirportById(req.body.to);
+
+    // add checking here
+    if (!to) {
+      const msg = `airport with id ${req.body.to}`;
+      const err = new RecordNotFoundError(msg);
+      res.status(404).json(err);
+      return;
+    }
+
+    const updateArgs = req.body;
+    const result = await flightService.updateFlight(flight.id, updateArgs);
+
+    res.status(201).json({
+      status: "OK",
+      data: result,
+    });
+  } catch (error) {
+    res.status(422).json({
+      status: "FAIL",
+      message: error,
+    });
     next();
   }
 }
@@ -69,4 +126,5 @@ async function handleCreateFlight(req, res, next) {
 module.exports = {
   handleSearchFlights,
   handleCreateFlight,
+  handleUpdateFlight,
 };

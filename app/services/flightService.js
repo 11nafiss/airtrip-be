@@ -52,7 +52,30 @@ async function createFlight(body) {
   }
 }
 
+async function updateFlight(id, updateArgs) {
+  try {
+    
+    // check destination
+
+    const flight = await flightsRepository.updateFlight(id, updateArgs);
+    return flight;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function getFlightById(id) {
+  try {
+    const flight = await flightsRepository.getFlightById(id);
+    return flight;
+  } catch (error) {
+    throw error;
+  }
+}
+
 module.exports = {
   searchFlights,
   createFlight,
+  updateFlight,
+  getFlightById,
 };

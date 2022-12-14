@@ -27,10 +27,18 @@ apiRouter.get(
   controllers.api.v1.airportController.handleGetAirports
 );
 
+// create flight data
 apiRouter.post(
   "/createFlight",
   controllers.api.v1.authenticationController.authorize("ADMIN"),
   controllers.api.v1.flightController.handleCreateFlight
+);
+
+// update flight data
+apiRouter.put(
+  "/updateFlight/:id",
+  controllers.api.v1.authenticationController.authorize("ADMIN"),
+  controllers.api.v1.flightController.handleUpdateFlight
 );
 
 // for authorization testing purpose only
