@@ -106,10 +106,19 @@ async function getFlightById(id) {
   }
 }
 
+async function deleteFlight(id) {
+  try {
+    const flight = await Flight.destroy({ where: { id: id } });
+    return flight;
+  } catch (error) {
+    throw error;
+  }
+}
 module.exports = {
+  getFlightById,
   findFlights,
   findReturnFlights,
   createFlight,
   updateFlight,
-  getFlightById,
+  deleteFlight,
 };

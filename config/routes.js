@@ -41,6 +41,13 @@ apiRouter.put(
   controllers.api.v1.flightController.handleUpdateFlight
 );
 
+// delete flight data
+apiRouter.delete(
+  "/deleteFlight/:id",
+  controllers.api.v1.authenticationController.authorize("ADMIN"),
+  controllers.api.v1.flightController.handleDeleteFlight
+);
+
 // for authorization testing purpose only
 if (process.env.NODE_ENV !== "production") {
   apiRouter.post(

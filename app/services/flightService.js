@@ -54,7 +54,6 @@ async function createFlight(body) {
 
 async function updateFlight(id, updateArgs) {
   try {
-    
     // check destination
 
     const flight = await flightsRepository.updateFlight(id, updateArgs);
@@ -73,9 +72,18 @@ async function getFlightById(id) {
   }
 }
 
+async function deleteFlight(id) {
+  try {
+    const flight = await flightsRepository.deleteFlight(id);
+  } catch (error) {
+    throw error;
+  }
+}
+
 module.exports = {
   searchFlights,
   createFlight,
   updateFlight,
   getFlightById,
+  deleteFlight,
 };

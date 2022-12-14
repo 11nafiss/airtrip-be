@@ -123,8 +123,38 @@ async function handleUpdateFlight(req, res, next) {
   }
 }
 
+async function handleDeleteFlight(req, res, next) {
+  try {
+    console.log("masuk controller");
+    const id = req.params.id;
+
+    // check if the flight present
+    const flight = await flightService.getFlightById(id);
+
+    if (!flight) {
+      const msg = `airplane with id ${id}`;
+      const err = new RecordNotFoundError(msg);
+      res.status(404).json(err);
+      return;
+    }
+
+    const result = await flightService.deleteFlight(id);
+
+    res.status(200).json({
+      status: "OK",
+      message: "Flight data deleted successfully.",
+    });
+  } catch (error) {
+    res.status(422).json({
+      status: "FAIL",
+      message: error,
+    });
+    next();
+  }
+}
 module.exports = {
   handleSearchFlights,
   handleCreateFlight,
   handleUpdateFlight,
+  handleDeleteFlight,
 };
