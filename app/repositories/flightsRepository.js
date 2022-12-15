@@ -1,5 +1,5 @@
 const { Flight, Airplane, Airport } = require("../models");
-const { Op, fn } = require("sequelize");
+const { Op } = require("sequelize");
 const airportRequiredAttributes = [
   "id",
   "iata",
@@ -31,16 +31,39 @@ async function list() {
   }
 }
 
-async function findFlights(flight_date, from, to, flight_class) {
+async function list() {
+  try {
+    const fligts = await Flight.findAll({
+      include: [
+        {
+          model: Airport,
+          as: "from_airport",
+          attributes: airportRequiredAttributes,
+        },
+        {
+          model: Airport,
+          as: "to_airport",
+          attributes: airportRequiredAttributes,
+        },
+        { model: Airplane },
+      ],
+    });
+    return fligts;
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function findFlights(departureDate, from, to, flightClass) {
   try {
     return await Flight.findAll({
       where: {
         departure: {
-          [Op.gte]: flight_date,
+          [Op.gte]: departureDate,
         },
         from,
         to,
-        flight_class: flight_class,
+        flight_class: flightClass,
       },
       include: [
         {
@@ -62,22 +85,23 @@ async function findFlights(flight_date, from, to, flight_class) {
 }
 
 async function findReturnFlights(
-  flight_date,
-  return_flight_date,
+  returnFlightDate,
+  arrivalDate,
   from,
   to,
-  flight_class
+  flightClass
 ) {
   try {
     return await Flight.findAll({
       where: {
         departure: {
-          [Op.gte]: return_flight_date,
-          [Op.gt]: flight_date,
+          [Op.gte]: returnFlightDate,
+          [Op.gt]: arrivalDate,
         },
         from: to,
         to: from,
-        flight_class: flight_class,
+
+        flight_class: flightClass,
       },
       include: [
         {
