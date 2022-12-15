@@ -13,7 +13,7 @@ const app = express();
 app.use(morgan("dev"));
 
 /** Install JSON request parser */
-app.use(express.json());
+app.use(express.json({ limit: "50mb" }));
 
 /** Install Router */
 app.use(router);
