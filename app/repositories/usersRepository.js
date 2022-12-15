@@ -1,7 +1,7 @@
 const { User, Role } = require("../models");
 async function register(userData) {
   try {
-    return await User.create({ ...userData, role_id: 1 });
+    return await User.create({ ...userData, role_id: 1, saldo: 20000000 });
   } catch (error) {
     throw error;
   }

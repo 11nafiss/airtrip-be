@@ -34,6 +34,9 @@ async function list() {
 async function list() {
   try {
     const fligts = await Flight.findAll({
+      attributes: {
+        exclude: ["from", "to"],
+      },
       include: [
         {
           model: Airport,
@@ -57,6 +60,9 @@ async function list() {
 async function findFlights(departureDate, from, to, flightClass) {
   try {
     return await Flight.findAll({
+      attributes: {
+        exclude: ["from", "to"],
+      },
       where: {
         departure: {
           [Op.gte]: departureDate,
