@@ -64,11 +64,13 @@ async function updateUser(id, updateParams, user) {
       updateParams.image = existingUser.image;
     }
 
-    const updatedUser = await usersRepository.updateUser(id, updateParams);
+    const { encryptedPassword, saldo, verified, ...updatedUser } = (
+      await usersRepository.updateUser(id, updateParams)
+    ).dataValues;
 
     const accessToken = createToken(updatedUser, user.role);
 
-    return { user: updatedUser, accessToken };
+    return { data: updatedUser, accessToken };
   } catch (error) {
     throw error;
   }

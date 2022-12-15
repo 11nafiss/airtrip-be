@@ -82,9 +82,6 @@ async function handleCreateFlight(req, res, next) {
     const airplane = await airplaneService.getAirplaneById(
       req.body.airplane_id
     );
-    const airplane = await airplaneService.getAirplaneById(
-      req.body.airplane_id
-    );
 
     if (!airplane) {
       const msg = `airplane with id ${req.body.airplane_id}`;
