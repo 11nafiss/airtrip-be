@@ -2,6 +2,7 @@ const usersRepository = require("../repositories/usersRepository");
 const cloudinary = require("../../config/cloudinary");
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const fileType = require("file-type");
 const { EmailAlreadyRegisteredError, UnauthorizedError } = require("../errors");
 
 function createToken(user, role) {
@@ -22,14 +23,19 @@ function createToken(user, role) {
   );
 }
 
-async function uploadImg(img) {
-  const fileBase64 = img.buffer.toString("base64");
-  const file = `data:${img.mimetype};base64,${fileBase64}`;
+async function uploadImg(imgBase64) {
+  const base64String = imgBase64.split(",")[1];
+  const mimetype = await fileType.fromBuffer(
+    Buffer.from(base64String, "base64")
+  );
+
+  const file = `data:${mimetype.mime};base64,${base64String}`;
 
   try {
     const imgUrl = await cloudinary.uploader.upload(file);
     return imgUrl;
   } catch (error) {
+    console.log(error);
     throw error;
   }
 }
@@ -52,7 +58,11 @@ async function updateUser(id, updateParams, user) {
     }
 
     updateParams.password = bcryptjs.hashSync(updateParams.password);
-    updateParams.image = (await uploadImg(updateParams.image)).secure_url;
+    if (updateParams.image !== "") {
+      updateParams.image = (await uploadImg(updateParams.image)).secure_url;
+    } else {
+      updateParams.image = existingUser.image;
+    }
 
     const updatedUser = await usersRepository.updateUser(id, updateParams);
 
