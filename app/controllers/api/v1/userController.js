@@ -5,18 +5,11 @@ const {
 const userService = require("../../../services/userService");
 
 async function handleUpdateUser(req, res, next) {
-  // req.body = {email, password, phone, name, address}
+  // req.body = {email, password, image, phone, name, address}
   try {
     const id = req.params.id;
 
-    const updatedUser = await userService.updateUser(
-      id,
-      {
-        ...req.body,
-        image: req.file,
-      },
-      req.user
-    );
+    const updatedUser = await userService.updateUser(id, req.body, req.user);
 
     if (updatedUser instanceof UnauthorizedError) {
       res
