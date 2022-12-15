@@ -11,31 +11,8 @@ const airportRequiredAttributes = [
 async function list() {
   try {
     const fligts = await Flight.findAll({
-      include: [
-        {
-          model: Airport,
-          as: "from_airport",
-          attributes: airportRequiredAttributes,
-        },
-        {
-          model: Airport,
-          as: "to_airport",
-          attributes: airportRequiredAttributes,
-        },
-        { model: Airplane },
-      ],
-    });
-    return fligts;
-  } catch (error) {
-    throw error;
-  }
-}
-
-async function list() {
-  try {
-    const fligts = await Flight.findAll({
       attributes: {
-        exclude: ["from", "to"],
+        exclude: ["from", "to", "airplane_id"],
       },
       include: [
         {
@@ -61,7 +38,7 @@ async function findFlights(departureDate, from, to, flightClass) {
   try {
     return await Flight.findAll({
       attributes: {
-        exclude: ["from", "to"],
+        exclude: ["from", "to", "airplane_id"],
       },
       where: {
         departure: {
@@ -99,6 +76,9 @@ async function findReturnFlights(
 ) {
   try {
     return await Flight.findAll({
+      attributes: {
+        exclude: ["from", "to", "airplane_id"],
+      },
       where: {
         departure: {
           [Op.gte]: returnFlightDate,
@@ -166,6 +146,9 @@ async function updateFlight(id, updateArgs) {
 async function getFlightById(id) {
   try {
     const flight = await Flight.findByPk(id, {
+      attributes: {
+        exclude: ["from", "to", "airplane_id"],
+      },
       include: [
         {
           model: Airport,
