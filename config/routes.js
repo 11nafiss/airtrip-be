@@ -36,10 +36,31 @@ apiRouter.get(
   controllers.api.v1.airportController.handleGetAirports
 );
 
+// create flight data
 apiRouter.post(
   "/createFlight",
   controllers.api.v1.authenticationController.authorize("ADMIN"),
   controllers.api.v1.flightController.handleCreateFlight
+);
+
+// get all flight data
+apiRouter.get(
+  "/listFlights",
+  controllers.api.v1.flightController.handleListFlights
+);
+
+// update flight data
+apiRouter.put(
+  "/updateFlight/:id",
+  controllers.api.v1.authenticationController.authorize("ADMIN"),
+  controllers.api.v1.flightController.handleUpdateFlight
+);
+
+// delete flight data
+apiRouter.delete(
+  "/deleteFlight/:id",
+  controllers.api.v1.authenticationController.authorize("ADMIN"),
+  controllers.api.v1.flightController.handleDeleteFlight
 );
 
 // for authorization testing purpose only
