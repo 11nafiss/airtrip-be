@@ -9,6 +9,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsTo(models.Flight, { foreignKey: "flight_id", as: "flight" });
+      this.belongsTo(models.User, {
+        foreignKey: "passenger_id",
+      });
+      this.hasOne(models.Flight_Detail, { foreignKey: "boarding_pass_pergi" });
+      this.hasOne(models.Flight_Detail, {
+        foreignKey: "boarding_pass_pulang",
+      });
     }
   }
   BoardingPass.init(

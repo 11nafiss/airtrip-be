@@ -67,6 +67,11 @@ apiRouter.delete(
   controllers.api.v1.flightController.handleDeleteFlight
 );
 
+apiRouter.post(
+  "/tickets/create",
+  controllers.api.v1.authenticationController.authorize(Roles.BUYER),
+  controllers.api.v1.ticketController.handleCreateTicket
+);
 // for authorization testing purpose only
 if (process.env.NODE_ENV !== "production") {
   apiRouter.post(
