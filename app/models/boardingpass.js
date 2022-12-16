@@ -12,7 +12,6 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.Flight, { foreignKey: "flight_id", as: "flight" });
       this.belongsTo(models.User, {
         foreignKey: "passenger_id",
-        as: "passenger",
       });
       this.hasOne(models.Flight_Detail, { foreignKey: "boarding_pass_pergi" });
       this.hasOne(models.Flight_Detail, {

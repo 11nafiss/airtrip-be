@@ -13,7 +13,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       invoice_number: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
       },
       flight_type: {
         type: Sequelize.ENUM("Oneway", "Roundtrip"),
