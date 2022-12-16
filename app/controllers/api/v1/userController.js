@@ -28,6 +28,16 @@ async function handleUpdateUser(req, res, next) {
   }
 }
 
+async function handleWhoami(req, res, next) {
+  try {
+    res.status(200).json({ data: req.user });
+  } catch (error) {
+    req.error = error;
+    next();
+  }
+}
+
 module.exports = {
   handleUpdateUser,
+  handleWhoami,
 };
