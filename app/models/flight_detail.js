@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Flight_Detail extends Model {
     /**
@@ -11,14 +9,26 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.belongsTo(models.BoardingPass, {
+        foreignKey: "boarding_pass_pulang",
+        as: "boarding_pass_pulang",
+      });
+      this.belongsTo(models.BoardingPass, {
+        foreignKey: "boarding_pass_pergi",
+        as: "boarding_pass_pergi",
+      });
+      this.hasOne(models.Ticket, { foreignKey: "flight_details" });
     }
   }
-  Flight_Detail.init({
-    boarding_pass_pergi: DataTypes.INTEGER,
-    boarding_pass_pulang: DataTypes.INTEGER
-  }, {
-    sequelize,
-    modelName: 'Flight_Detail',
-  });
+  Flight_Detail.init(
+    {
+      boarding_pass_pergi: DataTypes.INTEGER,
+      boarding_pass_pulang: DataTypes.INTEGER,
+    },
+    {
+      sequelize,
+      modelName: "Flight_Detail",
+    }
+  );
   return Flight_Detail;
 };
