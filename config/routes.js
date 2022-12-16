@@ -19,8 +19,12 @@ apiRouter.post("/login", controllers.api.v1.authenticationController.login);
 apiRouter.put(
   "/users/update/:id",
   controllers.api.v1.authenticationController.authorize(Roles.BUYER),
-  upload.single("image"),
   controllers.api.v1.userController.handleUpdateUser
+);
+apiRouter.get(
+  "/whoami",
+  controllers.api.v1.authenticationController.authorize(true),
+  controllers.api.v1.userController.handleWhoami
 );
 apiRouter.post(
   "/flights/search",
@@ -38,27 +42,27 @@ apiRouter.get(
 
 // create flight data
 apiRouter.post(
-  "/createFlight",
+  "/flights/create",
   controllers.api.v1.authenticationController.authorize("ADMIN"),
   controllers.api.v1.flightController.handleCreateFlight
 );
 
 // get all flight data
 apiRouter.get(
-  "/listFlights",
+  "/flights",
   controllers.api.v1.flightController.handleListFlights
 );
 
 // update flight data
 apiRouter.put(
-  "/updateFlight/:id",
+  "/flights/update/:id",
   controllers.api.v1.authenticationController.authorize("ADMIN"),
   controllers.api.v1.flightController.handleUpdateFlight
 );
 
 // delete flight data
 apiRouter.delete(
-  "/deleteFlight/:id",
+  "/flights/delete/:id",
   controllers.api.v1.authenticationController.authorize("ADMIN"),
   controllers.api.v1.flightController.handleDeleteFlight
 );

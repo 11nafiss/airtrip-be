@@ -82,7 +82,7 @@ async function authorize(token, expectedRole) {
       throw new Error("User not found!");
     }
 
-    if (expectedRole !== payload.role.name) {
+    if (expectedRole !== payload.role.name && expectedRole !== true) {
       throw new Error("Invalid role!");
     }
     return payload;
