@@ -62,16 +62,16 @@ async function createTicket(
     const result = {
       username: user.name,
       invoiceNumber: ticket.invoice_number,
-      boardingPasses: [{ flight: flight1, seat: seat1 }],
+      boardingPasses: { boarding_pass_pergi: { flight: flight1, seat: seat1 } },
       flightType: ticket.flight_type,
       totalPrice: ticket.total_price,
     };
 
     if (flight2) {
-      result.boardingPasses.push({
+      result.boardingPasses.boarding_pass_pulang = {
         flight: flight2,
         seat: seat2,
-      });
+      };
     }
 
     // kurangi saldo
@@ -88,12 +88,9 @@ async function createTicket(
   }
 }
 
-async function getTicketsHistory(userId) {
+async function getTickets(userId) {
   try {
-    let tickets = await Ticket.findAll({
-      where: {
-        passenger_id: userId,
-      },
+    const ticketOption = {
       attributes: { exclude: ["flight_details", "passenger_id"] },
       include: [
         {
@@ -105,7 +102,13 @@ async function getTicketsHistory(userId) {
       ],
       raw: true,
       nest: true,
-    });
+    };
+    if (userId) {
+      ticketOption.where = {
+        passenger_id: userId,
+      };
+    }
+    let tickets = await Ticket.findAll(ticketOption);
 
     if (tickets.length === 0) {
       return tickets;
@@ -116,7 +119,7 @@ async function getTicketsHistory(userId) {
         ticket.flight_detail.boarding_pass_pulang,
       ];
 
-      const boardingPasses = [];
+      let boardingPasses = [];
       for (let boardingPassId of boardingPassesId) {
         const boardingPass = await BoardingPass.findOne({
           where: { id: boardingPassId },
@@ -131,6 +134,11 @@ async function getTicketsHistory(userId) {
         boardingPasses.push(boardingPass);
       }
 
+      boardingPasses = {
+        boarding_pass_pergi: boardingPasses[0],
+        boarding_pass_pulang: boardingPasses[1],
+      };
+
       ticket.boardingPasses = boardingPasses;
 
       tickets[index] = ticket;
@@ -144,5 +152,5 @@ async function getTicketsHistory(userId) {
 
 module.exports = {
   createTicket,
-  getTicketsHistory,
+  getTickets,
 };

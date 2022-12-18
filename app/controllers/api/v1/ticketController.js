@@ -18,7 +18,7 @@ async function handleCreateTicket(req, res, next) {
 async function handleTicketHistory(req, res, next) {
   // no request body
   try {
-    const tickets = await ticketService.getTicketsHistory(req.user.id);
+    const tickets = await ticketService.getTickets(req.user.id);
     res.status(200).json({ data: tickets });
   } catch (error) {
     console.log(error);
@@ -27,4 +27,14 @@ async function handleTicketHistory(req, res, next) {
   }
 }
 
-module.exports = { handleCreateTicket, handleTicketHistory };
+async function handleGetTickets(req, res, next) {
+  try {
+    const tickets = await ticketService.getTickets();
+    res.status(200).json({ data: tickets });
+  } catch (error) {
+    console.log(error);
+    req.error = error;
+    next();
+  }
+}
+module.exports = { handleCreateTicket, handleTicketHistory, handleGetTickets };

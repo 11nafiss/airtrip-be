@@ -62,9 +62,9 @@ async function createTicket(user, createArgs) {
   }
 }
 
-async function getTicketsHistory(userId) {
+async function getTickets(userId) {
   try {
-    const result = await ticketRepository.getTicketsHistory(userId);
+    const result = await ticketRepository.getTickets(userId);
     return result;
   } catch (error) {
     throw new Error(error);
@@ -73,5 +73,5 @@ async function getTicketsHistory(userId) {
 
 module.exports = {
   createTicket,
-  getTicketsHistory,
+  getTickets,
 };

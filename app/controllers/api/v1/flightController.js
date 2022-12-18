@@ -20,10 +20,7 @@ async function handleListFlights(req, res, next) {
       data: flights,
     });
   } catch (error) {
-    res.status(422).json({
-      status: "FAIL",
-      message: error,
-    });
+    req.error;
     next();
   }
 }

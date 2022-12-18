@@ -25,11 +25,12 @@ async function list() {
           as: "to_airport",
           attributes: airportRequiredAttributes,
         },
-        { model: Airplane },
+        { model: Airplane, as: "airplane" },
       ],
     });
     return fligts;
   } catch (error) {
+    console.log(error);
     throw error;
   }
 }
