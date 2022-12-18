@@ -4,6 +4,7 @@ const {
   User,
   BoardingPass,
   Flight,
+  Airplane,
 } = require("../models");
 
 async function createTicket(
@@ -53,6 +54,7 @@ async function createTicket(
         flight_type: flightType,
         passenger_id: user.id,
         flight_details: flightDetail.id,
+        has_read: false,
       },
       { returning: true }
     );
@@ -82,11 +84,65 @@ async function createTicket(
 
     return result;
   } catch (error) {
-    console.log(error);
-    throw error;
+    throw new Error(error);
+  }
+}
+
+async function getTicketsHistory(userId) {
+  try {
+    let tickets = await Ticket.findAll({
+      where: {
+        passenger_id: userId,
+      },
+      attributes: { exclude: ["flight_details", "passenger_id"] },
+      include: [
+        {
+          model: User,
+          as: "passenger",
+          attributes: ["name", "phone", "address", "email"],
+        },
+        { model: Flight_Detail, as: "flight_detail" },
+      ],
+      raw: true,
+      nest: true,
+    });
+
+    if (tickets.length === 0) {
+      return tickets;
+    }
+    for (let [index, ticket] of tickets.entries()) {
+      const boardingPassesId = [
+        ticket.flight_detail.boarding_pass_pergi,
+        ticket.flight_detail.boarding_pass_pulang,
+      ];
+
+      const boardingPasses = [];
+      for (let boardingPassId of boardingPassesId) {
+        const boardingPass = await BoardingPass.findOne({
+          where: { id: boardingPassId },
+          attributes: ["seat"],
+          include: {
+            model: Flight,
+            as: "flight",
+            include: { model: Airplane, as: "airplane" },
+            attributes: { exclude: ["airplane_id"] },
+          },
+        });
+        boardingPasses.push(boardingPass);
+      }
+
+      ticket.boardingPasses = boardingPasses;
+
+      tickets[index] = ticket;
+      delete tickets[index].flight_detail;
+    }
+    return tickets;
+  } catch (error) {
+    throw new Error(error);
   }
 }
 
 module.exports = {
   createTicket,
+  getTicketsHistory,
 };

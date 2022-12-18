@@ -72,6 +72,13 @@ apiRouter.post(
   controllers.api.v1.authenticationController.authorize(Roles.BUYER),
   controllers.api.v1.ticketController.handleCreateTicket
 );
+
+apiRouter.get(
+  "/tickets/history",
+  controllers.api.v1.authenticationController.authorize(Roles.BUYER),
+  controllers.api.v1.ticketController.handleTicketHistory
+);
+
 // for authorization testing purpose only
 if (process.env.NODE_ENV !== "production") {
   apiRouter.post(

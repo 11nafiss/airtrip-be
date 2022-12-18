@@ -13,6 +13,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "flight_details",
         as: "flight_detail",
       });
+      this.belongsTo(models.User, {
+        foreignKey: "passenger_id",
+        as: "passenger",
+      });
     }
   }
   Ticket.init(
@@ -22,6 +26,7 @@ module.exports = (sequelize, DataTypes) => {
       flight_type: DataTypes.ENUM("Oneway", "Roundtrip"),
       passenger_id: DataTypes.INTEGER,
       flight_details: DataTypes.INTEGER,
+      has_read: DataTypes.BOOLEAN,
     },
     {
       sequelize,

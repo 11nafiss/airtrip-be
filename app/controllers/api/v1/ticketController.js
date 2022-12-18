@@ -10,10 +10,21 @@ async function handleCreateTicket(req, res, next) {
     }
     res.status(200).json(result);
   } catch (error) {
-    console.log(error);
     req.error;
     next();
   }
 }
 
-module.exports = { handleCreateTicket };
+async function handleTicketHistory(req, res, next) {
+  // no request body
+  try {
+    const tickets = await ticketService.getTicketsHistory(req.user.id);
+    res.status(200).json({ data: tickets });
+  } catch (error) {
+    console.log(error);
+    req.error = error;
+    next();
+  }
+}
+
+module.exports = { handleCreateTicket, handleTicketHistory };

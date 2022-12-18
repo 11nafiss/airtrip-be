@@ -133,7 +133,7 @@ async function updateFlight(id, updateArgs) {
           as: "to_airport",
           attributes: airportRequiredAttributes,
         },
-        { model: Airplane },
+        { model: Airplane, as: "airplane" },
       ],
     });
 
@@ -160,7 +160,7 @@ async function getFlightById(id) {
           as: "to_airport",
           attributes: airportRequiredAttributes,
         },
-        { model: Airplane },
+        { model: Airplane, as: "airplane" },
       ],
     });
     return flight;

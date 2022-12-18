@@ -58,10 +58,20 @@ async function createTicket(user, createArgs) {
     return result;
   } catch (error) {
     console.log(error);
-    throw error;
+    throw new Error(error);
+  }
+}
+
+async function getTicketsHistory(userId) {
+  try {
+    const result = await ticketRepository.getTicketsHistory(userId);
+    return result;
+  } catch (error) {
+    throw new Error(error);
   }
 }
 
 module.exports = {
   createTicket,
+  getTicketsHistory,
 };
