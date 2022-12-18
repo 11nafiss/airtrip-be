@@ -100,6 +100,7 @@ async function getTickets(userId) {
         },
         { model: Flight_Detail, as: "flight_detail" },
       ],
+      order: [["createdAt", "DESC"]],
       raw: true,
       nest: true,
     };
