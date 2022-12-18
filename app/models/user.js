@@ -18,7 +18,6 @@ module.exports = (sequelize, DataTypes) => {
 
       this.hasMany(models.Ticket, {
         foreignKey: "passenger_id",
-        as: "passenger",
       });
     }
   }

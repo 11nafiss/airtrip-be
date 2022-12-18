@@ -4,6 +4,7 @@ const {
   User,
   BoardingPass,
   Flight,
+  Airplane,
 } = require("../models");
 
 async function createTicket(
@@ -53,6 +54,7 @@ async function createTicket(
         flight_type: flightType,
         passenger_id: user.id,
         flight_details: flightDetail.id,
+        has_read: false,
       },
       { returning: true }
     );
@@ -60,16 +62,16 @@ async function createTicket(
     const result = {
       username: user.name,
       invoiceNumber: ticket.invoice_number,
-      boardingPasses: [{ flight: flight1, seat: seat1 }],
+      boardingPasses: { boarding_pass_pergi: { flight: flight1, seat: seat1 } },
       flightType: ticket.flight_type,
       totalPrice: ticket.total_price,
     };
 
     if (flight2) {
-      result.boardingPasses.push({
+      result.boardingPasses.boarding_pass_pulang = {
         flight: flight2,
         seat: seat2,
-      });
+      };
     }
 
     // kurangi saldo
@@ -82,11 +84,73 @@ async function createTicket(
 
     return result;
   } catch (error) {
-    console.log(error);
-    throw error;
+    throw new Error(error);
+  }
+}
+
+async function getTickets(userId) {
+  try {
+    const ticketOption = {
+      attributes: { exclude: ["flight_details", "passenger_id"] },
+      include: [
+        {
+          model: User,
+          as: "passenger",
+          attributes: ["name", "phone", "address", "email"],
+        },
+        { model: Flight_Detail, as: "flight_detail" },
+      ],
+      raw: true,
+      nest: true,
+    };
+    if (userId) {
+      ticketOption.where = {
+        passenger_id: userId,
+      };
+    }
+    let tickets = await Ticket.findAll(ticketOption);
+
+    if (tickets.length === 0) {
+      return tickets;
+    }
+    for (let [index, ticket] of tickets.entries()) {
+      const boardingPassesId = [
+        ticket.flight_detail.boarding_pass_pergi,
+        ticket.flight_detail.boarding_pass_pulang,
+      ];
+
+      let boardingPasses = [];
+      for (let boardingPassId of boardingPassesId) {
+        const boardingPass = await BoardingPass.findOne({
+          where: { id: boardingPassId },
+          attributes: ["seat"],
+          include: {
+            model: Flight,
+            as: "flight",
+            include: { model: Airplane, as: "airplane" },
+            attributes: { exclude: ["airplane_id"] },
+          },
+        });
+        boardingPasses.push(boardingPass);
+      }
+
+      boardingPasses = {
+        boarding_pass_pergi: boardingPasses[0],
+        boarding_pass_pulang: boardingPasses[1],
+      };
+
+      ticket.boardingPasses = boardingPasses;
+
+      tickets[index] = ticket;
+      delete tickets[index].flight_detail;
+    }
+    return tickets;
+  } catch (error) {
+    throw new Error(error);
   }
 }
 
 module.exports = {
   createTicket,
+  getTickets,
 };
