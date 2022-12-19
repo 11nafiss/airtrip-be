@@ -10,6 +10,8 @@ const Roles = {
 
 // API List here
 apiRouter.get("/", controllers.main.handleGetRoot);
+
+// USER ENDPOINTS
 apiRouter.post(
   "/register",
   controllers.api.v1.authenticationController.register
@@ -26,20 +28,14 @@ apiRouter.get(
   controllers.api.v1.authenticationController.authorize(true),
   controllers.api.v1.userController.handleWhoami
 );
-apiRouter.post(
-  "/flights/search",
-  controllers.api.v1.flightController.handleSearchFlights
-);
-apiRouter.post(
-  "/flights/search-return",
-  controllers.api.v1.flightController.handleSearchReturnFlights
-);
 
+// AIRPORT ENDPOINTS
 apiRouter.get(
   "/airports",
   controllers.api.v1.airportController.handleGetAirports
 );
 
+// FLIGHT ENDPOINTS
 // create flight data
 apiRouter.post(
   "/flights/create",
@@ -68,6 +64,17 @@ apiRouter.delete(
 );
 
 apiRouter.post(
+  "/flights/search",
+  controllers.api.v1.flightController.handleSearchFlights
+);
+
+apiRouter.post(
+  "/flights/search-return",
+  controllers.api.v1.flightController.handleSearchReturnFlights
+);
+
+// TICKET ENDPOINTS
+apiRouter.post(
   "/tickets/create",
   controllers.api.v1.authenticationController.authorize(Roles.BUYER),
   controllers.api.v1.ticketController.handleCreateTicket
@@ -85,6 +92,31 @@ apiRouter.get(
   controllers.api.v1.ticketController.handleGetTickets
 );
 
+// AIRPLANE ENDPOINTS
+apiRouter.post(
+  "/airplanes/create",
+  controllers.api.v1.authenticationController.authorize(Roles.ADMIN),
+  controllers.api.v1.airplaneController.handleCreateAirplane
+);
+
+apiRouter.get(
+  "/airplanes",
+  controllers.api.v1.authenticationController.authorize(Roles.ADMIN),
+  controllers.api.v1.airplaneController.handleGetAirplanes
+);
+
+apiRouter.delete(
+  "/airplanes/delete/:id",
+  controllers.api.v1.authenticationController.authorize(Roles.ADMIN),
+  controllers.api.v1.airplaneController.handleDeleteAirplane
+);
+
+apiRouter.put(
+  "/airplanes/update/:id",
+  controllers.api.v1.authenticationController.authorize(Roles.ADMIN),
+  controllers.api.v1.airplaneController.handleUpdateAirplane
+);
+
 // for authorization testing purpose only
 if (process.env.NODE_ENV !== "production") {
   apiRouter.post(
@@ -95,6 +127,7 @@ if (process.env.NODE_ENV !== "production") {
     }
   );
 }
-
+apiRouter.use("*", controllers.main.handleNotFound);
 apiRouter.use(controllers.main.handleError);
+
 module.exports = apiRouter;

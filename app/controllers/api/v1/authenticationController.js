@@ -17,8 +17,7 @@ async function register(req, res, next) {
     }
     res.status(201).json({ email: registeredEmail });
   } catch (error) {
-    req.error = error;
-    next();
+    next(error);
   }
 }
 
@@ -37,8 +36,7 @@ async function login(req, res, next) {
 
     res.status(200).json({ accessToken: token });
   } catch (error) {
-    req.error = error;
-    next();
+    next(error);
   }
 }
 
@@ -56,8 +54,7 @@ function authorize(expectedRole) {
       req.user = user;
       next();
     } catch (error) {
-      req.error = error;
-      next();
+      next(error);
     }
   };
 }

@@ -10,8 +10,7 @@ async function handleCreateTicket(req, res, next) {
     }
     res.status(200).json(result);
   } catch (error) {
-    req.error;
-    next();
+    next(error);
   }
 }
 
@@ -22,8 +21,8 @@ async function handleTicketHistory(req, res, next) {
     res.status(200).json({ data: tickets });
   } catch (error) {
     console.log(error);
-    req.error = error;
-    next();
+
+    next(error);
   }
 }
 
@@ -33,8 +32,8 @@ async function handleGetTickets(req, res, next) {
     res.status(200).json({ data: tickets });
   } catch (error) {
     console.log(error);
-    req.error = error;
-    next();
+
+    next(error);
   }
 }
 module.exports = { handleCreateTicket, handleTicketHistory, handleGetTickets };

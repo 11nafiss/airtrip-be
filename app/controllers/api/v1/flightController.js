@@ -20,8 +20,7 @@ async function handleListFlights(req, res, next) {
       data: flights,
     });
   } catch (error) {
-    req.error;
-    next();
+    next(error);
   }
 }
 
@@ -35,8 +34,7 @@ async function handleSearchFlights(req, res, next) {
 
     res.status(200).json({ data: flights });
   } catch (error) {
-    req.error = error;
-    next();
+    next(error);
   }
 }
 async function handleSearchReturnFlights(req, res, next) {
@@ -46,8 +44,7 @@ async function handleSearchReturnFlights(req, res, next) {
 
     res.status(200).json({ data: flights });
   } catch (error) {
-    req.error = error;
-    next();
+    next(error);
   }
 }
 
@@ -96,11 +93,7 @@ async function handleCreateFlight(req, res, next) {
       data: flight,
     });
   } catch (error) {
-    res.status(422).json({
-      status: "FAIL",
-      message: error,
-    });
-    next();
+    next(error);
   }
 }
 
@@ -147,11 +140,7 @@ async function handleUpdateFlight(req, res, next) {
       data: result,
     });
   } catch (error) {
-    res.status(422).json({
-      status: "FAIL",
-      message: error,
-    });
-    next();
+    next(error);
   }
 }
 
@@ -177,11 +166,7 @@ async function handleDeleteFlight(req, res, next) {
       message: "Flight data deleted successfully.",
     });
   } catch (error) {
-    res.status(422).json({
-      status: "FAIL",
-      message: error,
-    });
-    next();
+    next(error);
   }
 }
 module.exports = {
