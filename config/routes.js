@@ -2,12 +2,13 @@ const express = require("express");
 const controllers = require("../app/controllers");
 const upload = require("./multer");
 const apiRouter = express.Router();
-
+const cors = require("cors");
 const Roles = {
   ADMIN: "ADMIN",
   BUYER: "BUYER",
 };
 
+apiRouter.use(cors());
 // API List here
 apiRouter.get("/", controllers.main.handleGetRoot);
 
