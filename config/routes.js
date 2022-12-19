@@ -86,9 +86,27 @@ apiRouter.get(
 );
 
 apiRouter.post(
-  "/airplane/create",
+  "/airplanes/create",
   controllers.api.v1.authenticationController.authorize(Roles.ADMIN),
   controllers.api.v1.airplaneController.handleCreateAirplane
+);
+
+apiRouter.get(
+  "/airplanes",
+  controllers.api.v1.authenticationController.authorize(Roles.ADMIN),
+  controllers.api.v1.airplaneController.handleGetAirplanes
+);
+
+apiRouter.delete(
+  "/airplanes/delete/:id",
+  controllers.api.v1.authenticationController.authorize(Roles.ADMIN),
+  controllers.api.v1.airplaneController.handleDeleteAirplane
+);
+
+apiRouter.put(
+  "/airplanes/update/:id",
+  controllers.api.v1.authenticationController.authorize(Roles.ADMIN),
+  controllers.api.v1.airplaneController.handleUpdateAirplane
 );
 
 // for authorization testing purpose only
@@ -101,6 +119,7 @@ if (process.env.NODE_ENV !== "production") {
     }
   );
 }
-
+apiRouter.use("*", controllers.main.handleNotFound);
 apiRouter.use(controllers.main.handleError);
+
 module.exports = apiRouter;
