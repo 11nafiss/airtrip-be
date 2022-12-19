@@ -85,6 +85,12 @@ apiRouter.get(
   controllers.api.v1.ticketController.handleGetTickets
 );
 
+apiRouter.post(
+  "/airplane/create",
+  controllers.api.v1.authenticationController.authorize(Roles.ADMIN),
+  controllers.api.v1.airplaneController.handleCreateAirplane
+);
+
 // for authorization testing purpose only
 if (process.env.NODE_ENV !== "production") {
   apiRouter.post(
