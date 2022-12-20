@@ -20,6 +20,7 @@ module.exports = {
       website: airport.website,
       createdAt: timestamp,
       updatedAt: timestamp,
+      deletedAt: null,
     }));
 
     await queryInterface.bulkInsert("Airports", airports, {});

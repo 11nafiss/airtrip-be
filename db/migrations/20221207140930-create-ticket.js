@@ -13,7 +13,7 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       invoice_number: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
       },
       flight_type: {
         type: Sequelize.ENUM("Oneway", "Roundtrip"),
@@ -31,6 +31,9 @@ module.exports = {
           model: "Flight_Details", // tables name not model name
           key: "id",
         },
+      },
+      has_read: {
+        type: Sequelize.BOOLEAN,
       },
       createdAt: {
         allowNull: false,

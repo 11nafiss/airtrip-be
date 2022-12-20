@@ -5,8 +5,7 @@ async function handleGetAirports(req, res, next) {
     const airports = await airportService.getAirports();
     res.status(200).json({ data: airports });
   } catch (error) {
-    req.error = error;
-    next();
+    next(error);
   }
 }
 

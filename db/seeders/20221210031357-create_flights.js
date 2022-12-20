@@ -82,6 +82,7 @@ module.exports = {
         description: lorem,
         createdAt: timeStamp,
         updatedAt: timeStamp,
+        deletedAt: null,
       };
 
       data.push(temp);

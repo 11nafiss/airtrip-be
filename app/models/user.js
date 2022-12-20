@@ -12,6 +12,13 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.Role, {
         foreignKey: "role_id",
       });
+      this.hasMany(models.BoardingPass, {
+        foreignKey: "passenger_id",
+      });
+
+      this.hasMany(models.Ticket, {
+        foreignKey: "passenger_id",
+      });
     }
   }
   User.init(

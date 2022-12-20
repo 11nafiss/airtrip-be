@@ -23,11 +23,19 @@ async function handleUpdateUser(req, res, next) {
 
     res.status(200).json(updatedUser);
   } catch (error) {
-    req.error;
-    next();
+    next(error);
+  }
+}
+
+async function handleWhoami(req, res, next) {
+  try {
+    res.status(200).json({ data: req.user });
+  } catch (error) {
+    next(error);
   }
 }
 
 module.exports = {
   handleUpdateUser,
+  handleWhoami,
 };

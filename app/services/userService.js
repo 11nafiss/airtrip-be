@@ -1,10 +1,8 @@
 const usersRepository = require("../repositories/usersRepository");
-const cloudinary = require("../../config/cloudinary");
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const fileType = require("file-type");
 const { EmailAlreadyRegisteredError, UnauthorizedError } = require("../errors");
-
+const uploadImg = require("./utils/uploadImage");
 function createToken(user, role) {
   return jwt.sign(
     {
@@ -21,23 +19,6 @@ function createToken(user, role) {
     },
     process.env.JWT_SIGNATURE_KEY
   );
-}
-
-async function uploadImg(imgBase64) {
-  const base64String = imgBase64.split(",")[1];
-  const mimetype = await fileType.fromBuffer(
-    Buffer.from(base64String, "base64")
-  );
-
-  const file = `data:${mimetype.mime};base64,${base64String}`;
-
-  try {
-    const imgUrl = await cloudinary.uploader.upload(file);
-    return imgUrl;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
 }
 
 async function updateUser(id, updateParams, user) {
