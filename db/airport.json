@@ -999,7 +999,7 @@
     "uct": 720,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 2870,
     "iata": "HFT",
@@ -1360,7 +1360,6 @@
     "uct": -240,
     "website": "http://www.airinuit.com/"
   },
-  { "error": { "text": "No airport found" } },
   {
     "id": 113,
     "iata": "AEY",
@@ -1501,7 +1500,7 @@
     "uct": 240,
     "website": "http://salalahairport.co.om/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 191,
     "iata": "AJF",
@@ -1722,7 +1721,7 @@
     "uct": -360,
     "website": "http://www.cabq.gov/airport/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 48,
     "iata": "ABX",
@@ -2163,7 +2162,7 @@
     "uct": -480,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 226,
     "iata": "ALA",
@@ -2704,7 +2703,7 @@
     "uct": -60,
     "website": "http://www.asa.cv/index.php?option=com_content&view=article&id=137&Itemid=58"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 6609,
     "iata": "SAY",
@@ -3125,7 +3124,7 @@
     "uct": 120,
     "website": "http://www.angersloireaeroport.fr/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 736,
     "iata": "BIQ",
@@ -3246,7 +3245,7 @@
     "uct": 60,
     "website": "http://www.aeroport-d-annaba-rabah-bitat.com/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 287,
     "iata": "ANN",
@@ -3967,7 +3966,7 @@
     "uct": -240,
     "website": "http://www.palmerairport.com/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 4845,
     "iata": "MOL",
@@ -4008,7 +4007,7 @@
     "uct": 180,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 401,
     "iata": "ATC",
@@ -5329,7 +5328,7 @@
     "uct": 330,
     "website": "https://www.aai.aero/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 8439,
     "iata": "YBG",
@@ -5970,7 +5969,7 @@
     "uct": 60,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 4221,
     "iata": "LKL",
@@ -6351,7 +6350,7 @@
     "uct": 480,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 579,
     "iata": "BCI",
@@ -6692,7 +6691,7 @@
     "uct": -180,
     "website": "http://www.infraero.gov.br/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 3888,
     "iata": "KRZ",
@@ -7073,7 +7072,7 @@
     "uct": -300,
     "website": "http://www.faa.gov/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 554,
     "iata": "BBJ",
@@ -8114,7 +8113,7 @@
     "uct": -420,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 8762,
     "iata": "YTL",
@@ -8615,7 +8614,7 @@
     "uct": 60,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 788,
     "iata": "BKQ",
@@ -10916,7 +10915,7 @@
     "uct": 420,
     "website": "http://camauairport.vn/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 1137,
     "iata": "CAB",
@@ -11457,7 +11456,7 @@
     "uct": -180,
     "website": "http://www.transportes.rs.gov.br/dap"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 1288,
     "iata": "CGR",
@@ -12898,7 +12897,7 @@
     "uct": 630,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 318,
     "iata": "APA",
@@ -13019,8 +13018,7 @@
     "uct": -180,
     "website": "http://www.aeropuertoantofagasta.cl/"
   },
-  { "error": { "text": "No airport found" } },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 7912,
     "iata": "VAF",
@@ -13201,7 +13199,7 @@
     "uct": -300,
     "website": "https://iflycu.com/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 3332,
     "iata": "IXC",
@@ -13602,7 +13600,7 @@
     "uct": 120,
     "website": "https://www.ville-vichy.fr/vichy-pratique/venir-se-deplacer/venir-a-vichy/en-avion"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 1430,
     "iata": "CNG",
@@ -13643,7 +13641,7 @@
     "uct": 825,
     "website": "http://www.discoverthechathamislands.co.nz/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 1545,
     "iata": "CSY",
@@ -14304,7 +14302,7 @@
     "uct": 330,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 7797,
     "iata": "ULN",
@@ -14325,7 +14323,7 @@
     "uct": 480,
     "website": "http://en.airport.gov.mn/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 3439,
     "iata": "JKH",
@@ -15086,7 +15084,7 @@
     "uct": -180,
     "website": "http://www.dinac.gov.py/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 1377,
     "iata": "CLE",
@@ -15487,7 +15485,7 @@
     "uct": -300,
     "website": "http://www.asa.gob.mx/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 6442,
     "iata": "RML",
@@ -15848,7 +15846,7 @@
     "uct": 0,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 1279,
     "iata": "CGH",
@@ -16609,7 +16607,7 @@
     "uct": 120,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 1520,
     "iata": "CRV",
@@ -18150,7 +18148,7 @@
     "uct": 180,
     "website": "http://www.rho-airport.gr/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 3263,
     "iata": "IQQ",
@@ -18691,7 +18689,7 @@
     "uct": 420,
     "website": "http://donmueangairportthai.com/th"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 1263,
     "iata": "CFN",
@@ -18932,7 +18930,7 @@
     "uct": -240,
     "website": "http://www.dover.af.mil/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 5136,
     "iata": "NAG",
@@ -19613,7 +19611,7 @@
     "uct": -540,
     "website": "http://www.chugach-eareckson.com/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 2082,
     "iata": "ELS",
@@ -19694,7 +19692,7 @@
     "uct": -240,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 2125,
     "iata": "EOI",
@@ -19955,7 +19953,7 @@
     "uct": 0,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 2036,
     "iata": "EGS",
@@ -20576,7 +20574,7 @@
     "uct": 120,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 2225,
     "iata": "EZS",
@@ -20957,7 +20955,7 @@
     "uct": 600,
     "website": "http://www.centralhighlands.qld.gov.au/facilities-recreation/airports/emerald-airport/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 2119,
     "iata": "ENT",
@@ -22898,7 +22896,7 @@
     "uct": -180,
     "website": "http://aeropuertoformosa.blogspot.com.ar/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 8509,
     "iata": "YFA",
@@ -25019,7 +25017,7 @@
     "uct": -300,
     "website": "http://www.oma.aero/es/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 6232,
     "iata": "PZO",
@@ -26100,7 +26098,7 @@
     "uct": 180,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 2406,
     "iata": "FTK",
@@ -27201,7 +27199,7 @@
     "uct": -240,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 2719,
     "iata": "GTE",
@@ -27742,7 +27740,7 @@
     "uct": 600,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 2311,
     "iata": "FLA",
@@ -27943,7 +27941,7 @@
     "uct": 240,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 7413,
     "iata": "TJQ",
@@ -28364,7 +28362,7 @@
     "uct": 540,
     "website": "https://www.hna-terminal.co.jp/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 697,
     "iata": "BHB",
@@ -28805,7 +28803,7 @@
     "uct": -360,
     "website": "http://www.gov.nt.ca/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 4181,
     "iata": "LHR",
@@ -29986,7 +29984,7 @@
     "uct": 120,
     "website": "http://www.avinor.no/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 3735,
     "iata": "KKN",
@@ -30407,7 +30405,7 @@
     "uct": 0,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 2840,
     "iata": "HDD",
@@ -30608,7 +30606,7 @@
     "uct": 420,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 8536,
     "iata": "YGT",
@@ -32869,7 +32867,7 @@
     "uct": -420,
     "website": "http://www.ocair.com/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 3468,
     "iata": "JOL",
@@ -37010,7 +37008,7 @@
     "uct": 540,
     "website": "http://www.kairport.co.jp/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 3589,
     "iata": "KCZ",
@@ -38151,7 +38149,7 @@
     "uct": 120,
     "website": "https://norrkopingairport.se/sv/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 3957,
     "iata": "KUV",
@@ -38732,8 +38730,7 @@
     "uct": -240,
     "website": "http://www.panynj.gov/airports/laguardia.html"
   },
-  { "error": { "text": "No airport found" } },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 8389,
     "iata": "XQP",
@@ -38954,7 +38951,7 @@
     "uct": -240,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 5331,
     "iata": "NOU",
@@ -39215,7 +39212,7 @@
     "uct": 60,
     "website": "http://www.egsa-alger.dz/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 4108,
     "iata": "LDU",
@@ -39676,7 +39673,7 @@
     "uct": 60,
     "website": "https://www.islesofscilly-travel.co.uk/lands-end-airport/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 2660,
     "iata": "GOT",
@@ -40117,7 +40114,7 @@
     "uct": -360,
     "website": "http://www.lasvegasnm.gov/business/municipal_airport/index.php"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 4363,
     "iata": "LSH",
@@ -40138,7 +40135,7 @@
     "uct": 390,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 1807,
     "iata": "DLF",
@@ -41899,7 +41896,7 @@
     "uct": 660,
     "website": "http://www.lismore.nsw.gov.au/cp_themes/default/page.asp?p=DOC-YRC-87-72-53"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 4345,
     "iata": "LRF",
@@ -47560,7 +47557,7 @@
     "uct": -240,
     "website": "http://www.mercercounty.org/departments/transportation-and-infrastructure/trenton-mercer-airport"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 875,
     "iata": "BOD",
@@ -49061,7 +49058,7 @@
     "uct": -300,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 4744,
     "iata": "MKK",
@@ -49122,7 +49119,7 @@
     "uct": 600,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 4516,
     "iata": "MBE",
@@ -49303,7 +49300,7 @@
     "uct": -240,
     "website": "http://aeroportmontjoli.com/en/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 4933,
     "iata": "MRY",
@@ -50064,7 +50061,7 @@
     "uct": -180,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 4998,
     "iata": "MUO",
@@ -51365,7 +51362,7 @@
     "uct": 480,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 6762,
     "iata": "SHM",
@@ -51386,7 +51383,7 @@
     "uct": 540,
     "website": "http://shirahama-airport.jp/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 8295,
     "iata": "WUS",
@@ -51647,7 +51644,7 @@
     "uct": 660,
     "website": "http://www.narrandera.nsw.gov.au/cp_themes/default/home.asp"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 7713,
     "iata": "UAK",
@@ -51728,7 +51725,7 @@
     "uct": 330,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 8640,
     "iata": "YNA",
@@ -52549,7 +52546,7 @@
     "uct": 330,
     "website": "http://www.aai.aero/allAirports/Guwahati_GENERAL.jsp"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 3265,
     "iata": "IRA",
@@ -54870,7 +54867,7 @@
     "uct": -240,
     "website": "http://www.orlandosanfordairport.com/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 5667,
     "iata": "ORY",
@@ -55331,7 +55328,7 @@
     "uct": 420,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 2940,
     "iata": "HME",
@@ -55632,7 +55629,7 @@
     "uct": 120,
     "website": "http://www.airport-pad.com/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 5855,
     "iata": "PEM",
@@ -56133,7 +56130,7 @@
     "uct": -180,
     "website": "http://www4.infraero.gov.br/aeroportos/aeroporto-de-belo-horizonte-pampulha-carlos-drummond-de-andrade/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 8820,
     "iata": "YXP",
@@ -57134,7 +57131,7 @@
     "uct": 180,
     "website": "http://airport58.ru/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 5913,
     "iata": "PIA",
@@ -57675,7 +57672,7 @@
     "uct": 420,
     "website": "http://phuketairportthai.com/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 6045,
     "iata": "POS",
@@ -58896,7 +58893,7 @@
     "uct": 660,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 6158,
     "iata": "PUG",
@@ -59177,7 +59174,7 @@
     "uct": 600,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 6108,
     "iata": "PSD",
@@ -59838,7 +59835,7 @@
     "uct": -240,
     "website": "http://www.sxmairport.com/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 8478,
     "iata": "YDC",
@@ -60599,7 +60596,7 @@
     "uct": 480,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 3383,
     "iata": "JCH",
@@ -60620,7 +60617,7 @@
     "uct": -120,
     "website": "http://www.mit.gl/en/todays-flights/airports/ilulissat-airport/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 3261,
     "iata": "IQM",
@@ -61541,7 +61538,7 @@
     "uct": 420,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 6242,
     "iata": "QRA",
@@ -61562,7 +61559,7 @@
     "uct": 120,
     "website": "http://www.randairport.co.za/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 6453,
     "iata": "RND",
@@ -61943,7 +61940,7 @@
     "uct": -300,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 6338,
     "iata": "REG",
@@ -64804,7 +64801,7 @@
     "uct": -420,
     "website": "http://www.san.org/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 6708,
     "iata": "SFE",
@@ -65245,7 +65242,7 @@
     "uct": -240,
     "website": "https://www.sanfordmaine.org/airport"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 1975,
     "iata": "EAE",
@@ -65426,7 +65423,7 @@
     "uct": 0,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 6581,
     "iata": "RZA",
@@ -66767,7 +66764,7 @@
     "uct": 0,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 5981,
     "iata": "PLX",
@@ -67148,7 +67145,7 @@
     "uct": 210,
     "website": "https://kermanshah.airport.ir/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 7137,
     "iata": "SWX",
@@ -67329,7 +67326,7 @@
     "uct": -240,
     "website": "http://www.shaw.af.mil/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 6577,
     "iata": "RYK",
@@ -69170,7 +69167,7 @@
     "uct": 120,
     "website": "http://www.sonderborg-lufthavn.dk/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 6712,
     "iata": "SFJ",
@@ -69711,7 +69708,7 @@
     "uct": -480,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 5333,
     "iata": "NOZ",
@@ -70732,7 +70729,7 @@
     "uct": 120,
     "website": "http://www.swedavia.se/malmo/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 7059,
     "iata": "STR",
@@ -72893,7 +72890,7 @@
     "uct": -300,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 1821,
     "iata": "DMB",
@@ -73294,7 +73291,7 @@
     "uct": 0,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 7740,
     "iata": "UDI",
@@ -74455,7 +74452,7 @@
     "uct": 420,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 7480,
     "iata": "TMM",
@@ -75076,7 +75073,7 @@
     "uct": 660,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 5773,
     "iata": "PAP",
@@ -75477,7 +75474,7 @@
     "uct": 345,
     "website": "http://www.tiairport.com.np/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 7394,
     "iata": "TIP",
@@ -76218,7 +76215,7 @@
     "uct": 120,
     "website": "http://twente-airport.nl/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 7697,
     "iata": "TYR",
@@ -77099,7 +77096,7 @@
     "uct": 720,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 4559,
     "iata": "MCX",
@@ -77420,7 +77417,7 @@
     "uct": 660,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 8010,
     "iata": "VLL",
@@ -77861,7 +77858,7 @@
     "uct": 120,
     "website": "http://www.veniceairport.it/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 8029,
     "iata": "VNT",
@@ -78382,7 +78379,7 @@
     "uct": 480,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 7941,
     "iata": "VCP",
@@ -78703,7 +78700,7 @@
     "uct": 720,
     "website": "http://www.airportsfiji.com/outer_islands.php"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 8804,
     "iata": "YWK",
@@ -78764,7 +78761,7 @@
     "uct": 60,
     "website": "http://www.raf.mod.uk/rafwaddington"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 8150,
     "iata": "WGA",
@@ -78845,7 +78842,7 @@
     "uct": -600,
     "website": "http://hawaii.gov/mue"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 8180,
     "iata": "WJR",
@@ -78886,7 +78883,7 @@
     "uct": 0,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 247,
     "iata": "ALW",
@@ -79727,7 +79724,7 @@
     "uct": 60,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 8309,
     "iata": "WWK",
@@ -79848,7 +79845,7 @@
     "uct": -600,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 5415,
     "iata": "NUW",
@@ -80229,7 +80226,7 @@
     "uct": -240,
     "website": "http://www.flyipt.com/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 8570,
     "iata": "YIP",
@@ -80970,7 +80967,7 @@
     "uct": 60,
     "website": ""
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 8343,
     "iata": "XFN",
@@ -82371,7 +82368,7 @@
     "uct": 360,
     "website": "http://zhezair.com/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 6228,
     "iata": "PZH",
@@ -82392,7 +82389,7 @@
     "uct": 300,
     "website": "http://www.caapakistan.com.pk/"
   },
-  { "error": { "text": "No airport found" } },
+
   {
     "id": 3016,
     "iata": "HSN",
