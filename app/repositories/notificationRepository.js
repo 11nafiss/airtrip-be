@@ -2,7 +2,10 @@ const { Notification } = require("../models");
 
 async function getNotificationList(userId) {
   try {
-    return await Notification.findAll({ where: { user_id: userId } });
+    return await Notification.findAll({
+      where: { user_id: userId },
+      order: [["createdAt", "DESC"]],
+    });
   } catch (error) {
     throw new Error(error);
   }
