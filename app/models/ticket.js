@@ -17,6 +17,10 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "passenger_id",
         as: "passenger",
       });
+      this.hasOne(models.Notification, {
+        foreignKey: "ticket_id",
+        as: "ticket",
+      });
     }
   }
   Ticket.init(
@@ -26,7 +30,6 @@ module.exports = (sequelize, DataTypes) => {
       flight_type: DataTypes.ENUM("Oneway", "Roundtrip"),
       passenger_id: DataTypes.INTEGER,
       flight_details: DataTypes.INTEGER,
-      has_read: DataTypes.BOOLEAN,
     },
     {
       sequelize,

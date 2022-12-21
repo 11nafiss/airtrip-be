@@ -1,5 +1,6 @@
 const ticketRepository = require("../repositories/ticketRepository");
 const flightRepository = require("../repositories/flightsRepository");
+const notificationRepository = require("../repositories/notificationRepository");
 
 const { customAlphabet } = require("nanoid");
 const { RecordNotFoundError } = require("../errors");
@@ -23,6 +24,8 @@ async function createTicket(user, createArgs) {
     const flightType =
       createArgs.flightType.charAt(0).toUpperCase() +
       createArgs.flightType.slice(1);
+
+    // get flights
     const flight = await flightRepository.getFlightById(createArgs.flightId);
     if (!flight) {
       return new RecordNotFoundError(
@@ -45,6 +48,7 @@ async function createTicket(user, createArgs) {
       totalPrice += flight2.price;
     }
 
+    // create ticket
     const result = await ticketRepository.createTicket(
       user,
       totalPrice,
@@ -55,9 +59,22 @@ async function createTicket(user, createArgs) {
       flight2,
       seat2
     );
+
+    // create notification
+    let notificationMessage = `Pemesanan tiket rute ${flight.from_airport.iata} ke ${flight.to_airport.iata}`;
+    if (flight2) {
+      notificationMessage += ` dan ${flight2.from_airport.iata} ke ${flight2.to_airport.iata} `;
+    }
+    notificationMessage += "berhasil!";
+
+    notificationRepository.createNotification(
+      user.id,
+      result.id,
+      notificationMessage
+    );
+
     return result;
   } catch (error) {
-    console.log(error);
     throw new Error(error);
   }
 }

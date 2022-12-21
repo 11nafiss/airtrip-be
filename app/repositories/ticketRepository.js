@@ -60,6 +60,7 @@ async function createTicket(
     );
 
     const result = {
+      id: ticket.id,
       username: user.name,
       invoiceNumber: ticket.invoice_number,
       boardingPasses: { boarding_pass_pergi: { flight: flight1, seat: seat1 } },

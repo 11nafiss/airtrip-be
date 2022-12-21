@@ -60,7 +60,7 @@ async function findFlights(departureDate, from, to, flightClass) {
           as: "to_airport",
           attributes: airportRequiredAttributes,
         },
-        { model: Airplane },
+        { model: Airplane, as: "airplane" },
       ],
     });
   } catch (error) {
@@ -101,7 +101,7 @@ async function findReturnFlights(
           as: "to_airport",
           attributes: airportRequiredAttributes,
         },
-        { model: Airplane },
+        { model: Airplane, as: "airplane" },
       ],
     });
   } catch (error) {

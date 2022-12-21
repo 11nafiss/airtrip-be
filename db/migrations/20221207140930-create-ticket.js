@@ -32,9 +32,6 @@ module.exports = {
           key: "id",
         },
       },
-      has_read: {
-        type: Sequelize.BOOLEAN,
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
