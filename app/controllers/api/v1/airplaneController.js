@@ -60,9 +60,27 @@ async function handleUpdateAirplane(req, res, next) {
   }
 }
 
+async function handleGetAirplaneById(req, res, next) {
+  try {
+    const airplane = await airplaneService.getAirplaneById(req.params.id);
+    if (airplane) {
+      return res.status(200).json({ data: airplane });
+    }
+    res
+      .status(404)
+      .json({
+        message: new RecordNotFoundError(`Airplane id ${req.params.id}`)
+          .message,
+      });
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   handleCreateAirplane,
   handleGetAirplanes,
   handleDeleteAirplane,
   handleUpdateAirplane,
+  handleGetAirplaneById,
 };

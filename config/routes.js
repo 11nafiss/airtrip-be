@@ -106,6 +106,12 @@ apiRouter.get(
   controllers.api.v1.airplaneController.handleGetAirplanes
 );
 
+apiRouter.get(
+  "/airplanes/:id",
+  controllers.api.v1.authenticationController.authorize(Roles.ADMIN),
+  controllers.api.v1.airplaneController.handleGetAirplaneById
+);
+
 apiRouter.delete(
   "/airplanes/delete/:id",
   controllers.api.v1.authenticationController.authorize(Roles.ADMIN),
