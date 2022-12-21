@@ -118,6 +118,19 @@ apiRouter.put(
   controllers.api.v1.airplaneController.handleUpdateAirplane
 );
 
+// NOTIFICATION ENDPOINTS
+apiRouter.get(
+  "/notifications",
+  controllers.api.v1.authenticationController.authorize(Roles.BUYER),
+  controllers.api.v1.notificationController.handleGetNotifications
+);
+
+apiRouter.put(
+  "/notifications/read/:id",
+  controllers.api.v1.authenticationController.authorize(Roles.BUYER),
+  controllers.api.v1.notificationController.handleMarkRead
+);
+
 // for authorization testing purpose only
 if (process.env.NODE_ENV !== "production") {
   apiRouter.post(
