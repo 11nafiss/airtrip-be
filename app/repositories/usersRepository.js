@@ -35,7 +35,6 @@ async function updateUser(id, updateParams) {
 
 async function findRole(roleId) {
   try {
-    console.log(Role);
     const role = await Role.findByPk(roleId);
     return role;
   } catch (error) {

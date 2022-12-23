@@ -50,6 +50,7 @@ async function handleSearchReturnFlights(req, res, next) {
 
 async function handleCreateFlight(req, res, next) {
   try {
+    // req.body = {departure, arrival, flight_class, price, from, to, airplane_id, description}
     // get the departure address
     const from = await airportService.getAirportById(req.body.from);
 

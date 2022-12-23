@@ -2,7 +2,8 @@ const cloudinary = require("../../../config/cloudinary");
 const fileType = require("file-type");
 
 async function uploadImg(imgBase64) {
-  const base64String = imgBase64.split(",")[1];
+  let base64String = imgBase64.split(",");
+  base64String = base64String[base64String.length - 1];
   const mimetype = await fileType.fromBuffer(
     Buffer.from(base64String, "base64")
   );
