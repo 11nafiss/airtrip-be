@@ -1,13 +1,11 @@
 const fs = require("fs");
 const path = require("path");
 
-const mockUploadedImg = {
-  buffer: fs.readFileSync(
-    path.resolve(__dirname, "../helper/example-image-test.png")
-  ),
-  mimetype: "examplemimetype",
-};
-const mockUploadedImgBase64 = mockUploadedImg.buffer.toString("base64");
+// const base64Img = fs
+//   .readFileSync(path.resolve(__dirname, "../helper/example-image-test.png"))
+//   .toString("base64");
+
+const base64Img = "boo";
 describe("userService", () => {
   beforeEach(() => {
     jest.resetModules();
@@ -24,7 +22,7 @@ describe("userService", () => {
     const existingUser = "emailme@email";
     const params = {
       name: "examplename",
-      image: mockUploadedImg,
+      image: base64Img,
       phone: "089212121",
       address: "probolinggo",
       email: "emailmail@email",
@@ -49,9 +47,11 @@ describe("userService", () => {
             .mockReturnValue(Promise.resolve(userExist)),
           updateUser: jest.fn().mockReturnValue(
             Promise.resolve({
-              id: id,
-              ...updateParams,
-              image: cloudinaryResponse.secure_url,
+              dataValues: {
+                id: id,
+                ...updateParams,
+                image: cloudinaryResponse.secure_url,
+              },
             })
           ),
         };
@@ -59,23 +59,31 @@ describe("userService", () => {
         const mockJwt = {
           sign: jest.fn().mockReturnValue(accessToken),
         };
+        const mockUploadImg = jest
+          .fn()
+          .mockReturnValue(Promise.resolve(cloudinaryResponse));
+        // const mockCloudinary = {
+        //   uploader: {
+        //     upload: jest
+        //       .fn()
+        //       .mockReturnValue(Promise.resolve(cloudinaryResponse)),
+        //   },
+        // };
 
-        const mockCloudinary = {
-          uploader: {
-            upload: jest
-              .fn()
-              .mockReturnValue(Promise.resolve(cloudinaryResponse)),
-          },
-        };
         jest.mock("../../repositories/usersRepository", () => mockUserRepo);
         jest.mock("jsonwebtoken", () => mockJwt);
-        jest.mock("../../../config/cloudinary", () => mockCloudinary);
+        // jest.mock("../../../config/cloudinary", () => mockCloudinary);
+        jest.mock("../../services/utils/uploadImage", () => mockUploadImg);
         const userService = require("../../services/userService");
         const {
           EmailAlreadyRegisteredError,
           UnauthorizedError,
         } = require("../../errors");
+
+        // const fileType = require("file-type");
+        // const spyFromBuffer = jest.spyOn(fileType, "fromBuffer");
         process.env.JWT_SIGNATURE_KEY = "examplekey";
+
         const result = await userService.updateUser(id, updateParams, user);
 
         if (id !== user.id.toString()) {
@@ -94,9 +102,11 @@ describe("userService", () => {
           );
           return;
         }
-        expect(mockCloudinary.uploader.upload).toHaveBeenCalledWith(
-          `data:${mockUploadedImg.mimetype};base64,${mockUploadedImgBase64}`
-        );
+
+        // upload img proccess
+        // expect(spyFromBuffer.toHaveBeenCalledWith(Buffer.from(base64Img)));
+
+        expect(mockUploadImg).toHaveBeenCalledWith(base64Img);
         updateParams.image = cloudinaryResponse.secure_url;
         expect(mockJwt.sign).toHaveBeenCalledWith(
           {
@@ -115,8 +125,8 @@ describe("userService", () => {
         );
 
         expect(mockUserRepo.updateUser).toHaveBeenCalledWith(id, updateParams);
-        expect(result).toEqual({
-          user: { ...updateParams, id, password: expect.any(String) },
+        expect(result).toStrictEqual({
+          data: { ...updateParams, id, password: expect.any(String) },
           accessToken,
         });
       }
