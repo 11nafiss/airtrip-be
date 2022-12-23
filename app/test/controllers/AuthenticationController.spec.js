@@ -102,8 +102,7 @@ describe("AuthenticationController", () => {
         mockNext
       );
 
-      expect(mockNext).toHaveBeenCalled();
-      expect(mockRequestRegister.error).toBeInstanceOf(Error);
+      expect(mockNext).toHaveBeenCalledWith(expect.any(Error));
     });
   });
 
