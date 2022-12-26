@@ -12,13 +12,11 @@ async function uploadImg(imgBase64) {
 
   try {
     const imgUrl = await cloudinary.uploader.upload(file);
-    return imgUrl;
+    return imgUrl.secure_url;
   } catch (error) {
     console.log(error);
     throw error;
   }
 }
 
-module.exports = {
-  uploadImg,
-};
+module.exports = uploadImg;

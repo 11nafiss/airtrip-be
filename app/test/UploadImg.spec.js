@@ -1,7 +1,7 @@
 const base64Img = "baS3G4Str1nG";
 
 describe("UploadImage", () => {
-  it("should return uploaded image object", async () => {
+  it("should return uploaded image url", async () => {
     const cloudinaryResponse = { secure_url: "exampleurl.com" };
     const mockCloudinary = {
       uploader: {
@@ -18,12 +18,12 @@ describe("UploadImage", () => {
     jest.mock("file-type", () => mockFileType);
     const uploadImg = require("../services/utils/uploadImage");
 
-    const result = await uploadImg.uploadImg(base64Img);
+    const result = await uploadImg(base64Img);
     const fileUrl = `data:png;base64,${base64Img}`;
     expect(mockFileType.fromBuffer).toHaveBeenCalledWith(
       Buffer.from(base64Img, "base64")
     );
     expect(mockCloudinary.uploader.upload).toHaveBeenCalledWith(fileUrl);
-    expect(result).toBe(cloudinaryResponse);
+    expect(result).toBe(cloudinaryResponse.secure_url);
   });
 });
