@@ -40,7 +40,7 @@ async function updateUser(id, updateParams, user) {
 
     updateParams.password = bcryptjs.hashSync(updateParams.password);
     if (updateParams.image !== "") {
-      updateParams.image = (await uploadImg(updateParams.image)).secure_url;
+      updateParams.image = await uploadImg(updateParams.image);
     } else {
       updateParams.image = existingUser.image;
     }

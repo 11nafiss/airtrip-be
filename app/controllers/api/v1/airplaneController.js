@@ -5,7 +5,6 @@ async function handleCreateAirplane(req, res, next) {
   // req.body = {image, model_number, manufacture, capacity}
   try {
     const airplane = await airplaneService.createAirplane(req.body);
-    console.log(airplane);
     res
       .status(201)
       .json({ message: "Airplane created successfully!", data: airplane });
@@ -27,6 +26,7 @@ async function handleGetAirplanes(req, res, next) {
 async function handleDeleteAirplane(req, res, next) {
   try {
     const deleted = await airplaneService.deleteAirplane(req.params.id);
+
     if (deleted instanceof RecordNotFoundError) {
       return res.status(404).json({ message: deleted.message });
     }
@@ -34,6 +34,7 @@ async function handleDeleteAirplane(req, res, next) {
       .status(200)
       .json({ message: `Airplane id ${req.params.id} deleted successfully!` });
   } catch (error) {
+    console.log(error);
     next(error);
   }
 }
@@ -66,12 +67,9 @@ async function handleGetAirplaneById(req, res, next) {
     if (airplane) {
       return res.status(200).json({ data: airplane });
     }
-    res
-      .status(404)
-      .json({
-        message: new RecordNotFoundError(`Airplane id ${req.params.id}`)
-          .message,
-      });
+    res.status(404).json({
+      message: new RecordNotFoundError(`Airplane id ${req.params.id}`).message,
+    });
   } catch (error) {
     next(error);
   }
