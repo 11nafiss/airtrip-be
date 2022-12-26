@@ -64,12 +64,12 @@ apiRouter.delete(
   controllers.api.v1.flightController.handleDeleteFlight
 );
 
-apiRouter.post(
+apiRouter.get(
   "/flights/search",
   controllers.api.v1.flightController.handleSearchFlights
 );
 
-apiRouter.post(
+apiRouter.get(
   "/flights/search-return",
   controllers.api.v1.flightController.handleSearchReturnFlights
 );

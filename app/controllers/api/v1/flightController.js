@@ -27,10 +27,10 @@ async function handleListFlights(req, res, next) {
 async function handleSearchFlights(req, res, next) {
   try {
     /*
-    req.body = {from, to, departureDate, flightClass}
+    req.query = {from, to, departureDate, flightClass}
     */
 
-    const flights = await flightService.searchFlights(req.body);
+    const flights = await flightService.searchFlights(req.query);
 
     res.status(200).json({ data: flights });
   } catch (error) {
@@ -38,9 +38,9 @@ async function handleSearchFlights(req, res, next) {
   }
 }
 async function handleSearchReturnFlights(req, res, next) {
-  // req.body = {from, to, returnFlightDate,  arrivalDate, flightClass}
+  // req.query = {from, to, returnFlightDate,  arrivalDate, flightClass}
   try {
-    const flights = await flightService.searchReturnFlights(req.body);
+    const flights = await flightService.searchReturnFlights(req.query);
 
     res.status(200).json({ data: flights });
   } catch (error) {
