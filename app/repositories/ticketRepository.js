@@ -34,6 +34,7 @@ async function createTicket(
     }
 
     const flightDetailsArgs = {};
+
     const boardingPassPergi = await createBoardingPass(user, flight1, seat1);
     flightDetailsArgs.boarding_pass_pergi = boardingPassPergi.id;
 
@@ -115,7 +116,10 @@ async function getTickets(userId) {
     if (tickets.length === 0) {
       return tickets;
     }
-    for (let [index, ticket] of tickets.entries()) {
+
+    for (let index = 0; index < tickets.length; index++) {
+      let ticket = tickets[index];
+
       const boardingPassesId = [
         ticket.flight_detail.boarding_pass_pergi,
         ticket.flight_detail.boarding_pass_pulang,
@@ -148,6 +152,7 @@ async function getTickets(userId) {
     }
     return tickets;
   } catch (error) {
+    console.log(error);
     throw new Error(error);
   }
 }
