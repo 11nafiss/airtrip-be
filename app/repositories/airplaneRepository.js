@@ -1,49 +1,29 @@
 const { Airplane } = require("../models");
 
 const getAirplane = async (id) => {
-  try {
-    const airplane = await Airplane.findByPk(id);
-    return airplane;
-  } catch (error) {
-    throw new Error(error);
-  }
+  const airplane = await Airplane.findByPk(id);
+  return airplane;
 };
 
 async function createAirplane(createArgs) {
-  try {
-    return await Airplane.create(createArgs, { returning: true });
-  } catch (error) {
-    throw new Error(error);
-  }
+  return await Airplane.create(createArgs, { returning: true });
 }
 
 async function listAirplanes() {
-  try {
-    return await Airplane.findAll();
-  } catch (error) {
-    throw new Error(error);
-  }
+  return await Airplane.findAll();
 }
 
 async function deleteAirplane(airplaneId) {
-  try {
-    return await Airplane.destroy({ where: { id: airplaneId } });
-  } catch (error) {
-    throw new Error(error);
-  }
+  return await Airplane.destroy({ where: { id: airplaneId } });
 }
 
 async function updateAirplane(airplaneId, updateArgs) {
-  try {
-    const updatedAirplane = await Airplane.update(updateArgs, {
-      where: { id: airplaneId },
-      returning: true,
-    });
+  const updatedAirplane = await Airplane.update(updateArgs, {
+    where: { id: airplaneId },
+    returning: true,
+  });
 
-    return updatedAirplane[1];
-  } catch (error) {
-    throw new Error(error);
-  }
+  return updatedAirplane[1];
 }
 module.exports = {
   getAirplane,

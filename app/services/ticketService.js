@@ -19,73 +19,61 @@ function generateSeat() {
 }
 
 async function createTicket(user, createArgs) {
-  try {
-    const invoiceNumber = generateInvoiceId();
-    const flightType =
-      createArgs.flightType.charAt(0).toUpperCase() +
-      createArgs.flightType.slice(1);
+  const invoiceNumber = generateInvoiceId();
+  const flightType =
+    createArgs.flightType.charAt(0).toUpperCase() +
+    createArgs.flightType.slice(1);
 
-    // get flights
-    const flight = await flightRepository.getFlightById(createArgs.flightId);
-    if (!flight) {
-      return new RecordNotFoundError(
-        `flight id ${createArgs.flightId} not found!`
-      );
-    }
-    const seat1 = generateSeat();
-    let totalPrice = flight.price;
-
-    let flight2 = null;
-    let seat2 = null;
-    if (createArgs.flightId2) {
-      flight2 = await flightRepository.getFlightById(createArgs.flightId2);
-      if (!flight2) {
-        return new RecordNotFoundError(
-          `flight id ${createArgs.flightId2} not found!`
-        );
-      }
-      seat2 = generateSeat();
-      totalPrice += flight2.price;
-    }
-
-    // create ticket
-    const result = await ticketRepository.createTicket(
-      user,
-      totalPrice,
-      invoiceNumber,
-      flightType,
-      flight,
-      seat1,
-      flight2,
-      seat2
-    );
-
-    // create notification
-    let notificationMessage = `Pemesanan tiket rute ${flight.from_airport.iata} ke ${flight.to_airport.iata}`;
-    if (flight2) {
-      notificationMessage += ` dan ${flight2.from_airport.iata} ke ${flight2.to_airport.iata} `;
-    }
-    notificationMessage += "berhasil!";
-
-    notificationRepository.createNotification(
-      user.id,
-      result.id,
-      notificationMessage
-    );
-
-    return result;
-  } catch (error) {
-    throw new Error(error);
+  // get flights
+  const flight = await flightRepository.getFlightById(createArgs.flightId);
+  if (!flight) {
+    return new RecordNotFoundError(`flight id ${createArgs.flightId}`);
   }
+  const seat1 = generateSeat();
+  let totalPrice = flight.price;
+
+  let flight2 = null;
+  let seat2 = null;
+  if (createArgs.flightId2) {
+    flight2 = await flightRepository.getFlightById(createArgs.flightId2);
+    if (!flight2) {
+      return new RecordNotFoundError(`flight id ${createArgs.flightId2}`);
+    }
+    seat2 = generateSeat();
+    totalPrice += flight2.price;
+  }
+
+  // create ticket
+  const result = await ticketRepository.createTicket(
+    user,
+    totalPrice,
+    invoiceNumber,
+    flightType,
+    flight,
+    seat1,
+    flight2,
+    seat2
+  );
+
+  // create notification
+  let notificationMessage = `Pemesanan tiket rute ${flight.from_airport.iata} ke ${flight.to_airport.iata}`;
+  if (flight2) {
+    notificationMessage += ` dan ${flight2.from_airport.iata} ke ${flight2.to_airport.iata} `;
+  }
+  notificationMessage += "berhasil!";
+
+  notificationRepository.createNotification(
+    user.id,
+    result.id,
+    notificationMessage
+  );
+
+  return result;
 }
 
 async function getTickets(userId) {
-  try {
-    const result = await ticketRepository.getTickets(userId);
-    return result;
-  } catch (error) {
-    throw new Error(error);
-  }
+  const result = await ticketRepository.getTickets(userId);
+  return result;
 }
 
 module.exports = {

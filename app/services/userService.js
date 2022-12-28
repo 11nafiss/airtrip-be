@@ -23,38 +23,35 @@ function createToken(user, role) {
 
 async function updateUser(id, updateParams, user) {
   /* updateParams = {name, image, phone, address, email, password,}*/
-  try {
-    if (id !== user.id.toString()) {
-      const err = new UnauthorizedError("token doesn't match the user id!");
-      return err;
-    }
 
-    const existingUser = await usersRepository.findUserByEmail(
-      updateParams.email
-    );
-
-    if (existingUser !== null && updateParams.email !== user.email) {
-      const err = new EmailAlreadyRegisteredError(updateParams.email);
-      return err;
-    }
-
-    updateParams.password = bcryptjs.hashSync(updateParams.password);
-    if (updateParams.image !== "") {
-      updateParams.image = (await uploadImg(updateParams.image)).secure_url;
-    } else {
-      updateParams.image = existingUser.image;
-    }
-
-    const { encryptedPassword, saldo, verified, ...updatedUser } = (
-      await usersRepository.updateUser(id, updateParams)
-    ).dataValues;
-
-    const accessToken = createToken(updatedUser, user.role);
-
-    return { data: updatedUser, accessToken };
-  } catch (error) {
-    throw error;
+  if (id !== user.id.toString()) {
+    const err = new UnauthorizedError("token doesn't match the user id!");
+    return err;
   }
+
+  const existingUser = await usersRepository.findUserByEmail(
+    updateParams.email
+  );
+
+  if (existingUser !== null && updateParams.email !== user.email) {
+    const err = new EmailAlreadyRegisteredError(updateParams.email);
+    return err;
+  }
+
+  updateParams.password = bcryptjs.hashSync(updateParams.password);
+  if (updateParams.image !== "") {
+    updateParams.image = await uploadImg(updateParams.image);
+  } else {
+    updateParams.image = existingUser.image;
+  }
+
+  const { encryptedPassword, saldo, verified, ...updatedUser } = (
+    await usersRepository.updateUser(id, updateParams)
+  ).dataValues;
+
+  const accessToken = createToken(updatedUser, user.role);
+
+  return { data: updatedUser, accessToken };
 }
 
 module.exports = {

@@ -8,6 +8,7 @@ function encryptPass(password) {
 const userData = {
   email: "email@email",
   encryptedPassword: encryptPass("userpass"),
+  saldo: 20000000,
 };
 const user = new User({
   ...userData,

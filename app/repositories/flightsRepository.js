@@ -9,63 +9,54 @@ const airportRequiredAttributes = [
 ];
 
 async function list() {
-  try {
-    const fligts = await Flight.findAll({
-      attributes: {
-        exclude: ["from", "to", "airplane_id"],
+  const fligts = await Flight.findAll({
+    attributes: {
+      exclude: ["from", "to", "airplane_id"],
+    },
+    include: [
+      {
+        model: Airport,
+        as: "from_airport",
+        attributes: airportRequiredAttributes,
       },
-      include: [
-        {
-          model: Airport,
-          as: "from_airport",
-          attributes: airportRequiredAttributes,
-        },
-        {
-          model: Airport,
-          as: "to_airport",
-          attributes: airportRequiredAttributes,
-        },
-        { model: Airplane, as: "airplane" },
-      ],
-    });
-    return fligts;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
+      {
+        model: Airport,
+        as: "to_airport",
+        attributes: airportRequiredAttributes,
+      },
+      { model: Airplane, as: "airplane" },
+    ],
+  });
+  return fligts;
 }
 
 async function findFlights(departureDate, from, to, flightClass) {
-  try {
-    return await Flight.findAll({
-      attributes: {
-        exclude: ["from", "to", "airplane_id"],
+  return await Flight.findAll({
+    attributes: {
+      exclude: ["from", "to", "airplane_id"],
+    },
+    where: {
+      departure: {
+        [Op.gte]: departureDate,
       },
-      where: {
-        departure: {
-          [Op.gte]: departureDate,
-        },
-        from,
-        to,
-        flight_class: flightClass,
+      from,
+      to,
+      flight_class: flightClass,
+    },
+    include: [
+      {
+        model: Airport,
+        as: "from_airport",
+        attributes: airportRequiredAttributes,
       },
-      include: [
-        {
-          model: Airport,
-          as: "from_airport",
-          attributes: airportRequiredAttributes,
-        },
-        {
-          model: Airport,
-          as: "to_airport",
-          attributes: airportRequiredAttributes,
-        },
-        { model: Airplane, as: "airplane" },
-      ],
-    });
-  } catch (error) {
-    throw error;
-  }
+      {
+        model: Airport,
+        as: "to_airport",
+        attributes: airportRequiredAttributes,
+      },
+      { model: Airplane, as: "airplane" },
+    ],
+  });
 }
 
 async function findReturnFlights(
@@ -75,108 +66,88 @@ async function findReturnFlights(
   to,
   flightClass
 ) {
-  try {
-    return await Flight.findAll({
-      attributes: {
-        exclude: ["from", "to", "airplane_id"],
+  return await Flight.findAll({
+    attributes: {
+      exclude: ["from", "to", "airplane_id"],
+    },
+    where: {
+      departure: {
+        [Op.gte]: returnFlightDate,
+        [Op.gt]: arrivalDate,
       },
-      where: {
-        departure: {
-          [Op.gte]: returnFlightDate,
-          [Op.gt]: arrivalDate,
-        },
-        from: to,
-        to: from,
+      from: to,
+      to: from,
 
-        flight_class: flightClass,
+      flight_class: flightClass,
+    },
+    include: [
+      {
+        model: Airport,
+        as: "from_airport",
+        attributes: airportRequiredAttributes,
       },
-      include: [
-        {
-          model: Airport,
-          as: "from_airport",
-          attributes: airportRequiredAttributes,
-        },
-        {
-          model: Airport,
-          as: "to_airport",
-          attributes: airportRequiredAttributes,
-        },
-        { model: Airplane, as: "airplane" },
-      ],
-    });
-  } catch (error) {
-    throw error;
-  }
+      {
+        model: Airport,
+        as: "to_airport",
+        attributes: airportRequiredAttributes,
+      },
+      { model: Airplane, as: "airplane" },
+    ],
+  });
 }
 
 async function createFlight(body) {
-  try {
-    const flight = await Flight.create(body);
-    return flight;
-  } catch (error) {
-    throw error;
-  }
+  const flight = await Flight.create(body);
+  return flight;
 }
 
 async function updateFlight(id, updateArgs) {
-  try {
-    const flight = await Flight.update(updateArgs, {
-      where: { id: id },
-      returning: true,
-      include: [
-        {
-          model: Airport,
-          as: "from_airport",
-          attributes: airportRequiredAttributes,
-        },
-        {
-          model: Airport,
-          as: "to_airport",
-          attributes: airportRequiredAttributes,
-        },
-        { model: Airplane, as: "airplane" },
-      ],
-    });
+  const flight = await Flight.update(updateArgs, {
+    where: { id: id },
+    returning: true,
+    include: [
+      {
+        model: Airport,
+        as: "from_airport",
+        attributes: airportRequiredAttributes,
+      },
+      {
+        model: Airport,
+        as: "to_airport",
+        attributes: airportRequiredAttributes,
+      },
+      { model: Airplane, as: "airplane" },
+    ],
+  });
 
-    return flight[1];
-  } catch (error) {
-    throw error;
-  }
+  return flight[1];
 }
 
 async function getFlightById(id) {
-  try {
-    const flight = await Flight.findByPk(id, {
-      attributes: {
-        exclude: ["from", "to", "airplane_id"],
+  const flight = await Flight.findByPk(id, {
+    attributes: {
+      exclude: ["from", "to", "airplane_id"],
+    },
+    include: [
+      {
+        model: Airport,
+        as: "from_airport",
+        attributes: airportRequiredAttributes,
       },
-      include: [
-        {
-          model: Airport,
-          as: "from_airport",
-          attributes: airportRequiredAttributes,
-        },
-        {
-          model: Airport,
-          as: "to_airport",
-          attributes: airportRequiredAttributes,
-        },
-        { model: Airplane, as: "airplane" },
-      ],
-    });
-    return flight;
-  } catch (error) {
-    throw error;
-  }
+      {
+        model: Airport,
+        as: "to_airport",
+        attributes: airportRequiredAttributes,
+      },
+      { model: Airplane, as: "airplane" },
+    ],
+  });
+  return flight;
 }
 
 async function deleteFlight(id) {
-  try {
-    const flight = await Flight.destroy({ where: { id: id } });
-    return flight;
-  } catch (error) {
-    throw error;
-  }
+  const flight = await Flight.destroy({ where: { id: id } });
+  return flight;
 }
 
 module.exports = {

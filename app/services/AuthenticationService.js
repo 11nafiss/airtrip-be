@@ -31,42 +31,32 @@ function createToken(user) {
 }
 
 async function register(userData) {
-  try {
-    const existingUser = await usersRepo.findUserByEmail(userData.email);
+  const existingUser = await usersRepo.findUserByEmail(userData.email);
 
-    if (existingUser !== null) {
-      const err = new EmailAlreadyRegisteredError(userData.email);
-      return err;
-    }
-    const user = await usersRepo.register({
-      ...userData,
-      encryptedPassword: encryptPass(userData.password),
-    });
-
-    return user.email;
-  } catch (error) {
-    throw error;
+  if (existingUser !== null) {
+    const err = new EmailAlreadyRegisteredError(userData.email);
+    return err;
   }
+  const user = await usersRepo.register({
+    ...userData,
+    encryptedPassword: encryptPass(userData.password),
+  });
+
+  return user.email;
 }
 
 async function login(userData) {
-  try {
-    const existingUser = await usersRepo.findUserByEmail(userData.email);
+  const existingUser = await usersRepo.findUserByEmail(userData.email);
 
-    if (existingUser === null) {
-      return new EmailNotRegisteredError(userData.email);
-    }
-
-    if (
-      bcryptjs.compareSync(userData.password, existingUser.encryptedPassword)
-    ) {
-      return createToken(existingUser);
-    }
-
-    return new WrongPasswordError();
-  } catch (error) {
-    throw error;
+  if (existingUser === null) {
+    return new EmailNotRegisteredError(userData.email);
   }
+
+  if (bcryptjs.compareSync(userData.password, existingUser.encryptedPassword)) {
+    return createToken(existingUser);
+  }
+
+  return new WrongPasswordError();
 }
 
 async function authorize(token, expectedRole) {

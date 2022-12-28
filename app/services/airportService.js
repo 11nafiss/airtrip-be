@@ -1,19 +1,11 @@
 const airportRepo = require("../repositories/airportsRepository");
 
 async function getAirports() {
-  try {
-    return await airportRepo.getAirports();
-  } catch (error) {
-    throw error;
-  }
+  return await airportRepo.getAirports();
 }
 
 async function getAirportById(id) {
-  try {
-    return await airportRepo.getAirportsById(id);
-  } catch (error) {
-    throw error;
-  }
+  return await airportRepo.getAirportsById(id);
 }
 
 module.exports = {
