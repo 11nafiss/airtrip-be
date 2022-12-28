@@ -1,23 +1,15 @@
 const { Airport } = require("../models");
 
 async function getAirports() {
-  try {
-    return await Airport.findAll({
-      attributes: ["id", "iata", "name", "address"],
-    });
-  } catch (error) {
-    throw error;
-  }
+  return await Airport.findAll({
+    attributes: ["id", "iata", "name", "address"],
+  });
 }
 
 async function getAirportsById(id) {
-  try {
-    return await Airport.findByPk(id, {
-      attributes: ["id", "iata", "name", "address"],
-    });
-  } catch (error) {
-    throw error;
-  }
+  return await Airport.findByPk(id, {
+    attributes: ["id", "iata", "name", "address"],
+  });
 }
 
 module.exports = {

@@ -1,21 +1,16 @@
 const flightsRepository = require("../repositories/flightsRepository");
 
 async function searchFlights({ from, to, departureDate, flightClass }) {
-  try {
-    console.log(departureDate);
-    departureDate = new Date(departureDate);
-    console.log(departureDate);
-    const flights = await flightsRepository.findFlights(
-      departureDate,
-      from,
-      to,
-      flightClass
-    );
+  departureDate = new Date(departureDate);
 
-    return flights;
-  } catch (error) {
-    throw error;
-  }
+  const flights = await flightsRepository.findFlights(
+    departureDate,
+    from,
+    to,
+    flightClass
+  );
+
+  return flights;
 }
 
 async function searchReturnFlights({
@@ -25,67 +20,43 @@ async function searchReturnFlights({
   arrivalDate,
   flightClass,
 }) {
-  try {
-    returnFlightDate = new Date(returnFlightDate);
-    arrivalDate = new Date(arrivalDate);
-    const flights = await flightsRepository.findReturnFlights(
-      returnFlightDate,
-      arrivalDate,
-      from,
-      to,
-      flightClass
-    );
+  returnFlightDate = new Date(returnFlightDate);
+  arrivalDate = new Date(arrivalDate);
+  const flights = await flightsRepository.findReturnFlights(
+    returnFlightDate,
+    arrivalDate,
+    from,
+    to,
+    flightClass
+  );
 
-    return flights;
-  } catch (error) {
-    throw error;
-  }
+  return flights;
 }
 
 async function getAllFlights() {
-  try {
-    const flights = await flightsRepository.list();
-    return flights;
-  } catch (error) {
-    throw error;
-  }
+  const flights = await flightsRepository.list();
+  return flights;
 }
 
 async function createFlight(body) {
-  try {
-    const flight = await flightsRepository.createFlight(body);
-    return flight;
-  } catch (error) {
-    throw error;
-  }
+  const flight = await flightsRepository.createFlight(body);
+  return flight;
 }
 
 async function updateFlight(id, updateArgs) {
-  try {
-    // check destination
+  // check destination
 
-    const flight = await flightsRepository.updateFlight(id, updateArgs);
-    return flight;
-  } catch (error) {
-    throw error;
-  }
+  const flight = await flightsRepository.updateFlight(id, updateArgs);
+  return flight;
 }
 
 async function getFlightById(id) {
-  try {
-    const flight = await flightsRepository.getFlightById(id);
-    return flight;
-  } catch (error) {
-    throw error;
-  }
+  const flight = await flightsRepository.getFlightById(id);
+  return flight;
 }
 
 async function deleteFlight(id) {
-  try {
-    const flight = await flightsRepository.deleteFlight(id);
-  } catch (error) {
-    throw error;
-  }
+  const flight = await flightsRepository.deleteFlight(id);
 }
 
 module.exports = {

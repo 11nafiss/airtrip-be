@@ -16,7 +16,7 @@ describe("flightController", () => {
       jest.mock("../../services/flightService", () => mockFlightService);
       const controllers = require("../../controllers");
       const mockRequest = {
-        body: {
+        query: {
           departure: new Date().toISOString(),
           from: 1,
           to: 2,
@@ -30,7 +30,7 @@ describe("flightController", () => {
       );
 
       expect(mockFlightService.searchFlights).toHaveBeenCalledWith(
-        mockRequest.body
+        mockRequest.query
       );
       expect(mockResponse.status).toHaveBeenCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith({ data: flights });
