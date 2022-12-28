@@ -53,7 +53,6 @@ async function handleCreateFlight(req, res, next) {
     // req.body = {departure, arrival, flight_class, price, from, to, airplane_id, description}
     // get the departure address
     const from = await airportService.getAirportById(req.body.from);
-
     // add checking here
     if (!from) {
       const msg = `airport with id ${req.body.from}`;
@@ -147,9 +146,8 @@ async function handleUpdateFlight(req, res, next) {
 
 async function handleDeleteFlight(req, res, next) {
   try {
-    console.log("masuk controller");
     const id = req.params.id;
-
+    console.log(req);
     // check if the flight present
     const flight = await flightService.getFlightById(id);
 

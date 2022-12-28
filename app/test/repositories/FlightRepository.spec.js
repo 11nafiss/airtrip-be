@@ -5,8 +5,8 @@ describe("flightsRepository", () => {
   function createFlightModel() {
     const flights = require("../helper/flightsDataExample");
     const flight = flights[0];
-    flight.from = flight.from.id;
-    flight.to = flight.to.id;
+    flight.from = flight.from_airport.id;
+    flight.to = flight.to_airport.id;
     flight.airplane = flight.airplane.id;
     return flight;
   }

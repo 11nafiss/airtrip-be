@@ -3,13 +3,14 @@ const flights = [
     id: 1,
     departure: new Date(),
     arrival: new Date(),
-    from: {
+    price: 200000,
+    from_airport: {
       id: 1,
       iata: "TBJ",
       name: "Tabarka–Aïn Draham International Airport",
       location: "Tabarka, Tunisia",
     },
-    to: {
+    to_airport: {
       id: 2,
       iata: "CGK",
       name: "Soekarno–Hatta International Airport",
@@ -26,13 +27,14 @@ const flights = [
     id: 2,
     departure: new Date(),
     arrival: new Date(),
-    from: {
+    price: 200000,
+    from_airport: {
       id: 1,
       iata: "TBJ",
       name: "Tabarka–Aïn Draham International Airport",
       location: "Tabarka, Tunisia",
     },
-    to: {
+    to_airport: {
       id: 2,
       iata: "CGK",
       name: "Soekarno–Hatta International Airport",

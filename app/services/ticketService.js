@@ -27,9 +27,7 @@ async function createTicket(user, createArgs) {
   // get flights
   const flight = await flightRepository.getFlightById(createArgs.flightId);
   if (!flight) {
-    return new RecordNotFoundError(
-      `flight id ${createArgs.flightId} not found!`
-    );
+    return new RecordNotFoundError(`flight id ${createArgs.flightId}`);
   }
   const seat1 = generateSeat();
   let totalPrice = flight.price;
@@ -39,9 +37,7 @@ async function createTicket(user, createArgs) {
   if (createArgs.flightId2) {
     flight2 = await flightRepository.getFlightById(createArgs.flightId2);
     if (!flight2) {
-      return new RecordNotFoundError(
-        `flight id ${createArgs.flightId2} not found!`
-      );
+      return new RecordNotFoundError(`flight id ${createArgs.flightId2}`);
     }
     seat2 = generateSeat();
     totalPrice += flight2.price;
