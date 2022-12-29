@@ -7,16 +7,13 @@ module.exports = {
   },
 
   // for handling unspecified error
-  handleError(err, req, res, next) {
-    if (err) {
-      return res.status(500).json({
-        error: {
-          name: err?.name || "error",
-          message: err?.message,
-        },
-      });
-    }
-    next();
+  handleError(err, req, res) {
+    return res.status(500).json({
+      error: {
+        name: err?.name || "error",
+        message: err?.message,
+      },
+    });
   },
 
   handleNotFound(req, res) {
