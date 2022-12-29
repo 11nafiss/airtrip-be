@@ -5,6 +5,8 @@ const notificationRepository = require("../repositories/notificationRepository")
 const { customAlphabet } = require("nanoid");
 const { RecordNotFoundError } = require("../errors");
 const nanoid = customAlphabet("ABCDEFGHIJKLMNOPQRSTUVWXYZ", 5);
+const email = require("./utils/email");
+
 function generateInvoiceId() {
   const uid = nanoid();
   const now = new Date();
@@ -66,6 +68,30 @@ async function createTicket(user, createArgs) {
     user.id,
     result.id,
     notificationMessage
+  );
+  function parseFlightEmail(flightData) {
+    if (!flightData) {
+      return flightData;
+    }
+    return {
+      from: {
+        iata: flightData.from_airport.iata,
+        date: flightData.departure,
+        name: flightData.from_airport.name,
+      },
+      to: {
+        iata: flightData.to_airport.iata,
+        date: flightData.arrival,
+        name: flightData.to_airport.name,
+      },
+    };
+  }
+  email.sendOrderNotification(
+    user.email,
+    invoiceNumber,
+    parseFlightEmail(flight),
+    parseFlightEmail(flight2),
+    totalPrice
   );
 
   return result;
