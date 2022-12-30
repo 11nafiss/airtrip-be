@@ -147,7 +147,7 @@ if (process.env.NODE_ENV !== "production") {
     }
   );
 }
-apiRouter.use("*", controllers.main.handleNotFound);
+apiRouter.use(controllers.main.handleNotFound);
 apiRouter.use(controllers.main.handleError);
 
 module.exports = apiRouter;

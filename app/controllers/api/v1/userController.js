@@ -23,6 +23,7 @@ async function handleUpdateUser(req, res, next) {
 
     res.status(200).json(updatedUser);
   } catch (error) {
+    console.log(error);
     next(error);
   }
 }
@@ -31,6 +32,7 @@ async function handleWhoami(req, res, next) {
   try {
     res.status(200).json({ data: req.user });
   } catch (error) {
+    console.log(error);
     next(error);
   }
 }

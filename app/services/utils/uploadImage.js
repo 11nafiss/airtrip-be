@@ -7,7 +7,7 @@ async function uploadImg(imgBase64) {
   const mimetype = await fileType.fromBuffer(
     Buffer.from(base64String, "base64")
   );
-
+  if (!mimetype) return null;
   const file = `data:${mimetype.mime};base64,${base64String}`;
 
   try {
@@ -15,7 +15,7 @@ async function uploadImg(imgBase64) {
     return imgUrl.secure_url;
   } catch (error) {
     console.log(error);
-    throw error;
+    throw new Error(error);
   }
 }
 
