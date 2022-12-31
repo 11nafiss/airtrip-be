@@ -15,6 +15,7 @@ async function handleUpdateUser(req, res, next) {
       res
         .status(401)
         .json({ message: updatedUser.message, cause: updatedUser.cause });
+      return;
     }
 
     if (updatedUser instanceof EmailAlreadyRegisteredError) {
