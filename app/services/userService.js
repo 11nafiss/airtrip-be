@@ -37,8 +37,10 @@ async function updateUser(id, updateParams, user) {
     const err = new EmailAlreadyRegisteredError(updateParams.email);
     return err;
   }
+  if (updateParams.password) {
+    updateParams.encryptedPassword = bcryptjs.hashSync(updateParams.password);
+  }
 
-  updateParams.encryptedPassword = bcryptjs.hashSync(updateParams.password);
   if (updateParams.image) {
     updateParams.image = await uploadImg(updateParams.image);
   } else {
