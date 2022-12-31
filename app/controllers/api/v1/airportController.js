@@ -8,7 +8,15 @@ async function handleGetAirports(req, res, next) {
     next(error);
   }
 }
-
+async function handleGetAirportById(req, res, next) {
+  try {
+    const airport = await airportService.getAirportById(req.params.id);
+    res.status(200).json({ data: airport });
+  } catch (error) {
+    next(error);
+  }
+}
 module.exports = {
   handleGetAirports,
+  handleGetAirportById,
 };

@@ -106,8 +106,14 @@ describe("userService", () => {
         );
 
         expect(mockUserRepo.updateUser).toHaveBeenCalledWith(id, updateParams);
+        delete updateParams.encryptedPassword;
         expect(result).toStrictEqual({
-          data: { ...updateParams, id, password: expect.any(String) },
+          data: {
+            ...updateParams,
+            id,
+            password: expect.any(String),
+            // encryptedPassword: expect.any(String),
+          },
           accessToken,
         });
       }
