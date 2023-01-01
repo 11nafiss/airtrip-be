@@ -21,7 +21,7 @@ function createToken(user) {
       phone: user.phone,
       address: user.address,
       email: user.email,
-      saldo: user.saldo,
+
       role: {
         id: user.Role.id,
         name: user.Role.name,

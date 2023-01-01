@@ -31,7 +31,8 @@ async function handleUpdateUser(req, res, next) {
 
 async function handleWhoami(req, res, next) {
   try {
-    res.status(200).json({ data: req.user });
+    const user = await userService.whoami(req.user);
+    res.status(200).json({ data: user });
   } catch (error) {
     console.log(error);
     next(error);

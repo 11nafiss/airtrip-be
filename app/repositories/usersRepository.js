@@ -26,9 +26,19 @@ async function findRole(roleId) {
   return role;
 }
 
+async function getSaldo(userId) {
+  const saldo = await User.findOne({
+    where: { id: userId },
+    attributes: ["saldo"],
+  });
+
+  return saldo.saldo;
+}
+
 module.exports = {
   register,
   findUserByEmail,
   updateUser,
   findRole,
+  getSaldo,
 };

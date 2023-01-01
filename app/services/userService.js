@@ -16,7 +16,6 @@ function createToken(user, role) {
         id: role.id,
         name: role.name,
       },
-      saldo: user.saldo,
     },
     process.env.JWT_SIGNATURE_KEY
   );
@@ -57,6 +56,17 @@ async function updateUser(id, updateParams, user) {
   return { data: updatedUser, accessToken };
 }
 
+async function whoami(user) {
+  try {
+    const saldo = await usersRepository.getSaldo(user.id);
+    user.saldo = saldo;
+    return user;
+  } catch (error) {
+    throw new Error(error);
+  }
+}
+
 module.exports = {
   updateUser,
+  whoami,
 };

@@ -7,7 +7,7 @@ module.exports = {
   },
 
   // for handling unspecified error
-  handleError(err, req, res) {
+  handleError(err, req, res, next) {
     return res.status(500).json({
       error: {
         name: err?.name || "error",
