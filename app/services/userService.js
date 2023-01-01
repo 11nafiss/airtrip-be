@@ -16,6 +16,7 @@ function createToken(user, role) {
         id: role.id,
         name: role.name,
       },
+      saldo: user.saldo,
     },
     process.env.JWT_SIGNATURE_KEY
   );
@@ -47,12 +48,12 @@ async function updateUser(id, updateParams, user) {
     updateParams.image = user.image;
   }
 
-  const { encryptedPassword, saldo, verified, ...updatedUser } = (
+  const { encryptedPassword, verified, ...updatedUser } = (
     await usersRepository.updateUser(id, updateParams)
   ).dataValues;
 
   const accessToken = createToken(updatedUser, user.role);
-
+  console.log(updatedUser);
   return { data: updatedUser, accessToken };
 }
 
