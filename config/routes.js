@@ -35,7 +35,10 @@ apiRouter.get(
   "/airports",
   controllers.api.v1.airportController.handleGetAirports
 );
-
+apiRouter.get(
+  "/airports/:id",
+  controllers.api.v1.airportController.handleGetAirportById
+);
 // FLIGHT ENDPOINTS
 // create flight data
 apiRouter.post(
