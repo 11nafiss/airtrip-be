@@ -13,6 +13,7 @@ async function list() {
     attributes: {
       exclude: ["from", "to", "airplane_id"],
     },
+    order: [["createdAt", "DESC"]],
     include: [
       {
         model: Airport,

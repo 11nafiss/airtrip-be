@@ -119,4 +119,27 @@ describe("userService", () => {
       }
     );
   });
+
+  describe("whoami", () => {
+    const user = {
+      id: 1,
+      email: "email@email",
+      role: {
+        id: 2,
+        name: "BUYER",
+      },
+    };
+    it('should return user with latest "saldo"', async () => {
+      const saldo = 20000;
+      const mockUserRepo = {
+        getSaldo: jest.fn().mockReturnValue(Promise.resolve(saldo)),
+      };
+      jest.mock("../../repositories/usersRepository", () => mockUserRepo);
+      const userService = require("../../services/userService");
+
+      const result = await userService.whoami(user);
+      expect(mockUserRepo.getSaldo).toHaveBeenCalledWith(user.id);
+      expect(result).toEqual({ ...user, saldo });
+    });
+  });
 });

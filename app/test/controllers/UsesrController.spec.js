@@ -99,6 +99,12 @@ describe("userController", () => {
       const mockRequest = {
         user,
       };
+      const userServiceReturn = { ...user, saldo: 2000 };
+      const mockUserService = {
+        whoami: jest.fn().mockReturnValue(userServiceReturn),
+      };
+
+      jest.mock("../../services/userService", () => mockUserService);
       const controllers = require("../../controllers");
 
       await controllers.api.v1.userController.handleWhoami(
@@ -106,10 +112,10 @@ describe("userController", () => {
         mockResponse,
         mockNext
       );
-
+      expect(mockUserService.whoami).toHaveBeenCalledWith(mockRequest.user);
       expect(mockResponse.status).toHaveBeenCalledWith(200);
       expect(mockResponse.json).toHaveBeenCalledWith({
-        data: mockRequest.user,
+        data: userServiceReturn,
       });
     });
   });

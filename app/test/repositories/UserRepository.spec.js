@@ -128,4 +128,28 @@ describe("UsersRepository", () => {
       expect(result).toEqual(mockRole);
     });
   });
+
+  describe("getSaldo", () => {
+    it('should return user "saldo"', async () => {
+      const saldo = 20000;
+      const id = 1;
+      const mockUserModel = {
+        findOne: jest.fn().mockReturnValue(Promise.resolve({ saldo })),
+      };
+
+      jest.mock("../../models", () => {
+        return { User: mockUserModel };
+      });
+
+      const UsersRepository = require("../../repositories/usersRepository");
+
+      const result = await UsersRepository.getSaldo(id);
+
+      expect(mockUserModel.findOne).toHaveBeenCalledWith({
+        where: { id },
+        attributes: ["saldo"],
+      });
+      expect(result).toEqual(saldo);
+    });
+  });
 });
