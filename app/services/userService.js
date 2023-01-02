@@ -57,13 +57,9 @@ async function updateUser(id, updateParams, user) {
 }
 
 async function whoami(user) {
-  try {
-    const saldo = await usersRepository.getSaldo(user.id);
-    user.saldo = saldo;
-    return user;
-  } catch (error) {
-    throw new Error(error);
-  }
+  const saldo = await usersRepository.getSaldo(user.id);
+  user.saldo = saldo;
+  return user;
 }
 
 module.exports = {
