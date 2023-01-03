@@ -140,6 +140,19 @@ apiRouter.put(
   controllers.api.v1.notificationController.handleMarkRead
 );
 
+// WISHLIST ENDPOINT
+apiRouter.post(
+  "/wishlists/create",
+  controllers.api.v1.authenticationController.authorize(Roles.BUYER),
+  controllers.api.v1.wishlistController.handleCreateWishlist
+);
+
+apiRouter.get(
+  "/wishlists",
+  controllers.api.v1.authenticationController.authorize(Roles.BUYER),
+  controllers.api.v1.wishlistController.handleGetWishlist
+);
+
 // for authorization testing purpose only
 if (process.env.NODE_ENV !== "production") {
   apiRouter.post(

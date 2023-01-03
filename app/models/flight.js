@@ -22,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
         as: "airplane",
       });
       this.hasMany(models.BoardingPass, { foreignKey: "flight_id" });
+      this.hasMany(models.Wishlist, { foreignKey: "flight_id" });
     }
   }
   Flight.init(

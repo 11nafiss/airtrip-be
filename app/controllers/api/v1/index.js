@@ -6,7 +6,10 @@ const userController = require("./userController");
 const ticketController = require("./ticketController");
 const airplaneController = require("./airplaneController");
 const notificationController = require("./notificationController");
+const wishlistController = require("./wishlistController");
+
 module.exports = {
+  wishlistController,
   authenticationController,
   flightController,
   airportController,
