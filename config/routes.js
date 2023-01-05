@@ -1,8 +1,9 @@
 const express = require("express");
 const controllers = require("../app/controllers");
-const upload = require("./multer");
 const apiRouter = express.Router();
 const cors = require("cors");
+const listEndpoints = require("express-list-endpoints");
+
 const Roles = {
   ADMIN: "ADMIN",
   BUYER: "BUYER",
@@ -171,5 +172,7 @@ if (process.env.NODE_ENV !== "production") {
 }
 apiRouter.use(controllers.main.handleNotFound);
 apiRouter.use(controllers.main.handleError);
+
+console.log(listEndpoints(apiRouter));
 
 module.exports = apiRouter;
