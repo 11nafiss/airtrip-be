@@ -48,4 +48,24 @@ describe("userService", () => {
       expect(result).toEqual(wishlists);
     });
   });
+
+  describe("deleteWishlist", () => {
+    it("should returr number of deleted wishlist", async () => {
+      const deleted = 1;
+      const wishlistId = 1;
+      const mockWishlistRepo = {
+        destroy: jest.fn().mockReturnValue(Promise.resolve(deleted)),
+      };
+
+      jest.mock(
+        "../../repositories/wishlistRepository",
+        () => mockWishlistRepo
+      );
+      const wishlistService = require("../../services/wishlistService");
+
+      const result = await wishlistService.deleteWishlist(wishlistId);
+      expect(mockWishlistRepo.destroy).toHaveBeenCalledWith(wishlistId);
+      expect(result).toEqual(deleted);
+    });
+  });
 });

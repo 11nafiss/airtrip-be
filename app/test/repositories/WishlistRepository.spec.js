@@ -76,4 +76,24 @@ describe("wishlistRepository", () => {
       expect(result).toEqual(wishlists);
     });
   });
+
+  describe("destroy", () => {
+    it("should return number of deleted wishlists", async () => {
+      const deleted = 1;
+      const wishlistId = 1;
+      const mockWishlistModel = {
+        destroy: jest.fn().mockReturnValue(Promise.resolve(deleted)),
+      };
+      jest.mock("../../models", () => {
+        return { Wishlist: mockWishlistModel };
+      });
+      const wishlistRepository = require("../../repositories/wishlistRepository");
+      const result = await wishlistRepository.destroy(wishlistId);
+
+      expect(mockWishlistModel.destroy).toHaveBeenCalledWith({
+        where: { id: wishlistId },
+      });
+      expect(result).toEqual(deleted);
+    });
+  });
 });

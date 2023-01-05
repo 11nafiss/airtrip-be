@@ -65,4 +65,45 @@ describe("wishlistController", () => {
       expect(mockResponse.json).toHaveBeenCalledWith({ data: wishlists });
     });
   });
+
+  describe("handleDeleteWishlist", () => {
+    test.each([1, 0])(
+      "should call res.status(200) and res.json with message",
+      async (deleted) => {
+        const wishlistId = 1;
+        const mockRequest = {
+          params: {
+            id: 1,
+          },
+        };
+        const mockWishlistService = {
+          deleteWishlist: jest.fn().mockReturnValue(Promise.resolve(deleted)),
+        };
+        jest.mock("../../services/wishlistService", () => mockWishlistService);
+
+        const controllers = require("../../controllers");
+
+        await controllers.api.v1.wishlistController.handleDeleteWishlist(
+          mockRequest,
+          mockResponse,
+          mockNext
+        );
+
+        expect(mockWishlistService.deleteWishlist).toHaveBeenCalledWith(
+          wishlistId
+        );
+        if (deleted < 1) {
+          expect(mockResponse.status).toHaveBeenCalledWith(404);
+          expect(mockResponse.json).toHaveBeenCalledWith({
+            message: `Wishlist id ${mockRequest.params.id} not found!`,
+          });
+          return;
+        }
+        expect(mockResponse.status).toHaveBeenCalledWith(200);
+        expect(mockResponse.json).toHaveBeenCalledWith({
+          message: `Wishlist id ${mockRequest.params.id} deleted!`,
+        });
+      }
+    );
+  });
 });
