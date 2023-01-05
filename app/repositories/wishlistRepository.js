@@ -34,7 +34,11 @@ async function list(userId) {
   });
 }
 
+async function destroy(wishlistId) {
+  return await Wishlist.destroy({ where: { id: wishlistId } });
+}
 module.exports = {
   create,
   list,
+  destroy,
 };

@@ -153,6 +153,12 @@ apiRouter.get(
   controllers.api.v1.wishlistController.handleGetWishlist
 );
 
+apiRouter.delete(
+  "/wishlists/delete/:id",
+  controllers.api.v1.authenticationController.authorize(Roles.BUYER),
+  controllers.api.v1.wishlistController.handleDeleteWishlist
+);
+
 // for authorization testing purpose only
 if (process.env.NODE_ENV !== "production") {
   apiRouter.post(
